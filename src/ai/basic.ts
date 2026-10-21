@@ -1,0 +1,146 @@
+/**
+ * Giocatore base generico: regole di buon senso valide per qualsiasi mazzo.
+ * È il punto di partenza dei piani di mazzo (fase 1) e il giocatore delle
+ * continuazioni del giocatore forte (fase 2).
+ *
+ * Ordine del turno: Abilità ed evoluzioni, panchina, ricerca, Energia,
+ * Supporter, poi l'attacco migliore. Boss's Orders solo se dà un KO.
+ */
+import { attackCost, canPay, G, retreatCost, slot } from "../engine/game.js";
+import type { Agent } from "../engine/game.js";
+import type { Action, Attack, CardDef, Decision, Mon } from "../engine/types.js";
+
+const SEARCH = new Set(["search", "ultra_ball", "poke_pad", "puppet_pull", "poffin", "telepathic", "explorer", "pokegear",
+  "night_stretcher", "recover", "procurement", "look_top", "patch_energy", "attach_discard"]);
+const DISCARD = new Set(["discard", "ultra_ball_discard", "prism_discard", "retreat_discard"]);
+
+export class BasicAgent implements Agent {
+  constructor(public opts: { benchMax?: number } = {}) {}
+
+  // --- valutazioni --------------------------------------------------------
+
+  /** Danno stampato del miglior attacco pagabile adesso da questo Pokémon. */
+  bestDamage(g: G, m: Mon): { atk: Attack | null; dmg: number } {
+    let best: { atk: Attack | null; dmg: number } = { atk: null, dmg: -1 };
+    for (const a of g.top(m).attacks ?? []) {
+      if (canPay(g, m.energies, attackCost(g, m, a)) && a.damage > best.dmg) best = { atk: a, dmg: a.damage };
+    }
+    return best;
+  }
+
+  /** Quanto manca, in Energie, all'attacco più forte del Pokémon. */
+  energyGap(g: G, m: Mon): number {
+    const atks = g.top(m).attacks ?? [];
+    if (!atks.length) return 0;
+    const strongest = atks.reduce((a, b) => (b.damage >= a.damage ? b : a));
+    return Math.max(0, attackCost(g, m, strongest).length - m.energies.length);
+  }
+
+  /** Quanto vale avere in mano questa carta adesso (più alto = più utile). */
+  want(g: G, me: number, c: number): number {
+    const d = g.def(c), p = g.p(me);
+    const inPlay = g.inPlay(me);
+    const inHand = p.hand.filter(x => g.def(x).name === d.name).length;
+    if (d.kind === "pokemon") {
+      if (d.evolvesFrom && inPlay.some(m => g.top(m).name === d.evolvesFrom)) return 90 - 20 * inHand;
+      if (d.sub === "basic") return (inPlay.some(m => g.top(m).name === d.name) ? 40 : 70) - 15 * inHand + (d.attacks?.some(a => a.damage >= 100) ? 10 : 0);
+      return 50 - 15 * inHand;
+    }
+    if (d.kind === "energy") return inPlay.some(m => this.energyGap(g, m) > 0) ? 55 - 20 * inHand : 15;
+    if (d.sub === "supporter") return p.hand.some(x => g.def(x).sub === "supporter") ? 25 : 65;
+    return 35 - 10 * inHand;
+  }
+
+  // --- decisioni ----------------------------------------------------------
+
+  decide(g: G, d: Decision): number[] {
+    const me = d.player;
+    const idx = d.options.map((_, i) => i);
+    const top = (score: (o: unknown) => number, n: number) =>
+      idx.sort((a, b) => score(d.options[b]) - score(d.options[a])).slice(0, n);
+
+    if (d.kind === "action") return [this.action(g, me, d.options as Action[])];
+    if (d.kind === "mulligan_draw") return [d.options.length - 1];
+    if (d.kind === "setup_active") {
+      // in attivo il Pokémon meno prezioso e più facile da ritirare
+      return top(c => -(g.def(c as number).retreat ?? 0) * 10 - ((g.def(c as number).tags ?? []).includes("ex") ? 50 : 0), 1);
+    }
+    if (d.kind === "setup_bench") return idx.slice(0, Math.min(d.max, this.opts.benchMax ?? 3));
+    if (d.kind === "promote" || d.kind === "switch") {
+      const p = g.p(me);
+      return top(t => { const m = slot(p, t as number); return this.bestDamage(g, m).dmg * 2 + g.hpLeft(m) / 10 - this.energyGap(g, m) * 30; }, 1);
+    }
+    if (d.kind === "gust") {
+      const o = g.p(1 - me), mine = g.p(me).active;
+      const dmg = mine ? this.bestDamage(g, mine).dmg : 0;
+      return top(t => { const m = slot(o, t as number); return (g.hpLeft(m) <= dmg ? 100 * (g.top(m).prizes ?? 1) : 0) - g.hpLeft(m) / 10; }, 1);
+    }
+    if (d.kind === "counters" || d.kind === "spiritual_end") {
+      return top(m => (m as Mon).damage * (g.top(m as Mon).prizes ?? 1) - g.hpLeft(m as Mon) / 10, d.max);
+    }
+    if (d.kind.endsWith("_target")) return top(m => this.energyGap(g, m as Mon) * 10 + (g.top(m as Mon).attacks?.length ?? 0), 1);
+    if (d.kind === "gwynn") return idx.slice(0, d.max);
+    if (d.kind === "mill" || d.kind === "blender") {
+      // scarta prima le carte che contano negli scarti (Hide 'n' Sneak), poi le meno utili
+      return top(c => ((g.def(c as number).tags ?? []).includes("hide_n_sneak") ? 100 : 0) - this.want(g, me, c as number), d.max);
+    }
+    if (d.kind === "naveen") return top(c => -this.want(g, me, c as number), Math.max(d.min, g.p(me).hand.length - 3));
+    if (DISCARD.has(d.kind)) return top(c => -this.want(g, me, c as number), d.min);
+    if (SEARCH.has(d.kind) || typeof d.options[0] === "number") {
+      return top(c => this.want(g, me, c as number), d.max);
+    }
+    return idx.slice(0, d.max);
+  }
+
+  action(g: G, me: number, acts: Action[]): number {
+    const p = g.p(me), o = g.p(1 - me);
+    const benchMax = this.opts.benchMax ?? 4;
+    const score = (a: Action): number => {
+      switch (a.kind) {
+        case "ability": return 70;
+        case "evolve": return 80;
+        case "bench": return p.bench.length < benchMax ? 60 : -1;
+        case "stadium": return p.hand.length >= 4 ? 20 : -1;
+        case "attach": {
+          const m = slot(p, a.target);
+          const gap = this.energyGap(g, m);
+          if (gap <= 0) return a.target === -1 ? 5 : 3;
+          return a.target === -1 ? 50 : 40 - p.bench.indexOf(m);
+        }
+        case "trainer": return this.trainerScore(g, me, g.def(a.card), a.card);
+        case "retreat": {
+          const a0 = p.active!;
+          if (this.bestDamage(g, a0).dmg >= 0 && this.energyGap(g, a0) === 0) return -1;
+          const t = p.bench[a.target];
+          return this.bestDamage(g, t).dmg > Math.max(0, this.bestDamage(g, a0).dmg) && retreatCost(g, a0) <= 1 ? 30 : -1;
+        }
+        default: return -1;
+      }
+    };
+    let best = -1, bestScore = 0;
+    acts.forEach((a, i) => { const s = score(a); if (s > bestScore) { best = i; bestScore = s; } });
+    if (best >= 0) return best;
+    const attacks = acts.map((a, i) => [a, i] as const).filter(([a]) => a.kind === "attack");
+    if (attacks.length && o.active) {
+      const atk = g.top(p.active!).attacks!;
+      return attacks.reduce((b, x) => (atk[(x[0] as { index: number }).index].damage >= atk[(b[0] as { index: number }).index].damage ? x : b))[1];
+    }
+    return acts.findIndex(a => a.kind === "end");
+  }
+
+  trainerScore(g: G, me: number, d: CardDef, card: number): number {
+    const p = g.p(me), o = g.p(1 - me);
+    if (d.name === "Boss's Orders" || d.name === "Prime Catcher" || d.name === "Pokémon Catcher") {
+      const dmg = p.active ? this.bestDamage(g, p.active).dmg : 0;
+      return o.bench.some(m => g.hpLeft(m) <= dmg) && !(o.active && g.hpLeft(o.active) <= dmg && (g.top(o.active).prizes ?? 1) >= 2) ? 45 : -1;
+    }
+    if (d.sub === "supporter") {
+      if (d.name === "Black Belt's Training") return o.active && (g.top(o.active).tags ?? []).includes("ex") ? 10 : -1;
+      return p.hand.length <= 5 ? 35 : 20;
+    }
+    if (d.sub === "stadium") return 15;
+    if (d.sub === "tool") return 25;
+    void card;
+    return 40;
+  }
+}

@@ -5,13 +5,13 @@
 | Lista | Carte complete | % |
 | --- | --- | --- |
 | frankfurt-2026/01-alakazam-dusknoir | 19/60 | 32% |
-| frankfurt-2026/03-festival-lead | 24/60 | 40% |
+| frankfurt-2026/03-festival-lead | 26/60 | 43% |
 | frankfurt-2026/04-dragapult-dusknoir | 35/60 | 58% |
 | frankfurt-2026/05-dragapult-blaziken | 33/60 | 55% |
 | frankfurt-2026/06-slowking | 29/60 | 48% |
 | frankfurt-2026/07-dragapult | 34/60 | 57% |
 | frankfurt-2026/08-lopunny-dusknoir | 25/60 | 42% |
-| frankfurt-2026/12-n-s-zoroark | 30/60 | 50% |
+| frankfurt-2026/12-n-s-zoroark | 31/60 | 52% |
 | frankfurt-2026/15-hydrapple | 28/60 | 47% |
 | frankfurt-2026/16-mega-excadrill | 27/60 | 45% |
 | hide-n-sneak/francesco-attuale | 60/60 | 100% |
@@ -38,7 +38,7 @@
 | yokohama-2026-jp/08-dragapult | 33/60 | 55% |
 | yokohama-2026-jp/09-dragapult-dusknoir | 33/60 | 55% |
 
-## Da implementare (116 carte, dalle più usate)
+## Da implementare (115 carte, dalle più usate)
 
 | Carta | Liste | Copie | Testo mancante |
 | --- | --- | --- | --- |
@@ -88,7 +88,6 @@ Your opponent shuffles their hand and puts it on the bottom of their deck. If th
 | Mega Excadrill ex | 2 | 4 | attacco Undermine: Discard the top 2 cards of your opponent's deck.<br>attacco Maximum Drilling: If this Pokémon has at least 2 extra Energy attached (in addition to this attack's cost), this attack does 130 more damage. |
 | Genesect ex | 2 | 4 | attacco Protect Charge: During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).<br>Abilità Metallic Signal: Once during your turn, you may search your deck for up to 2 Evolution Metal Pokémon, reveal them, and put them into your hand. Then, shuffle your deck. |
 | Jumbo Ice Cream | 2 | 4 | Jumbo Ice Cream: Heal 80 damage from your Active Pokémon that has 3 or more Energy attached. You may play any number of Item cards during your turn. |
-| Air Balloon | 2 | 3 | Air Balloon: The Retreat Cost of the Pokémon this card is attached to is ColorlessColorless less. You may attach any number of Pokémon Tools to your Pokémon during your turn. You may attach only 1 Pokémon Tool to each Pokémon, and it stays attached. |
 | Annihilape | 2 | 3 | attacco Ghostly Blow: Place 5 damage counters on 1 of your opponent's Benched Pokémon.<br>Abilità Durable Body: If this Pokémon would be Knocked Out by damage from an attack, flip a coin. If heads, this Pokémon is not Knocked Out, and its remaining HP becomes 10. |
 | Mew ex | 2 | 3 | attacco Teleportation Burst: You may switch this Pokémon with 1 of your Benched Pokémon.<br>Abilità Memory Helix: This Pokémon can use the attacks of any of your Benched Pokémon. (You still need the necessary Energy to use each attack.) |
 | Sacred Ash | 2 | 2 | Sacred Ash: Shuffle up to 5 Pokémon from your discard pile into your deck. You may play any number of Item cards during your turn. |

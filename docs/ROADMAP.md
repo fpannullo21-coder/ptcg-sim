@@ -10,14 +10,20 @@
 - [x] Scelta: sito, pubblico più avanti, motore in TypeScript
 - [x] Motore TypeScript a punti di decisione: setup, mulligan, turni, Abilità, attacchi, debolezza e resistenza, condizioni, KO, premi, clone a metà effetto (10 test, circa 3.600 partite al secondo)
 - [x] Libreria di effetti base: pesca, cerca, scarta, segnalini, cura, cambio, Boss's Orders
-- [ ] Import delle carte dal database aperto (PS, tipi, attacchi, testi)
-- [ ] Primo mazzo completo nel nuovo motore: Hide n' Sneak (lista per Danzica)
+- [x] Import delle carte dal database aperto (4.765 carte, PS, tipi, attacchi, testi)
+- [x] Liste in formato Live: lettura, riconoscimento delle ristampe, controllo (60 carte, 4 copie, ACE SPEC, legalità)
+- [x] 35 liste in `decks/`: Hide n' Sneak (16), Frankfurt top 16 (10), Yokohama (9)
+- [x] Registro delle carte con report di copertura
+- [x] Motore: effetti passivi, effetti per il turno, regola Tera, Stadi con azione, prevenzione degli effetti
+- [x] Primo mazzo completo nel nuovo motore: Hide n' Sneak, tutte le varianti
+- [x] Giocatore base generico, matrice in parallelo, replay, CI su GitHub
+- [ ] Carte del meta: le 116 dell'elenco di copertura, a partire da Dragapult, Fezandipiti, Budew, Meowth, Unfair Stamp
 
 ## Fase 1 · novembre, settimane 1-3
 
 Delta Reign esce il 6 novembre: il primo formato di riferimento è quello con Delta Reign.
 
-- [ ] Import delle liste da Limitless (formato TCG Live) e delle quote da Limitless Labs
+- [ ] Import automatico delle liste da Limitless e delle quote da Limitless Labs (le liste manuali sono già supportate)
 - [ ] I 12 mazzi principali del nuovo formato, carta per carta, con test
 - [ ] Giocatore base per archetipo
 

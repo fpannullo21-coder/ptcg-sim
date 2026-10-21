@@ -9,7 +9,12 @@
   "scripts": {
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "demo": "tsx src/tools/demo.ts"
+    "demo": "tsx src/tools/demo.ts",
+    "import-cards": "NODE_USE_ENV_PROXY=1 tsx src/tools/import-cards.ts",
+    "check-decks": "tsx src/tools/check-decks.ts",
+    "coverage": "tsx src/tools/coverage.ts",
+    "matrix": "tsx src/tools/matrix.ts",
+    "replay": "tsx src/tools/replay.ts"
   },
   "repository": {
     "type": "git",

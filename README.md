@@ -31,8 +31,9 @@ Dare in input una lista qualsiasi e ottenere percentuali su quanto funziona, car
 | `src/ai/` | Giocatori: base (regole per archetipo) e forte (ricerca Monte Carlo) |
 | `src/tools/` | Matrice, ottimizzatore, allenatore, demo |
 | `test/` | Test delle regole e delle carte |
-| `decks/` | Liste in formato Pokémon TCG Live |
-| `data/` | Import di carte, liste e win rate |
+| `src/data/` | Database delle carte, lettura e controllo delle liste, formati |
+| `decks/` | Liste in formato Pokémon TCG Live, una cartella per torneo o archetipo |
+| `data/` | `cards.json`: le carte importate dal database aperto |
 | `reports/` | Risultati delle simulazioni |
 | `legacy/` | Il modello di Danzica e il primo prototipo in Python |
 | `docs/` | Architettura e roadmap |
@@ -43,10 +44,22 @@ Serve Node 22.
 
 ```
 npm install
-npm test              # test delle regole e delle carte
-npm run demo          # una partita di prova con registro, più 5.000 partite per misurare la velocità
-npm run typecheck     # controllo dei tipi
+npm test                    # test di regole, carte, liste e partite complete
+npm run check-decks         # controlla tutte le liste in decks/ -> reports/liste.md
+npm run coverage            # carte implementate e da implementare -> reports/copertura.md
+npm run matrix -- --a "hide-n-sneak/lista-per-danzica" --b "frankfurt-2026/*" --games 200 --name danzica
+                            # matrice dei matchup in parallelo -> reports/matrice-danzica.md
+npm run replay -- hide-n-sneak/lista-per-danzica frankfurt-2026/07-dragapult 3
+                            # una partita con il registro completo
+npm run import-cards        # riscarica il database delle carte
 ```
+
+## Stato
+
+- **Carte:** 4.765 nel database. Le liste di Hide n' Sneak sono implementate al 100%; le altre liste del meta tra il 7% e il 60%. L'elenco di cosa manca, dalle carte più usate, è in `reports/copertura.md`.
+- **Liste:** 35 in `decks/` (16 Hide n' Sneak, top 16 di Frankfurt, 9 liste giapponesi di Yokohama).
+- **Giocatore:** base generico. Il giocatore forte e i piani di mazzo arrivano nelle fasi 1 e 2.
+- Come aggiungere una carta: `docs/CARTE.md`.
 
 ## Destinazione
 
