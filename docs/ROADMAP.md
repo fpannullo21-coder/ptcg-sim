@@ -6,8 +6,11 @@
 - [x] Avversario forte con ricerca Monte Carlo (Timbro, ritirata, Crushing Hammer, Boss's Orders)
 - [ ] Simulazione finale con avversario forte e lista per Danzica bloccata
 - [x] Struttura del progetto, README, roadmap
-- [x] Motore di regole: stato, azioni legali, turni, KO, premi, primo turno, condizioni speciali (prima versione, 6 test)
-- [ ] Libreria di effetti base: pesca, cerca, scarta, danno, segnalini, cura, cambio
+- [x] Prototipo in Python del motore (in `legacy/python-proto`)
+- [x] Scelta: sito, pubblico più avanti, motore in TypeScript
+- [x] Motore TypeScript a punti di decisione: setup, mulligan, turni, Abilità, attacchi, debolezza e resistenza, condizioni, KO, premi, clone a metà effetto (10 test, circa 3.600 partite al secondo)
+- [x] Libreria di effetti base: pesca, cerca, scarta, segnalini, cura, cambio, Boss's Orders
+- [ ] Import delle carte dal database aperto (PS, tipi, attacchi, testi)
 - [ ] Primo mazzo completo nel nuovo motore: Hide n' Sneak (lista per Danzica)
 
 ## Fase 1 · novembre, settimane 1-3

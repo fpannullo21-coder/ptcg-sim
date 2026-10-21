@@ -1,31 +1,39 @@
 # Architettura
 
-## Stato della partita (`engine/state.py`)
+Motore in TypeScript (`src/`). Lo stesso codice gira in Node per le simulazioni lunghe e nel browser per il sito.
 
-- `GameState`: due `PlayerState`, giocatore di turno, numero di turno, Stadio in gioco, vincitore, generatore casuale.
-- `PlayerState`: mazzo, mano, premi, scarti, Pokémon attivo, panchina (massimo 5), indicatori del turno (Supporter giocato, Energia attaccata, ritirata fatta, Stadio giocato).
-- `InPlay`: un Pokémon in campo con la pila di evoluzione, le Energie e gli Strumenti attaccati, i segnalini, le condizioni speciali e il turno in cui è entrato in campo.
+## Punti di decisione (`src/engine/game.ts`)
 
-## Carte (`cards/`)
+Tutta la partita è un generatore. Ogni volta che serve una scelta (un'azione del turno, quali carte cercare, chi promuovere, cosa scartare) il motore si ferma con `yield` e restituisce una `Decision`:
 
-- `CardDef`: nome, tipo di carta, sottotipo (Base, Fase 1, Fase 2, Oggetto, Supporter, Stadio, Strumento, Energia base o speciale), PS, tipo, debolezza, resistenza, ritirata, attacchi, Abilità, premi dati al KO (1, 2 per gli ex, 3 per i Mega ex), da chi evolve.
-- Gli effetti sono funzioni Python composte da una libreria di primitive (`cards/effects.py`): pescare, cercare nel mazzo, scartare, fare danno, piazzare segnalini, curare, cambiare il Pokémon attivo, accelerare Energie, bloccare Abilità o Oggetti.
-- Quando un effetto richiede una scelta (quali carte scartare, quale bersaglio), chiede al giocatore tramite `game.choose(...)`. Così la stessa carta funziona con qualsiasi IA.
+```ts
+{ player, kind, options, min, max }
+```
 
-## Regole (`engine/rules.py`)
+La risposta è un elenco di indici in `options`. `Match` tiene la storia delle risposte. Con lo stesso seme e le stesse risposte la partita si riproduce identica: `match.clone()` copia una partita in qualsiasi punto, anche a metà di un effetto. È ciò che serve al giocatore forte per esplorare ogni alternativa, all'allenatore per salvare una posizione e al sito per i replay.
 
-- `legal_actions(state)`: elenco di tutte le azioni legali del giocatore di turno.
-- `step(state, action)`: applica l'azione e le sue conseguenze (KO, premi, promozione, fine partita).
-- Fine partita: premi finiti, nessun Pokémon in campo, impossibile pescare a inizio turno.
-- Primo turno: chi inizia non attacca e non gioca Supporter.
+## Stato (`src/engine/types.ts`)
 
-## Giocatori (`ai/`)
+Solo dati semplici: si può copiare, salvare, confrontare e mandare al browser.
 
-- Interfaccia unica: `choose_action(state, actions)` e `choose(state, kind, options, k)`.
-- `RandomAgent`: per i test.
-- Giocatore base: regole per archetipo (cosa cercare, cosa scartare, chi attaccare).
-- Giocatore forte: per ogni decisione importante gioca molte continuazioni della partita con il giocatore base e sceglie l'azione che vince di più. Le carte nascoste dell'avversario vengono estratte a caso tra quelle compatibili con la sua lista (determinizzazione).
+- `State`: due `Player`, turno, giocatore di turno, chi ha iniziato, Stadio, vincitore, stato del generatore casuale.
+- `Player`: mazzo, mano, premi, scarti, attivo, panchina, indicatori del turno.
+- `Mon`: un Pokémon in campo con pila di evoluzione, Energie, Strumenti, danni, condizioni, Abilità usate.
+- Le carte sono numeri; `State.cards[n]` è l'id della definizione (es. `PBL-6`) nel registro.
+
+## Carte (`src/cards/`)
+
+- `CardDef`: i numeri della carta (PS, tipo, debolezza, ritirata, costi e danni) arrivano dall'import del database aperto delle carte; a mano si scrive solo l'effetto.
+- Gli effetti sono generatori composti da `effects.ts`: pescare, cercare, scartare dal mazzo, scartare dalla mano, recuperare, segnalini, cura, cambio, Boss's Orders, Energie dagli scarti.
+- Ogni carta ha un test che ne verifica il testo.
+
+## Giocatori (`src/ai/`)
+
+- Interfaccia unica: `decide(g, decision) -> number[]`.
+- `RandomAgent` per i test, `GreedyAgent` come base minima.
+- Giocatore base per archetipo: regole generali più un piano del mazzo (cosa mettere in campo, chi attacca, cosa tenere e scartare).
+- Giocatore forte: per ogni decisione importante clona la partita, gioca molte continuazioni con il giocatore base e sceglie la giocata che vince di più. Le carte nascoste dell'avversario vengono ipotizzate partendo dalla sua lista (determinizzazione), così l'IA non bara.
 
 ## Validazione
 
-Per ogni matchup del meta: win rate simulato tra giocatori forti contro win rate reale di Limitless Labs. Gli scostamenti grandi indicano carte o archetipi da correggere.
+Per ogni matchup del meta: win rate simulato tra giocatori forti contro win rate reale di Limitless Labs. Uno scostamento oltre 8-10 punti segnala una carta o un piano di gioco da correggere.

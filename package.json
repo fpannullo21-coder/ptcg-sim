@@ -1,0 +1,31 @@
+{
+  "name": "ptcg-sim",
+  "version": "1.0.0",
+  "description": "Simulatore Pokémon TCG per preparare i tornei",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "demo": "tsx src/tools/demo.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpannullo21-coder/ptcg-sim.git"
+  },
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/fpannullo21-coder/ptcg-sim/issues"
+  },
+  "homepage": "https://github.com/fpannullo21-coder/ptcg-sim#readme",
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8"
+  },
+  "private": true,
+  "type": "module"
+}

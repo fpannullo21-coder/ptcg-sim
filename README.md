@@ -26,23 +26,31 @@ Dare in input una lista qualsiasi e ottenere percentuali su quanto funziona, car
 
 | Cartella | Contenuto |
 | --- | --- |
-| `engine/` | Regole del gioco: stato della partita, azioni legali, turni, KO, premi |
-| `cards/` | Definizioni ed effetti delle carte, un modulo per espansione, ognuna con il suo test |
+| `src/engine/` | Regole del gioco a punti di decisione: stato, azioni legali, turni, KO, premi |
+| `src/cards/` | Effetti di base e definizioni delle carte, un modulo per espansione |
+| `src/ai/` | Giocatori: base (regole per archetipo) e forte (ricerca Monte Carlo) |
+| `src/tools/` | Matrice, ottimizzatore, allenatore, demo |
+| `test/` | Test delle regole e delle carte |
 | `decks/` | Liste in formato Pokémon TCG Live |
-| `ai/` | Giocatori: base (regole per archetipo) e forte (ricerca Monte Carlo) |
-| `data/` | Import da Limitless (liste, risultati) e Limitless Labs (win rate) |
-| `tools/` | Matrice, ottimizzatore, allenatore |
+| `data/` | Import di carte, liste e win rate |
 | `reports/` | Risultati delle simulazioni |
-| `tests/` | Test delle regole e delle carte |
-| `legacy/danzica_model/` | Il modello usato per preparare Danzica (Hide n' Sneak contro avversari semplificati) |
+| `legacy/` | Il modello di Danzica e il primo prototipo in Python |
 | `docs/` | Architettura e roadmap |
 
-## Come si usa (in arrivo con la fase 0)
+## Come si usa
+
+Serve Node 22.
 
 ```
-python -m pytest tests          # test delle regole
-python -m tools.demo            # una partita di prova tra due mazzi
+npm install
+npm test              # test delle regole e delle carte
+npm run demo          # una partita di prova con registro, più 5.000 partite per misurare la velocità
+npm run typecheck     # controllo dei tipi
 ```
+
+## Destinazione
+
+Un sito: privato fino a dicembre 2026, poi beta chiusa, poi pubblico e gratuito, senza immagini delle carte. Il motore è in TypeScript perché lo stesso codice gira nel browser (partite, puzzle, simulazioni brevi) e su server o in cloud (matrice completa).
 
 ## Principi
 
