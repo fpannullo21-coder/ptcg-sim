@@ -1,0 +1,35 @@
+# Nome: Alakazam Dusknoir (Felix Christen, 18° Regional Frankfurt)
+# Archetipo: Alakazam Dusknoir
+# Fonte: Regional Frankfurt, 26th September 2026, 18° posto su 2793 giocatori. https://limitlesstcg.com/decks/list/29614
+
+Pokémon: 27
+4 Frillish WHT 44
+1 Jellicent ex WHT 45
+2 Abra TWM 80
+2 Abra MEG 54
+4 Kadabra MEG 55
+3 Alakazam MEG 56
+3 Duskull PRE 35
+2 Dusclops PRE 36
+2 Dusknoir PRE 37
+1 Shaymin DRI 10
+1 Latias ex SSP 76
+1 Fezandipiti ex ASC 142
+1 Patrat CRI 70
+
+Trainer: 27
+4 Hilda WHT 84
+3 Dawn PFL 87
+3 Gwynn PBL 78
+1 Boss's Orders MEG 114
+4 Night Stretcher ASC 196
+4 Poké Pad POR 81
+4 Rare Candy MEG 125
+2 Special Red Card CRI 82
+1 Prime Catcher TEF 157
+1 Pokégear 3.0 SVI 186
+
+Energy: 6
+4 Telepathic Psychic Energy POR 88
+1 Psychic Energy MEE 13
+1 Mist Energy TEF 161

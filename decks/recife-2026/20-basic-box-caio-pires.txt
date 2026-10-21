@@ -1,0 +1,40 @@
+# Nome: Basic Box (Caio Pires, 20° Regional Recife)
+# Archetipo: Basic Box
+# Fonte: Regional Recife, 3rd October 2026, 20° posto su 1074 giocatori. https://limitlesstcg.com/decks/list/30017
+
+Pokémon: 22
+3 Mega Kangaskhan ex MEG 104
+3 Meowth ex POR 62
+2 Latias ex SSP 76
+2 Teal Mask Ogerpon ex TWM 25
+2 Lillie's Clefairy ex JTG 56
+2 Mew ex 30C 66
+1 Iron Leaves ex TEF 25
+1 Fezandipiti ex ASC 142
+1 Frillish WHT 44
+1 Iron Crown ex TEF 81
+1 Wellspring Mask Ogerpon ex TWM 64
+1 Unown 30C 72
+1 Paldean Tauros SSP 18
+1 Chien-Pao SSP 56
+
+Trainer: 25
+3 Crispin SCR 133
+3 Boss's Orders MEG 114
+2 Lillie's Determination MEG 119
+1 Cyrano SSP 170
+1 Judge POR 76
+1 Ciphermaniac's Codebreaking TEF 145
+4 Ultra Ball MEG 131
+3 Energy Switch MEG 115
+2 Night Stretcher ASC 196
+1 Special Red Card CRI 82
+1 Hero's Cape TEF 152
+3 Area Zero Underdepths SCR 131
+
+Energy: 13
+5 Grass Energy MEE 9
+4 Telepathic Psychic Energy POR 88
+2 Psychic Energy MEE 13
+1 Water Energy MEE 11
+1 Fire Energy MEE 10

@@ -1,0 +1,32 @@
+# Nome: Hydrapple (Paulo Mimoso, 3° Regional Nice)
+# Archetipo: Hydrapple
+# Fonte: Regional Nice, 17th October 2026, 3° posto su 2336 giocatori. https://limitlesstcg.com/decks/list/30518
+
+Pokémon: 19
+4 Teal Mask Ogerpon ex TWM 25
+2 Chikorita MEG 8
+2 Bayleef MEG 9
+2 Meganium MEG 10
+2 Applin TWM 17
+2 Dipplin TWM 18
+2 Hydrapple ex SCR 14
+1 Fezandipiti ex ASC 142
+1 Meowth ex POR 62
+1 Celebi MEG 12
+
+Trainer: 28
+4 Lillie's Determination MEG 119
+2 Boss's Orders MEG 114
+1 Judge POR 76
+1 Dawn PFL 87
+1 Lana's Aid TWM 155
+1 Briar SCR 132
+4 Ultra Ball MEG 131
+4 Bug Catching Set TWM 143
+3 Poké Pad POR 81
+2 Night Stretcher ASC 196
+1 Unfair Stamp TWM 165
+4 Forest of Vitality MEG 117
+
+Energy: 13
+13 Grass Energy MEE 9

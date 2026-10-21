@@ -1,0 +1,31 @@
+# Nome: Mega Excadrill (Riguel Assis, 5° Regional Recife)
+# Archetipo: Mega Excadrill
+# Fonte: Regional Recife, 3rd October 2026, 5° posto su 1074 giocatori. https://limitlesstcg.com/decks/list/30008
+
+Pokémon: 21
+3 Beldum TEF 113
+1 Beldum CRI 59
+4 Metang TEF 114
+1 Metagross CRI 61
+3 Drilbur PBL 46
+2 Mega Excadrill ex PBL 65
+2 Piplup PFL 27
+1 Empoleon ex PFL 70
+2 Genesect ex BLK 67
+1 Mega Skarmory ex POR 55
+1 Fezandipiti ex ASC 142
+
+Trainer: 22
+4 Brock's Scouting JTG 146
+4 Team Rocket's Petrel DRI 176
+1 Boss's Orders MEG 114
+1 Kieran TWM 154
+4 Buddy-Buddy Poffin TEF 144
+4 Pokégear 3.0 SVI 186
+1 Jumbo Ice Cream PFL 91
+1 Switch MEG 130
+1 Rare Candy MEG 125
+1 Hero's Cape TEF 152
+
+Energy: 17
+17 Metal Energy MEE 16

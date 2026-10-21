@@ -1,0 +1,36 @@
+# Nome: Basic Box (Jack Wong, 26° Regional Louisville, KY)
+# Archetipo: Basic Box
+# Fonte: Regional Louisville, KY, 10th October 2026, 26° posto su 2927 giocatori. https://limitlesstcg.com/decks/list/29067
+
+Pokémon: 19
+4 Teal Mask Ogerpon ex TWM 25
+2 Mega Kangaskhan ex MEG 104
+2 Latias ex SSP 76
+2 Meowth ex POR 62
+2 Lillie's Clefairy ex JTG 56
+1 Fezandipiti ex ASC 142
+1 Koraidon ex ASC 121
+1 Wellspring Mask Ogerpon ex TWM 64
+1 Iron Leaves ex TEF 25
+1 Chi-Yu TWM 39
+1 Pecharunt SVP 149
+1 Chien-Pao SSP 56
+
+Trainer: 26
+4 Lillie's Determination MEG 119
+3 Boss's Orders MEG 114
+1 Cyrano SSP 170
+1 Judge POR 76
+1 N's Plan BLK 83
+4 Energy Switch MEG 115
+4 Ultra Ball MEG 131
+2 Bug Catching Set TWM 143
+1 Tera Orb SSP 189
+1 Unfair Stamp TWM 165
+1 Night Stretcher ASC 196
+3 Area Zero Underdepths SCR 131
+
+Energy: 15
+10 Grass Energy MEE 9
+4 Prism Energy ASC 216
+1 Psychic Energy MEE 13

@@ -1,0 +1,36 @@
+# Nome: Ethan's Typhlosion (Yasmin Kiss, 30° Regional Frankfurt)
+# Archetipo: Ethan's Typhlosion
+# Fonte: Regional Frankfurt, 26th September 2026, 30° posto su 2793 giocatori. https://limitlesstcg.com/decks/list/29622
+
+Pokémon: 20
+4 Ethan's Cyndaquil DRI 32
+4 Ethan's Quilava DRI 33
+3 Ethan's Typhlosion DRI 34
+2 Dreepy TWM 128
+2 Drakloak TWM 129
+2 Victini SSP 21
+1 Budew ASC 16
+1 Shaymin DRI 10
+1 Fezandipiti ex ASC 142
+
+Trainer: 35
+4 Ethan's Adventure DRI 165
+2 Lillie's Determination MEG 119
+2 Boss's Orders MEG 114
+1 Lana's Aid TWM 155
+1 Kieran TWM 154
+4 Poké Pad POR 81
+4 Ultra Ball MEG 131
+3 Buddy-Buddy Poffin TEF 144
+3 Rare Candy MEG 125
+2 Night Stretcher ASC 196
+1 Redeemable Ticket JTG 156
+1 Special Red Card CRI 82
+1 Secret Box TWM 163
+1 Sacred Ash DRI 168
+2 Brave Bangle WHT 80
+2 Battle Cage PFL 85
+1 Team Rocket's Watchtower DRI 180
+
+Energy: 5
+5 Fire Energy MEE 10

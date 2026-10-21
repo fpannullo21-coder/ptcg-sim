@@ -1,0 +1,35 @@
+# Nome: Absol Audino (Rob van de Vijver, 7° Regional Nice)
+# Archetipo: Absol Audino
+# Fonte: Regional Nice, 17th October 2026, 7° posto su 2336 giocatori. https://limitlesstcg.com/decks/list/30521
+
+Pokémon: 13
+4 Munkidori TWM 95
+2 Mega Audino ex ASC 172
+2 Mega Absol ex MEG 86
+1 Psyduck ASC 39
+1 Cornerstone Mask Ogerpon ex TWM 112
+1 Pecharunt ex SFA 39
+1 Yveltal MEG 88
+1 Latias ex SSP 76
+
+Trainer: 36
+4 Boss's Orders MEG 114
+4 Team Rocket's Petrel DRI 176
+3 Lillie's Determination MEG 119
+1 Cyrano SSP 170
+1 Lisia's Appeal SSP 179
+1 Xerosic's Machinations SFA 64
+4 Team Rocket's Transceiver DRI 178
+4 Pokégear 3.0 SVI 186
+3 Special Red Card CRI 82
+3 Energy Switch MEG 115
+2 Jumbo Ice Cream PFL 91
+2 Night Stretcher ASC 196
+1 Precious Trolley SSP 185
+1 Energy Search POR 72
+2 Team Rocket's Watchtower DRI 180
+
+Energy: 11
+8 Darkness Energy MEE 15
+2 Psychic Energy MEE 13
+1 Fighting Energy MEE 14

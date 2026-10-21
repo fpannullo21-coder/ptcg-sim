@@ -1,0 +1,34 @@
+# Nome: Dragapult Dusknoir (Patrick Liddy, 29° Regional Louisville, KY)
+# Archetipo: Dragapult Dusknoir
+# Fonte: Regional Louisville, KY, 10th October 2026, 29° posto su 2927 giocatori. https://limitlesstcg.com/decks/list/30175
+
+Pokémon: 21
+4 Dreepy TWM 128
+4 Drakloak TWM 129
+3 Dragapult ex TWM 130
+2 Duskull PRE 35
+2 Dusclops PRE 36
+1 Dusknoir PRE 37
+2 Budew ASC 16
+1 Patrat CRI 70
+1 Fezandipiti ex ASC 142
+1 Meowth ex POR 62
+
+Trainer: 31
+4 Lillie's Determination MEG 119
+3 Boss's Orders MEG 114
+2 Crispin SCR 133
+1 Dawn PFL 87
+1 Judge POR 76
+4 Buddy-Buddy Poffin TEF 144
+4 Poké Pad POR 81
+3 Ultra Ball MEG 131
+3 Night Stretcher ASC 196
+2 Rare Candy MEG 125
+1 Unfair Stamp TWM 165
+1 Special Red Card CRI 82
+2 Jamming Tower TWM 153
+
+Energy: 8
+4 Fire Energy MEE 10
+4 Psychic Energy MEE 13

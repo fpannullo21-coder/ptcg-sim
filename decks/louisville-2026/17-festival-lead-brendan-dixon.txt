@@ -1,0 +1,36 @@
+# Nome: Festival Lead (Brendan Dixon, 17° Regional Louisville, KY)
+# Archetipo: Festival Lead
+# Fonte: Regional Louisville, KY, 10th October 2026, 17° posto su 2927 giocatori. https://limitlesstcg.com/decks/list/30169
+
+Pokémon: 22
+3 Applin TWM 126
+1 Applin TWM 17
+3 Dipplin TWM 18
+3 Grookey MEP 52
+3 Thwackey TWM 15
+2 Goldeen TWM 44
+1 Seaking PRE 21
+2 Rellor TEF 23
+2 Rabsca TEF 24
+1 Shaymin DRI 10
+1 Psyduck ASC 39
+
+Trainer: 33
+4 Lillie's Determination MEG 119
+2 Gladion's Final Battle PBL 77
+2 Boss's Orders MEG 114
+1 Lana's Aid TWM 155
+1 Kieran TWM 154
+4 Buddy-Buddy Poffin TEF 144
+4 Poké Pad POR 81
+3 Ultra Ball MEG 131
+2 Night Stretcher ASC 196
+1 Switch MEG 130
+1 Secret Box TWM 163
+2 Air Balloon ASC 181
+2 Brave Bangle WHT 80
+4 Festival Grounds TWM 149
+
+Energy: 5
+3 Growing Grass Energy POR 86
+2 Grass Energy MEE 9

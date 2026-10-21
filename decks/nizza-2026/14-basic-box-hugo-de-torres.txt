@@ -1,0 +1,38 @@
+# Nome: Basic Box (Hugo De Torres, 14° Regional Nice)
+# Archetipo: Basic Box
+# Fonte: Regional Nice, 17th October 2026, 14° posto su 2336 giocatori. https://limitlesstcg.com/decks/list/30525
+
+Pokémon: 21
+4 Mega Kangaskhan ex MEG 104
+3 Meowth ex POR 62
+2 Lillie's Clefairy ex JTG 56
+2 Teal Mask Ogerpon ex TWM 25
+2 Latias ex SSP 76
+2 Mew ex 30C 66
+1 Fezandipiti ex ASC 142
+1 Wellspring Mask Ogerpon ex TWM 64
+1 Chien-Pao SSP 56
+1 Passimian SSP 111
+1 Iron Crown ex TEF 81
+1 Iron Leaves ex TEF 25
+
+Trainer: 26
+4 Crispin SCR 133
+2 Boss's Orders MEG 114
+1 Brock's Scouting JTG 146
+1 Cyrano SSP 170
+1 Ciphermaniac's Codebreaking TEF 145
+1 Judge POR 76
+4 Ultra Ball MEG 131
+4 Energy Switch MEG 115
+2 Night Stretcher ASC 196
+1 Prime Catcher TEF 157
+1 Special Red Card CRI 82
+4 Area Zero Underdepths SCR 131
+
+Energy: 13
+5 Grass Energy MEE 9
+3 Telepathic Psychic Energy POR 88
+3 Psychic Energy MEE 13
+1 Water Energy MEE 11
+1 Fighting Energy MEE 14

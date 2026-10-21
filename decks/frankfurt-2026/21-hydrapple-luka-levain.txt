@@ -1,0 +1,36 @@
+# Nome: Hydrapple (Luka Levain, 21° Regional Frankfurt)
+# Archetipo: Hydrapple
+# Fonte: Regional Frankfurt, 26th September 2026, 21° posto su 2793 giocatori. https://limitlesstcg.com/decks/list/29616
+
+Pokémon: 20
+4 Teal Mask Ogerpon ex TWM 25
+2 Applin SCR 12
+2 Dipplin TWM 18
+2 Hydrapple ex SCR 14
+2 Chikorita ASC 8
+1 Bayleef MEG 9
+1 Bayleef ASC 9
+2 Meganium MEG 10
+1 Celebi MEG 12
+1 Tapu Bulu SFA 6
+1 Meowth ex POR 62
+1 Fezandipiti ex ASC 142
+
+Trainer: 27
+4 Lillie's Determination MEG 119
+2 Boss's Orders MEG 114
+1 Briar SCR 132
+1 Lana's Aid TWM 155
+1 Judge POR 76
+1 Team Rocket's Petrel DRI 176
+1 Gwynn PBL 78
+4 Bug Catching Set TWM 143
+4 Ultra Ball MEG 131
+2 Night Stretcher ASC 196
+1 Poké Pad POR 81
+1 Unfair Stamp TWM 165
+1 Energy Retrieval SVI 171
+3 Forest of Vitality MEG 117
+
+Energy: 13
+13 Grass Energy MEE 9

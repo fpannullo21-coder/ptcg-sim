@@ -1,0 +1,35 @@
+# Nome: Festival Lead (Anthony Colaco, 28° Regional Recife)
+# Archetipo: Festival Lead
+# Fonte: Regional Recife, 3rd October 2026, 28° posto su 1074 giocatori. https://limitlesstcg.com/decks/list/30024
+
+Pokémon: 21
+4 Applin TWM 126
+3 Dipplin TWM 18
+3 Grookey TWM 14
+3 Thwackey TWM 15
+2 Goldeen TWM 44
+2 Seaking PRE 21
+1 Rellor TEF 23
+1 Rabsca TEF 24
+1 Psyduck ASC 39
+1 Shaymin DRI 10
+
+Trainer: 34
+4 Lillie's Determination MEG 119
+2 Boss's Orders MEG 114
+2 Gladion's Final Battle PBL 77
+1 Kieran TWM 154
+4 Buddy-Buddy Poffin TEF 144
+4 Poké Pad POR 81
+3 Ultra Ball MEG 131
+2 Night Stretcher ASC 196
+1 Secret Box TWM 163
+1 Sacred Ash DRI 168
+1 Tool Scrapper ASC 212
+3 Air Balloon ASC 181
+2 Brave Bangle WHT 80
+4 Festival Grounds TWM 149
+
+Energy: 5
+3 Grass Energy MEE 9
+2 Growing Grass Energy POR 86

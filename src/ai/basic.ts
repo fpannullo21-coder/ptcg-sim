@@ -6,7 +6,7 @@
  * Ordine del turno: Abilità ed evoluzioni, panchina, ricerca, Energia,
  * Supporter, poi l'attacco migliore. Boss's Orders solo se dà un KO.
  */
-import { attackCost, canPay, G, retreatCost, slot } from "../engine/game.js";
+import { attack, attackCost, canPay, G, GameOver, retreatCost, slot } from "../engine/game.js";
 import type { Agent } from "../engine/game.js";
 import type { Action, Attack, CardDef, Decision, Mon } from "../engine/types.js";
 
@@ -68,12 +68,13 @@ export class BasicAgent implements Agent {
     if (d.kind === "setup_bench") return idx.slice(0, Math.min(d.max, this.opts.benchMax ?? 3));
     if (d.kind === "promote" || d.kind === "switch") {
       const p = g.p(me);
-      return top(t => { const m = slot(p, t as number); return this.bestDamage(g, m).dmg * 2 + g.hpLeft(m) / 10 - this.energyGap(g, m) * 30; }, 1);
+      // le opzioni possono essere indici della panchina o direttamente i Pokémon
+      return top(t => { const m = typeof t === "number" ? slot(p, t) : (t as Mon); return this.bestDamage(g, m).dmg * 2 + g.hpLeft(m) / 10 - this.energyGap(g, m) * 30; }, 1);
     }
     if (d.kind === "gust") {
       const o = g.p(1 - me), mine = g.p(me).active;
       const dmg = mine ? this.bestDamage(g, mine).dmg : 0;
-      return top(t => { const m = slot(o, t as number); return (g.hpLeft(m) <= dmg ? 100 * (g.top(m).prizes ?? 1) : 0) - g.hpLeft(m) / 10; }, 1);
+      return top(t => { const m = typeof t === "number" ? slot(o, t) : (t as Mon); return (g.hpLeft(m) <= dmg ? 100 * (g.top(m).prizes ?? 1) : 0) - g.hpLeft(m) / 10; }, 1);
     }
     if (d.kind === "counters" || d.kind === "spiritual_end") {
       return top(m => (m as Mon).damage * (g.top(m as Mon).prizes ?? 1) - g.hpLeft(m as Mon) / 10, d.max);
@@ -109,10 +110,11 @@ export class BasicAgent implements Agent {
         }
         case "trainer": return this.trainerScore(g, me, g.def(a.card), a.card);
         case "retreat": {
-          const a0 = p.active!;
-          if (this.bestDamage(g, a0).dmg >= 0 && this.energyGap(g, a0) === 0) return -1;
-          const t = p.bench[a.target];
-          return this.bestDamage(g, t).dmg > Math.max(0, this.bestDamage(g, a0).dmg) && retreatCost(g, a0) <= 1 ? 30 : -1;
+          if (!o.active || (g.s.turn === 1 && g.s.first === me)) return -1;
+          const now = this.bestAttackValue(g, me);
+          const then = this.valueIfActive(g, me, a.target);
+          // conviene se il Pokémon in panchina fa molto di più, tenendo conto delle Energie scartate
+          return then > now + 30 + 20 * retreatCost(g, p.active!) ? 30 : -1;
         }
         default: return -1;
       }
@@ -122,10 +124,55 @@ export class BasicAgent implements Agent {
     if (best >= 0) return best;
     const attacks = acts.map((a, i) => [a, i] as const).filter(([a]) => a.kind === "attack");
     if (attacks.length && o.active) {
-      const atk = g.top(p.active!).attacks!;
-      return attacks.reduce((b, x) => (atk[(x[0] as { index: number }).index].damage >= atk[(b[0] as { index: number }).index].damage ? x : b))[1];
+      let bi = attacks[0][1], bv = -Infinity;
+      for (const [a, i] of attacks) {
+        const v = this.attackValue(g, me, (a as { index: number }).index, (a as { from?: number }).from);
+        if (v > bv) { bv = v; bi = i; }
+      }
+      return bi;
     }
     return acts.findIndex(a => a.kind === "end");
+  }
+
+  /**
+   * Valore di un attacco provato su una copia della partita: danni e segnalini
+   * fatti all'avversario, premi presi, vittoria. Così "30+" o Matcha Spin
+   * vengono valutati per quello che fanno davvero in questa posizione.
+   */
+  attackValue(g: G, me: number, index: number, from?: number): number {
+    const copy = new G(structuredClone(g.s), g.reg);
+    const before = copy.inPlay(1 - me).reduce((s, m) => s + m.damage, 0);
+    const prizes = copy.p(me).prizes.length;
+    try {
+      const it = attack(copy, index, from);
+      let r = it.next();
+      for (let guard = 0; !r.done && guard < 200; guard++) r = it.next(this.decide(copy, r.value));
+    } catch (e) {
+      if (e instanceof GameOver) return copy.s.winner === me ? 1e6 : -1e6;
+      throw e;
+    }
+    const after = copy.inPlay(1 - me).reduce((s, m) => s + m.damage, 0);
+    return (after - before) + 1000 * (prizes - copy.p(me).prizes.length);
+  }
+
+  bestAttackValue(g: G, me: number): number {
+    const a = g.p(me).active;
+    if (!a || a.used.no_attack === g.s.turn) return 0;
+    let best = 0;
+    (g.top(a).attacks ?? []).forEach((atk, i) => {
+      if (canPay(g, a.energies, attackCost(g, a, atk))) best = Math.max(best, this.attackValue(g, me, i));
+    });
+    return best;
+  }
+
+  /** Valore del miglior attacco se il Pokémon in panchina `t` fosse l'attivo (provato su una copia). */
+  valueIfActive(g: G, me: number, t: number): number {
+    const copy = new G(structuredClone(g.s), g.reg);
+    const p = copy.p(me);
+    const nw = p.bench.splice(t, 1)[0];
+    p.bench.push(p.active!);
+    p.active = nw;
+    return this.bestAttackValue(copy, me);
   }
 
   trainerScore(g: G, me: number, d: CardDef, card: number): number {

@@ -1,0 +1,34 @@
+# Nome: Dhelmise (Emanuel da Silva, 19° Regional Nice)
+# Archetipo: Dhelmise
+# Fonte: Regional Nice, 17th October 2026, 19° posto su 2336 giocatori. https://limitlesstcg.com/decks/list/30530
+
+Pokémon: 26
+4 Shuppet PBL 33
+4 Banette PBL 34
+4 Dhelmise PBL 39
+2 Dreepy TWM 128
+2 Drakloak TWM 129
+2 Dunsparce JTG 120
+2 Dudunsparce TEF 129
+1 Shaymin DRI 10
+1 Fezandipiti ex ASC 142
+1 Lillie's Clefairy ex JTG 56
+1 Flutter Mane TEF 78
+1 Latias ex SSP 76
+1 Bloodmoon Ursaluna ex TWM 141
+
+Trainer: 27
+4 Lillie's Determination MEG 119
+4 Gwynn PBL 78
+3 Boss's Orders MEG 114
+2 Black Belt's Training JTG 143
+1 Lana's Aid TWM 155
+4 Poké Pad POR 81
+4 Ultra Ball MEG 131
+1 Prime Catcher TEF 157
+1 Night Stretcher ASC 196
+3 Prism Tower CRI 80
+
+Energy: 7
+4 Telepathic Psychic Energy POR 88
+3 Psychic Energy MEE 13

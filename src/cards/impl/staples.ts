@@ -71,7 +71,7 @@ export const STAPLES: Impl[] = [
   },
   {
     name: "Buddy-Buddy Poffin",
-    canPlay: (g, me) => g.p(me).bench.length < 5,
+    canPlay: (g, me) => fx.benchFree(g, me) > 0,
     *play(g, me) { yield* fx.searchDeck(g, me, fx.and(fx.isBasicPokemon, fx.hpAtMost(70)), 2, "bench", 0, "poffin"); },
   },
   {

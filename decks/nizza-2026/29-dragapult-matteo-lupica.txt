@@ -1,0 +1,36 @@
+# Nome: Dragapult (Matteo Lupica, 29° Regional Nice)
+# Archetipo: Dragapult
+# Fonte: Regional Nice, 17th October 2026, 29° posto su 2336 giocatori. https://limitlesstcg.com/decks/list/30536
+
+Pokémon: 21
+4 Dreepy TWM 128
+4 Drakloak TWM 129
+3 Dragapult ex TWM 130
+2 Munkidori TWM 95
+2 Budew ASC 16
+1 Dunsparce TEF 128
+1 Dudunsparce TEF 129
+1 Dudunsparce ex JTG 121
+1 Meowth ex POR 62
+1 Fezandipiti ex ASC 142
+1 Moltres PFL 14
+
+Trainer: 31
+4 Lillie's Determination MEG 119
+3 Boss's Orders MEG 114
+2 Crispin SCR 133
+1 Rosa's Encouragement POR 84
+1 Judge POR 76
+4 Crushing Hammer POR 71
+4 Poké Pad POR 81
+4 Buddy-Buddy Poffin TEF 144
+3 Ultra Ball MEG 131
+2 Night Stretcher ASC 196
+1 Unfair Stamp TWM 165
+1 Risky Ruins MEG 127
+1 Jamming Tower TWM 153
+
+Energy: 8
+3 Psychic Energy MEE 13
+3 Fire Energy MEE 10
+2 Darkness Energy MEE 15

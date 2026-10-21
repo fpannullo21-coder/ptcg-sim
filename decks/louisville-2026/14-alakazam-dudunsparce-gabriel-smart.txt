@@ -1,0 +1,34 @@
+# Nome: Alakazam Dudunsparce (Gabriel Smart, 14° Regional Louisville, KY)
+# Archetipo: Alakazam Dudunsparce
+# Fonte: Regional Louisville, KY, 10th October 2026, 14° posto su 2927 giocatori. https://limitlesstcg.com/decks/list/30166
+
+Pokémon: 19
+4 Abra MEG 54
+4 Kadabra MEG 55
+3 Alakazam MEG 56
+3 Dunsparce JTG 120
+2 Dudunsparce TEF 129
+1 Lillie's Clefairy ex JTG 56
+1 Fezandipiti ex ASC 142
+1 Genesect SFA 40
+
+Trainer: 34
+4 Dawn PFL 87
+3 Hilda WHT 84
+3 Boss's Orders MEG 114
+1 Eri TEF 146
+1 Lana's Aid TWM 155
+4 Buddy-Buddy Poffin TEF 144
+4 Poké Pad POR 81
+3 Rare Candy MEG 125
+2 Wondrous Patch PFL 94
+1 Night Stretcher ASC 196
+1 Sacred Ash DRI 168
+2 Air Balloon ASC 181
+1 Lucky Helmet TWM 158
+4 Battle Cage PFL 85
+
+Energy: 7
+4 Telepathic Psychic Energy POR 88
+2 Psychic Energy MEE 13
+1 Enriching Energy SSP 191

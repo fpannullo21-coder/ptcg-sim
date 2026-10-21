@@ -49,7 +49,7 @@ npm run check-decks         # controlla tutte le liste in decks/ -> reports/list
 npm run coverage            # carte implementate e da implementare -> reports/copertura.md
 npm run matrix -- --a "hide-n-sneak/lista-per-danzica" --b "frankfurt-2026/*" --games 200 --name danzica
                             # matrice dei matchup in parallelo -> reports/matrice-danzica.md
-npm run replay -- hide-n-sneak/lista-per-danzica frankfurt-2026/07-dragapult 3
+npm run replay -- hide-n-sneak/lista-per-danzica frankfurt-2026/07-dragapult-owyn-kamerman 3
                             # una partita con il registro completo
 npm run import-cards        # riscarica il database delle carte
 ```

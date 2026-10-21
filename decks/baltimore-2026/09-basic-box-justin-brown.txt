@@ -1,0 +1,38 @@
+# Nome: Basic Box (Justin Brown, 9° Regional Baltimore, MD)
+# Archetipo: Basic Box
+# Fonte: Regional Baltimore, MD, 19th September 2026, 9° posto su 3122 giocatori. https://limitlesstcg.com/decks/list/29009
+
+Pokémon: 20
+4 Mega Kangaskhan ex MEG 104
+3 Meowth ex POR 62
+2 Teal Mask Ogerpon ex TWM 25
+2 Latias ex SSP 76
+2 Lillie's Clefairy ex JTG 56
+1 Iron Leaves ex TEF 25
+1 Raging Bolt ex TEF 123
+1 Wellspring Mask Ogerpon ex TWM 64
+1 Fezandipiti ex ASC 142
+1 Chien-Pao SSP 56
+1 Enamorus TWM 93
+1 Iron Crown ex TEF 81
+
+Trainer: 26
+4 Crispin SCR 133
+2 Boss's Orders MEG 114
+2 Cyrano SSP 170
+1 Ciphermaniac's Codebreaking TEF 145
+4 Ultra Ball MEG 131
+4 Energy Switch MEG 115
+2 Night Stretcher ASC 196
+1 Glass Trumpet SCR 135
+1 Special Red Card CRI 82
+1 Unfair Stamp TWM 165
+3 Area Zero Underdepths SCR 131
+1 Jamming Tower TWM 153
+
+Energy: 14
+7 Grass Energy MEE 9
+2 Lightning Energy MEE 12
+2 Fighting Energy MEE 14
+2 Psychic Energy MEE 13
+1 Water Energy MEE 11

@@ -1,0 +1,36 @@
+# Nome: Mew Box (Sawyer Melban, 8° Regional Louisville, KY)
+# Archetipo: Mew Box
+# Fonte: Regional Louisville, KY, 10th October 2026, 8° posto su 2927 giocatori. https://limitlesstcg.com/decks/list/29669
+
+Pokémon: 22
+4 Mega Kangaskhan ex MEG 104
+3 Meowth ex POR 62
+3 Mew ex 30C 66
+2 Lillie's Clefairy ex JTG 56
+2 Latias ex SSP 76
+2 Wellspring Mask Ogerpon ex TWM 64
+1 Iron Crown ex TEF 81
+1 Jirachi ex 30C 102
+1 Unown 30C 72
+1 Chien-Pao SSP 56
+1 Koraidon ex ASC 121
+1 Fezandipiti ex ASC 142
+
+Trainer: 26
+4 Crispin SCR 133
+2 Boss's Orders MEG 114
+2 Ciphermaniac's Codebreaking TEF 145
+1 Cyrano SSP 170
+1 Judge POR 76
+4 Ultra Ball MEG 131
+3 Dusk Ball SSP 175
+3 Wondrous Patch PFL 94
+1 Night Stretcher ASC 196
+1 Prime Catcher TEF 157
+4 Area Zero Underdepths SCR 131
+
+Energy: 12
+4 Telepathic Psychic Energy POR 88
+4 Psychic Energy MEE 13
+2 Water Energy MEE 11
+2 Fighting Energy MEE 14

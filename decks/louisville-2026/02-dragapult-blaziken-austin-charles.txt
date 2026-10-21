@@ -1,0 +1,35 @@
+# Nome: Dragapult Blaziken (Austin Charles, 2° Regional Louisville, KY)
+# Archetipo: Dragapult Blaziken
+# Fonte: Regional Louisville, KY, 10th October 2026, 2° posto su 2927 giocatori. https://limitlesstcg.com/decks/list/30160
+
+Pokémon: 21
+4 Dreepy TWM 128
+4 Drakloak TWM 129
+2 Dragapult ex TWM 130
+2 Torchic DRI 40
+1 Combusken DRI 41
+2 Blaziken ex JTG 24
+2 Munkidori TWM 95
+1 Chi-Yu TWM 39
+1 Meowth ex POR 62
+1 Fezandipiti ex ASC 142
+1 Budew ASC 16
+
+Trainer: 31
+4 Lillie's Determination MEG 119
+3 Boss's Orders MEG 114
+2 Judge POR 76
+2 Crispin SCR 133
+1 Dawn PFL 87
+4 Ultra Ball MEG 131
+4 Buddy-Buddy Poffin TEF 144
+4 Poké Pad POR 81
+2 Night Stretcher ASC 196
+2 Rare Candy MEG 125
+1 Unfair Stamp TWM 165
+2 Team Rocket's Watchtower DRI 180
+
+Energy: 8
+3 Fire Energy MEE 10
+3 Psychic Energy MEE 13
+2 Darkness Energy MEE 15

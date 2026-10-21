@@ -1,0 +1,34 @@
+# Nome: Ogerpon Meganium (Victor Carreira Rodrigues, 1° Regional Recife)
+# Archetipo: Ogerpon Meganium
+# Fonte: Regional Recife, 3rd October 2026, 1° posto su 1074 giocatori. https://limitlesstcg.com/decks/list/27175
+
+Pokémon: 21
+4 Teal Mask Ogerpon ex TWM 25
+2 Chikorita MEG 8
+2 Bayleef MEG 9
+2 Meganium MEG 10
+2 Smoliv DRI 21
+2 Dolliv DRI 22
+2 Arboliva ex DRI 23
+1 Hoothoot SCR 114
+1 Noctowl SCR 115
+1 Fezandipiti ex ASC 142
+1 Meowth ex POR 62
+1 Budew ASC 16
+
+Trainer: 28
+4 Lillie's Determination MEG 119
+3 Dawn PFL 87
+2 Boss's Orders MEG 114
+1 Lana's Aid TWM 155
+1 Briar SCR 132
+4 Bug Catching Set TWM 143
+3 Ultra Ball MEG 131
+2 Energy Switch MEG 115
+2 Night Stretcher ASC 196
+2 Poké Pad POR 81
+1 Unfair Stamp TWM 165
+3 Forest of Vitality MEG 117
+
+Energy: 11
+11 Grass Energy MEE 9

@@ -1,0 +1,30 @@
+# Nome: Dhelmise (Maxime Launay, 2° Regional Nice)
+# Archetipo: Dhelmise
+# Fonte: Regional Nice, 17th October 2026, 2° posto su 2336 giocatori. https://limitlesstcg.com/decks/list/30517
+
+Pokémon: 25
+4 Shuppet PBL 33
+4 Banette PBL 34
+4 Poltchageist PBL 5
+4 Sinistcha PBL 6
+4 Dhelmise PBL 39
+2 Lillie's Clefairy ex JTG 56
+1 Spiritomb PBL 35
+1 Latias ex SSP 76
+1 Bloodmoon Ursaluna ex TWM 141
+
+Trainer: 27
+4 Explorer's Guidance TEF 147
+3 Lillie's Determination MEG 119
+3 Gwynn PBL 78
+3 Boss's Orders MEG 114
+2 Naveen POR 79
+4 Ultra Ball MEG 131
+3 Poké Pad POR 81
+3 Night Stretcher ASC 196
+2 Prism Tower CRI 80
+
+Energy: 8
+4 Telepathic Psychic Energy POR 88
+3 Psychic Energy MEE 13
+1 Legacy Energy TWM 167

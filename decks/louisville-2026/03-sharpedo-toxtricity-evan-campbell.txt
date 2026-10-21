@@ -1,0 +1,31 @@
+# Nome: Sharpedo Toxtricity (Evan Campbell, 3° Regional Louisville, KY)
+# Archetipo: Sharpedo Toxtricity
+# Fonte: Regional Louisville, KY, 10th October 2026, 3° posto su 2927 giocatori. https://limitlesstcg.com/decks/list/30161
+
+Pokémon: 20
+3 Carvanha PFL 60
+4 Mega Sharpedo ex PFL 61
+3 Pecharunt ex SFA 39
+2 Toxel PFL 67
+2 Toxtricity PFL 68
+2 Tatsugiri TWM 131
+2 Munkidori TWM 95
+1 Fezandipiti ex ASC 142
+1 Yveltal MEG 88
+
+Trainer: 31
+4 Lillie's Determination MEG 119
+3 Judge POR 76
+3 Boss's Orders MEG 114
+1 Team Rocket's Petrel DRI 176
+4 Poké Pad POR 81
+4 Buddy-Buddy Poffin TEF 144
+4 Ultra Ball MEG 131
+1 Unfair Stamp TWM 165
+1 Night Stretcher ASC 196
+3 Binding Mochi PRE 95
+2 Team Rocket's Watchtower DRI 180
+1 Gravity Mountain SSP 177
+
+Energy: 9
+9 Darkness Energy MEE 15

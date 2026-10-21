@@ -1,0 +1,31 @@
+# Nome: Dhelmise (Rahul Reddy, 4° Regional Louisville, KY)
+# Archetipo: Dhelmise
+# Fonte: Regional Louisville, KY, 10th October 2026, 4° posto su 2927 giocatori. https://limitlesstcg.com/decks/list/30162
+
+Pokémon: 25
+4 Poltchageist PBL 5
+2 Sinistcha PBL 6
+4 Dhelmise PBL 39
+3 Shuppet PBL 33
+4 Banette PBL 34
+2 Dunsparce JTG 120
+2 Dudunsparce TEF 129
+1 Dudunsparce ex JTG 121
+2 Lillie's Clefairy ex JTG 56
+1 Latias ex SSP 76
+
+Trainer: 28
+4 Lillie's Determination MEG 119
+4 Gwynn PBL 78
+3 Boss's Orders MEG 114
+2 Explorer's Guidance TEF 147
+4 Ultra Ball MEG 131
+4 Poké Pad POR 81
+3 Night Stretcher ASC 196
+1 Pokégear 3.0 SVI 186
+3 Prism Tower CRI 80
+
+Energy: 7
+4 Telepathic Psychic Energy POR 88
+2 Psychic Energy MEE 13
+1 Legacy Energy TWM 167

@@ -30,13 +30,17 @@ export interface Attack {
   name: string;
   cost: EType[];
   damage: number;
-  /** Può restituire il danno base modificato (es. "30+"). */
+  /** Prima del danno: può restituire il danno base modificato (es. "30+"). */
   effect?: (g: import("./game.js").G, me: number) => Gen<number | void>;
+  /** Dopo il danno (es. "Then, discard that Stadium", "Put this Pokémon into your hand"). */
+  after?: (g: import("./game.js").G, me: number) => Gen;
 }
 
 export interface Ability {
   name: string;
   oncePerTurn?: boolean; // predefinito: true
+  /** "bench": si attiva quando giochi questo Pokémon dalla mano in panchina, non come azione libera. */
+  trigger?: "bench" | "evolve";
   canUse?: (g: import("./game.js").G, me: number, mon: Mon) => boolean;
   use: (g: import("./game.js").G, me: number, mon: Mon) => Gen;
 }
@@ -56,7 +60,7 @@ export interface DamageCtx {
  * attaccata come Strumento, Stadio in campo). Ogni campo è facoltativo.
  * `owner` è il giocatore che controlla la carta, `self` il Pokémon su cui si trova.
  */
-export type BlockKind = "item" | "supporter" | "stadium" | "tool" | "ability" | "ace";
+export type BlockKind = "item" | "supporter" | "stadium" | "tool" | "ability" | "ace" | "evolve";
 
 export interface Passive {
   /** Modifica il danno di un attacco prima di debolezza e resistenza (es. Black Belt, Maximum Belt). */
@@ -73,6 +77,22 @@ export interface Passive {
   weakness?: (g: import("./game.js").G, mon: Mon, monOwner: number, owner: number, self: Mon | null) => EType | undefined;
   /** Variazione dei premi presi quando un Pokémon va KO (es. Legacy Energy: -1). */
   prizes?: (g: import("./game.js").G, ko: Mon, koOwner: number, byAttack: boolean, owner: number, self: Mon | null) => number;
+  /** PS in più (es. Hero's Cape: +100). */
+  hp?: (g: import("./game.js").G, mon: Mon, monOwner: number, owner: number, self: Mon | null) => number;
+  /** Dopo che un Pokémon ha subito danno da un attacco avversario (es. Lucky Helmet). */
+  damaged?: (g: import("./game.js").G, mon: Mon, monOwner: number, owner: number, self: Mon | null) => void;
+  /** Un Pokémon che andrebbe KO per il danno di un attacco resta in gioco (es. Durable Body). Vero = sopravvive. */
+  survives?: (g: import("./game.js").G, mon: Mon, monOwner: number, owner: number, self: Mon | null) => boolean;
+  /** Panchina massima (es. Area Zero Underdepths: 8 con un Pokémon Tera in gioco). */
+  benchSize?: (g: import("./game.js").G, player: number, owner: number) => number;
+  /** Cosa fornisce un'Energia attaccata (es. Wild Growth: ogni Energia Erba base fornisce {G}{G}). */
+  energyProvides?: (g: import("./game.js").G, energy: number, energyOwner: number, owner: number, self: Mon | null) => string[] | undefined;
+  /** Un Pokémon può evolversi nel turno in cui è stato messo in gioco (es. Forest of Vitality). */
+  evolveSameTurn?: (g: import("./game.js").G, mon: Mon, evo: number, monOwner: number, owner: number) => boolean;
+  /** Quando un Pokémon viene messo in panchina durante il turno del suo giocatore (es. Risky Ruins). */
+  benched?: (g: import("./game.js").G, mon: Mon, monOwner: number, owner: number, self: Mon | null) => void;
+  /** Alla fine del turno del giocatore `player` (dopo l'attacco). */
+  endOfTurn?: (g: import("./game.js").G, player: number, owner: number, self: Mon | null) => void;
   /** Impedisce le cure su un Pokémon (es. Life-Locked di Yveltal). */
   noHeal?: (g: import("./game.js").G, mon: Mon, monOwner: number, owner: number, self: Mon | null) => boolean;
   /** Variazione del costo di ritirata di un Pokémon (es. Air Balloon: -2). */
@@ -159,5 +179,5 @@ export type Action =
   | { kind: "trainer"; card: number; target?: number }
   | { kind: "ability"; target: number; index: number }
   | { kind: "retreat"; target: number }
-  | { kind: "attack"; index: number }
+  | { kind: "attack"; index: number; from?: number }   // from: attacco di un Pokémon in panchina (Memory Helix)
   | { kind: "stadium" };

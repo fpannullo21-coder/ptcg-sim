@@ -8,7 +8,7 @@ import { parseDeck, type Deck } from "./decklist.js";
 export const DECKS_DIR = fileURLToPath(new URL("../../decks", import.meta.url));
 
 export interface DeckFile extends Deck {
-  path: string;   // es. "frankfurt-2026/07-dragapult"
+  path: string;   // es. "frankfurt-2026/07-dragapult-owyn-kamerman"
 }
 
 function walk(dir: string): string[] {

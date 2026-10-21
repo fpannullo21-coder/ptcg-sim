@@ -1,0 +1,31 @@
+# Nome: Dhelmise (Alberto Benvenga, 23° Regional Nice)
+# Archetipo: Dhelmise
+# Fonte: Regional Nice, 17th October 2026, 23° posto su 2336 giocatori. https://limitlesstcg.com/decks/list/30532
+
+Pokémon: 29
+4 Poltchageist PBL 5
+4 Sinistcha PBL 6
+4 Shuppet PBL 33
+4 Banette PBL 34
+4 Dhelmise PBL 39
+2 Dunsparce JTG 120
+2 Dudunsparce TEF 129
+1 Dudunsparce ex JTG 121
+2 Lillie's Clefairy ex JTG 56
+1 Spiritomb PBL 35
+1 Latias ex SSP 76
+
+Trainer: 24
+4 Gwynn PBL 78
+4 Lillie's Determination MEG 119
+2 Boss's Orders MEG 114
+2 Explorer's Guidance TEF 147
+4 Ultra Ball MEG 131
+3 Poké Pad POR 81
+2 Night Stretcher ASC 196
+3 Prism Tower CRI 80
+
+Energy: 7
+4 Telepathic Psychic Energy POR 88
+2 Psychic Energy MEE 13
+1 Legacy Energy TWM 167

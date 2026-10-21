@@ -1,0 +1,30 @@
+# Nome: Toucannon (Daniel Sopko, 32° Regional Louisville, KY)
+# Archetipo: Toucannon
+# Fonte: Regional Louisville, KY, 10th October 2026, 32° posto su 2927 giocatori. https://limitlesstcg.com/decks/list/30176
+
+Pokémon: 17
+4 Pikipek PBL 66
+2 Trumbeak PBL 67
+4 Toucannon PBL 68
+2 Fan Rotom SCR 118
+2 Tatsugiri TWM 131
+1 Genesect SFA 40
+1 Shaymin DRI 10
+1 Patrat CRI 70
+
+Trainer: 34
+4 Lillie's Determination MEG 119
+4 Hassel TWM 151
+3 Boss's Orders MEG 114
+4 Buddy-Buddy Poffin TEF 144
+4 Poké Pad POR 81
+4 Rare Candy MEG 125
+2 Night Stretcher ASC 196
+1 Sacred Ash DRI 168
+4 Air Balloon ASC 181
+4 Battle Cage PFL 85
+
+Energy: 9
+4 Spiky Energy JTG 159
+4 Mist Energy TEF 161
+1 Legacy Energy TWM 167
