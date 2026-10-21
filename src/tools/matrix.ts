@@ -18,8 +18,8 @@ import { loadDecks, type DeckFile } from "../data/decks.js";
 import { playGame } from "../engine/game.js";
 import { BasicAgent } from "../ai/basic.js";
 
-interface Job { a: string; b: string; games: number; seed: number }
-interface Result { a: string; b: string; games: number; winsA: number; winsB: number; draws: number; winsAFirst: number; gamesAFirst: number; turns: number; errors: string[] }
+export interface Job { a: string; b: string; games: number; seed: number }
+export interface Result { a: string; b: string; games: number; winsA: number; winsB: number; draws: number; winsAFirst: number; gamesAFirst: number; turns: number; errors: string[] }
 
 function playJob(decks: Map<string, DeckFile>, job: Job): Result {
   const reg = registry();
@@ -53,6 +53,40 @@ function arg(name: string, def: string): string {
   return i >= 0 ? process.argv[i + 1] : def;
 }
 
+/**
+ * Gioca `games` partite per ogni coppia (lista, avversario) su più processi.
+ * Metà delle partite inizia la prima lista, metà la seconda. Semi fissi: risultati riproducibili.
+ */
+export async function runPairs(pairs: [string, string][], games: number, workers = Math.max(1, availableParallelism() - 1), onProgress?: (done: number, total: number) => void): Promise<Result[]> {
+  const jobs: Job[] = [];
+  let seed = 1;
+  const chunk = Math.max(10, Math.ceil(games / Math.max(1, Math.min(workers, 4))));
+  for (const [a, b] of pairs) {
+    for (let done = 0; done < games; done += chunk) jobs.push({ a, b, games: Math.min(chunk, games - done), seed: (seed += 100000) });
+  }
+  const results: Result[] = [];
+  let next = 0;
+  await Promise.all(Array.from({ length: Math.min(workers, jobs.length) }, () => new Promise<void>((resolve, reject) => {
+    // processi figli: ereditano il caricatore TypeScript di tsx
+    const w = fork(fileURLToPath(new URL("./matrix.ts", import.meta.url)), ["--worker"]);
+    const feed = () => (next < jobs.length ? w.send(jobs[next++]) : (w.kill(), resolve()));
+    w.on("message", (r: Result) => { results.push(r); onProgress?.(results.length, jobs.length); feed(); });
+    w.on("error", reject);
+    w.on("exit", code => { if (code && code !== 0 && next < jobs.length) reject(new Error(`processo uscito con codice ${code}`)); });
+    feed();
+  })));
+  // somma i pezzi della stessa coppia
+  const merged = new Map<string, Result>();
+  for (const r of results) {
+    const k = `${r.a}|${r.b}`;
+    const m = merged.get(k);
+    if (!m) { merged.set(k, { ...r, errors: [...r.errors] }); continue; }
+    for (const f of ["games", "winsA", "winsB", "draws", "winsAFirst", "gamesAFirst", "turns"] as const) m[f] += r[f];
+    m.errors.push(...r.errors);
+  }
+  return [...merged.values()];
+}
+
 async function main() {
   const reg = registry();
   const all = loadDecks(reg.db).filter(d => d.entries.every(e => e.card));
@@ -63,36 +97,9 @@ async function main() {
   const name = arg("name", "ultima");
   if (!A.length || !B.length) throw new Error("nessuna lista trovata per --a o --b");
 
-  const jobs: Job[] = [];
-  let seed = 1;
-  const chunk = Math.max(10, Math.ceil(games / workers));
-  for (const a of A) for (const b of B) {
-    for (let done = 0; done < games; done += chunk) jobs.push({ a: a.path, b: b.path, games: Math.min(chunk, games - done), seed: (seed += 100000) });
-  }
   const t0 = performance.now();
-  const results: Result[] = [];
-  let next = 0;
-  await Promise.all(Array.from({ length: Math.min(workers, jobs.length) }, () => new Promise<void>((resolve, reject) => {
-    // processi figli: ereditano il caricatore TypeScript di tsx
-    const w = fork(fileURLToPath(import.meta.url), ["--worker"]);
-    const feed = () => (next < jobs.length ? w.send(jobs[next++]) : (w.kill(), resolve()));
-    w.on("message", (r: Result) => { results.push(r); feed(); });
-    w.on("error", reject);
-    w.on("exit", code => { if (code && code !== 0 && next < jobs.length) reject(new Error(`processo uscito con codice ${code}`)); });
-    feed();
-  })));
-
-  // somma i pezzi della stessa coppia
-  const merged = new Map<string, Result>();
-  for (const r of results) {
-    const k = `${r.a}|${r.b}`;
-    const m = merged.get(k);
-    if (!m) { merged.set(k, { ...r, errors: [...r.errors] }); continue; }
-    for (const f of ["games", "winsA", "winsB", "draws", "winsAFirst", "gamesAFirst", "turns"] as const) m[f] += r[f];
-    m.errors.push(...r.errors);
-  }
+  const rows = await runPairs(A.flatMap(a => B.map(b => [a.path, b.path] as [string, string])), games, workers);
   const sec = (performance.now() - t0) / 1000;
-  const rows = [...merged.values()];
   const pct = (x: number, n: number) => (n ? `${((100 * x) / n).toFixed(1)}%` : "-");
   const cov = (p: string) => { const c = reg.coverage(all.find(d => d.path === p)!); return Math.round((100 * c.complete) / c.total); };
 
@@ -113,10 +120,10 @@ async function main() {
   console.log(md);
 }
 
-if (!process.argv.includes("--worker")) {
-  main().catch(e => { console.error(e); process.exit(1); });
-} else {
+if (process.argv.includes("--worker")) {
   const reg = registry();
   const decks = new Map(loadDecks(reg.db).map(d => [d.path, d]));
   process.on("message", (job: Job) => process.send!(playJob(decks, job)));
+} else if (process.argv[1]?.endsWith("matrix.ts")) {
+  main().catch(e => { console.error(e); process.exit(1); });
 }

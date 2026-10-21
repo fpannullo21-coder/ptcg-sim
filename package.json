@@ -14,7 +14,11 @@
     "check-decks": "tsx src/tools/check-decks.ts",
     "coverage": "tsx src/tools/coverage.ts",
     "matrix": "tsx src/tools/matrix.ts",
-    "replay": "tsx src/tools/replay.ts"
+    "replay": "tsx src/tools/replay.ts",
+    "import-limitless": "NODE_USE_ENV_PROXY=1 tsx src/tools/import-limitless.ts --top 32 --fill 0.7 582 581 580 579 578 577",
+    "import-labs": "NODE_USE_ENV_PROXY=1 tsx src/tools/import-labs.ts 0072 0073 0074 0075 0076 0077",
+    "meta": "tsx src/tools/meta.ts",
+    "meta-matrix": "tsx src/tools/meta-matrix.ts"
   },
   "repository": {
     "type": "git",

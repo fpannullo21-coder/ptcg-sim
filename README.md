@@ -52,14 +52,21 @@ npm run matrix -- --a "hide-n-sneak/lista-per-danzica" --b "frankfurt-2026/*" --
 npm run replay -- hide-n-sneak/lista-per-danzica frankfurt-2026/07-dragapult-owyn-kamerman 3
                             # una partita con il registro completo
 npm run import-cards        # riscarica il database delle carte
+npm run import-limitless    # classifiche e liste dei Regional da Limitless
+npm run import-labs         # quote e risultati reali dei matchup da Limitless Labs
+npm run meta                # riepilogo del meta -> reports/meta.md
+npm run meta-matrix -- --lists "hide-n-sneak/lista-per-danzica" --top 16 --games 100 --validate --name prova
+                            # liste contro il meta reale e confronto con Labs -> reports/meta-matrix-prova.md
 ```
 
 ## Stato
 
-- **Carte:** 4.765 nel database. Le liste di Hide n' Sneak sono implementate al 100%; le altre liste del meta tra il 7% e il 60%. L'elenco di cosa manca, dalle carte più usate, è in `reports/copertura.md`.
-- **Liste:** 35 in `decks/` (16 Hide n' Sneak, top 16 di Frankfurt, 9 liste giapponesi di Yokohama).
-- **Giocatore:** base generico. Il giocatore forte e i piani di mazzo arrivano nelle fasi 1 e 2.
-- Come aggiungere una carta: `docs/CARTE.md`.
+- **Carte:** 4.765 nel database. Tutti gli archetipi del meta sopra l'1,5% hanno la lista rappresentativa implementata al 100%. Cosa manca è in `reports/copertura.md`.
+- **Liste:** oltre 230 in `decks/`: le prime 32 di sei Regional del formato (Baltimore, Frankfurt, Brisbane, Recife, Louisville, Nizza) prese da Limitless, la lista migliore di ogni archetipo minore, le varianti di Hide n' Sneak e le liste giapponesi di Yokohama.
+- **Meta:** quote e risultati reali dei matchup da Limitless Labs (`reports/meta.md`).
+- **Validazione:** `npm run meta-matrix -- --validate` confronta la simulazione con i match reali.
+- **Giocatore:** base generico, valuta attacchi e ritirata provandoli su una copia della partita. Il giocatore forte e i piani di mazzo arrivano nelle fasi 1 e 2.
+- Come aggiungere una carta: `docs/CARTE.md`. Da dove vengono i dati: `docs/DATI.md`.
 
 ## Destinazione
 

@@ -17,14 +17,17 @@
 - [x] Motore: effetti passivi, effetti per il turno, regola Tera, Stadi con azione, prevenzione degli effetti
 - [x] Primo mazzo completo nel nuovo motore: Hide n' Sneak, tutte le varianti
 - [x] Giocatore base generico, matrice in parallelo, replay, CI su GitHub
-- [ ] Carte del meta: le 116 dell'elenco di copertura, a partire da Dragapult, Fezandipiti, Budew, Meowth, Unfair Stamp
+- [x] Carte del meta: tutti gli archetipi sopra l'1,5% con la lista rappresentativa completa al 100%
+- [x] Liste e classifiche di sei Regional da Limitless, quote e matchup reali da Limitless Labs
+- [x] Matrice contro il meta reale e confronto automatico con Labs (`meta-matrix --validate`)
 
 ## Fase 1 · novembre, settimane 1-3
 
 Delta Reign esce il 6 novembre: il primo formato di riferimento è quello con Delta Reign.
 
-- [ ] Import automatico delle liste da Limitless e delle quote da Limitless Labs (le liste manuali sono già supportate)
+- [x] Import automatico delle liste da Limitless e delle quote da Limitless Labs
 - [ ] I 12 mazzi principali del nuovo formato, carta per carta, con test
+- [ ] Giocatore migliore: oggi lo scarto medio dai risultati reali è di circa 30 punti (correlazione 0,1). Prima un valutatore della posizione con ricerca di un passo, poi i piani di mazzo, poi Monte Carlo
 - [ ] Giocatore base per archetipo
 
 ## Fase 2 · novembre, settimane 4-5

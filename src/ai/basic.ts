@@ -6,7 +6,7 @@
  * Ordine del turno: Abilità ed evoluzioni, panchina, ricerca, Energia,
  * Supporter, poi l'attacco migliore. Boss's Orders solo se dà un KO.
  */
-import { attack, attackCost, canPay, G, GameOver, retreatCost, slot } from "../engine/game.js";
+import { attack, attackCost, canPay, G, GameOver, provided, retreatCost, slot } from "../engine/game.js";
 import type { Agent } from "../engine/game.js";
 import type { Action, Attack, CardDef, Decision, Mon } from "../engine/types.js";
 
@@ -24,6 +24,44 @@ export class BasicAgent implements Agent {
     let best: { atk: Attack | null; dmg: number } = { atk: null, dmg: -1 };
     for (const a of g.top(m).attacks ?? []) {
       if (canPay(g, m.energies, attackCost(g, m, a)) && a.damage > best.dmg) best = { atk: a, dmg: a.damage };
+    }
+    return best;
+  }
+
+  /** Simboli del costo non ancora coperti da queste Energie (prima i tipi, poi gli incolori). */
+  need(g: G, energies: number[], cost: string[]): number {
+    const pool = energies.flatMap(e => provided(g, e));
+    let missing = 0, colorless = 0;
+    for (const c of cost) {
+      if (c === "C") { colorless++; continue; }
+      let k = pool.indexOf(c);
+      if (k < 0) k = pool.indexOf("*");
+      if (k < 0) missing++; else pool.splice(k, 1);
+    }
+    return missing + Math.max(0, colorless - pool.length);
+  }
+
+  /** Quanto aiuta attaccare l'Energia `e` al Pokémon `m`: 0 se non avvicina nessun attacco utile. */
+  energyHelp(g: G, m: Mon, e: number): number {
+    let best = 0;
+    for (const a of g.top(m).attacks ?? []) {
+      if (a.damage <= 0 && !a.effect) continue;
+      const cost = attackCost(g, m, a);
+      const before = this.need(g, m.energies, cost), after = this.need(g, [...m.energies, e], cost);
+      if (after < before) best = Math.max(best, 10 + Math.max(a.damage, 30) / 10 + (after === 0 ? 20 : 0));
+    }
+    return best;
+  }
+
+  /** L'attaccante su cui concentrare le Energie: il più forte tra quelli più vicini a essere pronti. */
+  focus(g: G, me: number): Mon | null {
+    let best: Mon | null = null, bv = 0;
+    for (const m of g.inPlay(me)) {
+      for (const a of g.top(m).attacks ?? []) {
+        const dmg = a.damage > 0 ? a.damage : a.effect ? 60 : 0;
+        const v = dmg / (1 + this.need(g, m.energies, attackCost(g, m, a))) + (m === g.p(me).active ? 5 : 0);
+        if (v > bv) { bv = v; best = m; }
+      }
     }
     return best;
   }
@@ -104,9 +142,9 @@ export class BasicAgent implements Agent {
         case "stadium": return p.hand.length >= 4 ? 20 : -1;
         case "attach": {
           const m = slot(p, a.target);
-          const gap = this.energyGap(g, m);
-          if (gap <= 0) return a.target === -1 ? 5 : 3;
-          return a.target === -1 ? 50 : 40 - p.bench.indexOf(m);
+          const help = this.energyHelp(g, m, a.card);
+          if (help <= 0) return -1;
+          return (a.target === -1 ? 30 : 22) + help + (m === this.focus(g, me) ? 25 : 0);
         }
         case "trainer": return this.trainerScore(g, me, g.def(a.card), a.card);
         case "retreat": {
