@@ -1,0 +1,33 @@
+# Nome: Mega Rayquaza (Yu Nakayoshi, 13° Yokohama)
+# Archetipo: Mega Rayquaza
+# Fonte: Torneo di Yokohama (Giappone, formato giapponese con il set M6), 13° posto, Yu Nakayoshi. Lista raccolta da tcgmasters.net
+
+Pokémon: 16
+3 Mega Kangaskhan ex MEG 104
+2 Talonflame ex M6 62
+2 Mega Rayquaza ex M6 58
+2 Ethan's Ho-Oh ex DRI 39
+2 Latias ex SSP 76
+2 Meowth ex POR 62
+1 Iron Thorns ex TWM 77
+1 Bloodmoon Ursaluna ex TWM 141
+1 Fezandipiti ex ASC 142
+
+Trainer: 29
+4 Cyrano SSP 170
+2 Lillie's Determination MEG 119
+2 Judge POR 76
+2 Boss's Orders MEG 114
+2 Crispin SCR 133
+4 Ultra Ball MEG 131
+4 Energy Switch MEG 115
+2 Switch MEG 130
+1 Adventuring Lantern M6 64
+1 Unfair Stamp TWM 165
+2 Legendary Lava Cave M6 75
+2 Legendary Lava Cave M6 76
+1 Jamming Tower TWM 153
+
+Energy: 15
+10 Fire Energy MEE 10
+5 Lightning Energy MEE 12

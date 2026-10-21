@@ -1,0 +1,36 @@
+# Nome: Francesco attuale
+# Archetipo: Hide n' Sneak
+# Fonte: Lista di Francesco e Luigi dopo le modifiche del 20 ottobre
+
+Pokémon: 26
+4 Dhelmise PBL 91
+4 Banette PBL 34
+3 Shuppet PBL 33
+3 Poltchageist PBL 5
+2 Sinistcha PBL 6
+2 Dunsparce TEF 128
+2 Dudunsparce TEF 129
+1 Dudunsparce ex JTG 121
+2 Lillie's Clefairy ex JTG 184
+1 Bloodmoon Ursaluna ex TWM 216
+1 Latias ex SSP 239
+1 Yveltal 30C 100
+
+Trainer: 27
+4 Lillie's Determination MEG 184
+3 Gwynn PBL 119
+1 Explorer's Guidance TEF 200
+3 Boss's Orders MEG 114
+4 Ultra Ball ASC 264
+4 Poké Pad POR 113
+3 Night Stretcher SSP 251
+2 Pokégear 3.0 BLK 84
+2 Prism Tower CRI 111
+1 Jamming Tower TWM 153
+
+Energy: 7
+4 Telepathic Psychic Energy POR 88
+2 Psychic Energy MEE 13
+1 Legacy Energy TWM 167
+
+Total Cards: 60

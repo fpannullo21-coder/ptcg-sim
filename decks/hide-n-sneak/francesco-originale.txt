@@ -1,0 +1,36 @@
+# Nome: Francesco originale
+# Archetipo: Hide n' Sneak
+# Fonte: Lista di Francesco del 20 ottobre
+
+Pokémon: 25
+2 Dudunsparce TEF 129
+2 Poltchageist PBL 5
+1 Dudunsparce ex JTG 121
+1 Bloodmoon Ursaluna ex TWM 216
+4 Dhelmise PBL 91
+1 Latias ex SSP 239
+4 Banette PBL 34
+2 Dunsparce TEF 128
+1 Shaymin DRI 10
+1 Lillie's Clefairy ex JTG 184
+3 Shuppet PBL 33
+2 Sinistcha PBL 6
+1 Yveltal 30C 100
+
+Trainer: 28
+2 Explorer's Guidance TEF 200
+4 Ultra Ball ASC 264
+3 Gwynn PBL 119
+3 Night Stretcher SSP 251
+3 Prism Tower CRI 111
+4 Poké Pad POR 113
+2 Pokégear 3.0 BLK 84
+4 Lillie's Determination MEG 184
+3 Boss's Orders MEG 114
+
+Energy: 7
+4 Telepathic Psychic Energy POR 88
+1 Legacy Energy TWM 167
+2 Psychic Energy MEE 13
+
+Total Cards: 60

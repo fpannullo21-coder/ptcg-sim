@@ -1,0 +1,36 @@
+# Nome: Dragapult Dusknoir (Alberto Conti, 4° Frankfurt)
+# Archetipo: Dragapult Dusknoir
+# Fonte: Regional di Frankfurt, 4° posto, Alberto Conti. Lista raccolta da tcgmasters.net
+
+Pokémon: 21
+4 Dreepy TWM 128
+4 Drakloak TWM 129
+3 Dragapult ex TWM 130
+2 Duskull PRE 35
+2 Dusclops PRE 36
+1 Dusknoir PRE 37
+1 Munkidori TWM 95
+1 Fezandipiti ex ASC 142
+1 Budew ASC 16
+1 Meowth ex POR 62
+1 Moltres PFL 14
+
+Trainer: 31
+4 Lillie's Determination MEG 119
+3 Boss's Orders MEG 114
+2 Dawn PFL 87
+2 Crispin SCR 133
+1 Rosa's Encouragement POR 84
+4 Buddy-Buddy Poffin TEF 144
+4 Poké Pad POR 81
+4 Ultra Ball MEG 131
+3 Night Stretcher ASC 196
+1 Special Red Card CRI 82
+1 Unfair Stamp TWM 165
+1 Team Rocket's Watchtower DRI 180
+1 Jamming Tower TWM 153
+
+Energy: 8
+3 Fire Energy MEE 10
+3 Psychic Energy MEE 13
+2 Darkness Energy MEE 15

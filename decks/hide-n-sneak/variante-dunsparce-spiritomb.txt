@@ -1,0 +1,33 @@
+# Nome: Variante con Dunsparce e Spiritomb
+# Archetipo: Hide n' Sneak
+# Fonte: Variante provata nel modello di Danzica
+
+Pokémon: 29
+4 Shuppet PBL 33
+4 Banette PBL 34
+4 Poltchageist PBL 5
+4 Sinistcha PBL 6
+4 Dhelmise PBL 91
+2 Lillie's Clefairy ex JTG 184
+1 Spiritomb PBL 35
+1 Latias ex SSP 239
+1 Bloodmoon Ursaluna ex TWM 216
+2 Dunsparce TEF 128
+2 Dudunsparce TEF 129
+
+Trainer: 24
+3 Explorer's Guidance TEF 200
+3 Lillie's Determination MEG 184
+3 Gwynn PBL 119
+3 Boss's Orders MEG 114
+4 Ultra Ball ASC 264
+3 Poké Pad POR 113
+2 Night Stretcher SSP 251
+2 Prism Tower CRI 111
+1 Brilliant Blender SSP 164
+
+Energy: 7
+4 Telepathic Psychic Energy POR 88
+3 Psychic Energy MEE 13
+
+Total Cards: 60

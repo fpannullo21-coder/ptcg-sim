@@ -1,0 +1,32 @@
+# Nome: Vostra: 1 BB, 4 Shuppet, 4 EG
+# Archetipo: Hide n' Sneak
+# Fonte: Variante provata nel modello di Danzica
+
+Pokémon: 25
+4 Poltchageist PBL 5
+4 Sinistcha PBL 6
+2 Lillie's Clefairy ex JTG 184
+4 Dhelmise PBL 91
+1 Latias ex SSP 239
+4 Shuppet PBL 33
+4 Banette PBL 34
+1 Spiritomb PBL 35
+1 Bloodmoon Ursaluna ex TWM 216
+
+Trainer: 27
+3 Night Stretcher SSP 251
+3 Poké Pad POR 113
+4 Ultra Ball ASC 264
+3 Prism Tower CRI 111
+1 Black Belt's Training JTG 143
+3 Lillie's Determination MEG 184
+4 Explorer's Guidance TEF 200
+3 Gwynn PBL 119
+3 Boss's Orders MEG 114
+
+Energy: 8
+4 Telepathic Psychic Energy POR 88
+3 Psychic Energy MEE 13
+1 Legacy Energy TWM 167
+
+Total Cards: 60

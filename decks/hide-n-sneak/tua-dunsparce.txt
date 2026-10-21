@@ -1,0 +1,32 @@
+# Nome: Tua Dunsparce
+# Archetipo: Hide n' Sneak
+# Fonte: Variante provata nel modello di Danzica
+
+Pokémon: 26
+4 Shuppet PBL 33
+4 Banette PBL 34
+3 Poltchageist PBL 5
+3 Sinistcha PBL 6
+4 Dhelmise PBL 91
+2 Dunsparce TEF 128
+2 Dudunsparce TEF 129
+2 Lillie's Clefairy ex JTG 184
+1 Latias ex SSP 239
+1 Bloodmoon Ursaluna ex TWM 216
+
+Trainer: 26
+4 Lillie's Determination MEG 184
+3 Gwynn PBL 119
+2 Explorer's Guidance TEF 200
+3 Boss's Orders MEG 114
+4 Ultra Ball ASC 264
+4 Poké Pad POR 113
+3 Night Stretcher SSP 251
+3 Prism Tower CRI 111
+
+Energy: 8
+4 Telepathic Psychic Energy POR 88
+3 Psychic Energy MEE 13
+1 Legacy Energy TWM 167
+
+Total Cards: 60

@@ -1,0 +1,33 @@
+# Nome: Vostra (2 Black Belt)
+# Archetipo: Hide n' Sneak
+# Fonte: Lista di Francesco e Luigi su Live (ottobre 2026)
+
+Pokémon: 24
+4 Poltchageist PBL 5
+4 Sinistcha PBL 6
+2 Lillie's Clefairy ex JTG 184
+4 Dhelmise PBL 91
+1 Latias ex SSP 239
+3 Shuppet PBL 33
+4 Banette PBL 34
+1 Spiritomb PBL 35
+1 Bloodmoon Ursaluna ex TWM 216
+
+Trainer: 28
+3 Night Stretcher SSP 251
+3 Poké Pad POR 113
+2 Pokégear 3.0 BLK 84
+4 Ultra Ball ASC 264
+3 Prism Tower CRI 111
+2 Black Belt's Training JTG 143
+3 Lillie's Determination MEG 184
+2 Explorer's Guidance TEF 200
+3 Gwynn PBL 119
+3 Boss's Orders MEG 114
+
+Energy: 8
+4 Telepathic Psychic Energy POR 88
+3 Psychic Energy MEE 13
+1 Legacy Energy TWM 167
+
+Total Cards: 60

@@ -7,7 +7,7 @@
  * con lo stesso seme e le stesse risposte la partita si riproduce identica,
  * ed è così che si clona una partita a metà, anche dentro un effetto.
  */
-import type { Action, CardDef, Decision, Gen, Mon, Player, State } from "./types.js";
+import type { Action, Attack, BlockKind, CardDef, DamageCtx, Decision, EType, Gen, Mon, Passive, Player, State } from "./types.js";
 
 export class GameOver extends Error {}
 
@@ -131,9 +131,74 @@ export function canPay(g: G, energies: number[], cost: string[]): boolean {
   return pool.length >= colorless;
 }
 
+// --- effetti passivi --------------------------------------------------------
+
+export interface ActivePassive { p: Passive; owner: number; self: Mon | null; card: number }
+
+/** Tutti gli effetti passivi in gioco: Pokémon in campo, Strumenti, Stadio. */
+export function passives(g: G): ActivePassive[] {
+  const out: ActivePassive[] = [];
+  const toolsOff = g.s.stadium !== null && (g.def(g.s.stadium).tags ?? []).includes("tools_off");
+  for (const i of [0, 1]) {
+    for (const m of g.inPlay(i)) {
+      const top = m.stack[m.stack.length - 1];
+      const d = g.def(top);
+      if (d.passive) out.push({ p: d.passive, owner: i, self: m, card: top });
+      for (const e of m.energies) { const ed = g.def(e); if (ed.passive) out.push({ p: ed.passive, owner: i, self: m, card: e }); }
+      if (!toolsOff) for (const t of m.tools) { const td = g.def(t); if (td.passive) out.push({ p: td.passive, owner: i, self: m, card: t }); }
+    }
+  }
+  for (const e of g.s.turnEffects) {
+    const d = g.def(e.card);
+    if (e.until >= g.s.turn && d.turnPassive) out.push({ p: d.turnPassive, owner: e.owner, self: null, card: e.card });
+  }
+  if (g.s.stadium !== null) {
+    const d = g.def(g.s.stadium);
+    if (d.passive) out.push({ p: d.passive, owner: g.s.stadiumOwner, self: null, card: g.s.stadium });
+  }
+  return out;
+}
+
+export function ownerOf(g: G, m: Mon): number {
+  return g.inPlay(0).includes(m) ? 0 : 1;
+}
+
+/** Vero se gli effetti di attacchi e Abilità di `sourcePlayer` non hanno effetto su `target`. */
+export function prevented(g: G, target: Mon, sourcePlayer: number): boolean {
+  if (ownerOf(g, target) === sourcePlayer) return false;
+  if (target.used.protect === g.s.turn) return true;
+  return passives(g).some(a => a.p.preventsEffects?.(g, target, sourcePlayer, a.owner, a.self));
+}
+
+export function blocked(g: G, player: number, what: BlockKind, card: number | null): boolean {
+  return passives(g).some(a => a.p.blocks?.(g, player, what, card, a.owner, a.self));
+}
+
+export function attackCost(g: G, m: Mon, atk: Attack): string[] {
+  const owner = ownerOf(g, m);
+  let less = 0;
+  for (const a of passives(g)) if (a.p.attackCostLess) less += a.p.attackCostLess(g, m, atk, owner, a.owner, a.self);
+  const cost = [...atk.cost];
+  for (; less > 0; less--) { const k = cost.lastIndexOf("C"); if (k < 0) break; cost.splice(k, 1); }
+  return cost;
+}
+
+export function weaknessOf(g: G, m: Mon): EType | undefined {
+  const owner = ownerOf(g, m);
+  let w = g.top(m).weakness;
+  for (const a of passives(g)) if (a.p.weakness) w = a.p.weakness(g, m, owner, a.owner, a.self) ?? w;
+  return w;
+}
+
+export function canHeal(g: G, m: Mon): boolean {
+  const owner = ownerOf(g, m);
+  return !passives(g).some(a => a.p.noHeal?.(g, m, owner, a.owner, a.self));
+}
+
 export function retreatCost(g: G, m: Mon): number {
   let c = g.top(m).retreat ?? 0;
-  for (const t of m.tools) c -= g.def(t).retreatMinus ?? 0;
+  const owner = ownerOf(g, m);
+  for (const a of passives(g)) if (a.p.retreat) c += a.p.retreat(g, m, owner, a.owner, a.self);
   return Math.max(0, c);
 }
 
@@ -209,9 +274,12 @@ export function legalActions(g: G): Action[] {
         }
       }
     } else if (d.kind === "energy") {
+      if ((d.tags ?? []).includes("ace_spec") && blocked(g, s.current, "ace", c)) continue;
       if (!p.energyAttached) for (const t of slots(p)) acts.push({ kind: "attach", card: c, target: t });
     } else if (d.kind === "trainer") {
       if (d.sub === "supporter" && (p.supporterPlayed || firstTurn)) continue;
+      if ((d.sub === "item" || d.sub === "supporter" || d.sub === "stadium" || d.sub === "tool") && blocked(g, s.current, d.sub, c)) continue;
+      if ((d.tags ?? []).includes("ace_spec") && blocked(g, s.current, "ace", c)) continue;
       if (d.sub === "stadium" && (p.stadiumPlayed || (s.stadium !== null && g.name(s.stadium) === d.name))) continue;
       if (d.canPlay && !d.canPlay(g, s.current)) continue;
       if (d.sub === "tool") {
@@ -226,17 +294,24 @@ export function legalActions(g: G): Action[] {
     (g.top(m).abilities ?? []).forEach((ab, index) => {
       if ((ab.oncePerTurn ?? true) && m.used[ab.name] === s.turn) return;
       if (ab.canUse && !ab.canUse(g, s.current, m)) return;
+      if (blocked(g, s.current, "ability", m.stack[m.stack.length - 1])) return;
       acts.push({ kind: "ability", target: t, index });
     });
+  }
+  if (s.stadium !== null) {
+    const sd = g.def(s.stadium);
+    if (sd.stadiumAction && p.flags.stadium_used !== s.turn && (!sd.stadiumAction.canUse || sd.stadiumAction.canUse(g, s.current))) {
+      acts.push({ kind: "stadium" });
+    }
   }
   const a = p.active;
   const stuck = a && (a.conditions.includes("asleep") || a.conditions.includes("paralyzed"));
   if (a && p.bench.length && !p.retreated && !stuck && a.energies.length >= retreatCost(g, a)) {
     p.bench.forEach((_, t) => acts.push({ kind: "retreat", target: t }));
   }
-  if (a && !stuck && !(firstTurn && s.current === s.first)) {
+  if (a && !stuck && !(firstTurn && s.current === s.first) && a.used.no_attack !== s.turn) {
     (g.top(a).attacks ?? []).forEach((atk, index) => {
-      if (canPay(g, a.energies, atk.cost)) acts.push({ kind: "attack", index });
+      if (canPay(g, a.energies, attackCost(g, a, atk))) acts.push({ kind: "attack", index });
     });
   }
   return acts;
@@ -253,6 +328,7 @@ export function describe(g: G, a: Action): string {
     case "ability": return `Abilità ${g.top(slot(g.me(), a.target)).abilities![a.index].name} (${t(a.target)})`;
     case "retreat": return `ritirata verso panchina ${a.target}`;
     case "attack": return `attacco ${g.top(g.me().active!).attacks![a.index].name}`;
+    case "stadium": return `usa lo Stadio ${g.name(g.s.stadium!)}`;
   }
 }
 
@@ -281,10 +357,18 @@ function* apply(g: G, a: Action): Gen<boolean> {
       m.conditions = [];
       break;
     }
-    case "attach":
+    case "attach": {
       removeFromHand(p, a.card);
-      slot(p, a.target).energies.push(a.card);
+      const m = slot(p, a.target);
+      m.energies.push(a.card);
       p.energyAttached = true;
+      const d = g.def(a.card);
+      if (d.onAttach) yield* d.onAttach(g, me, m);
+      break;
+    }
+    case "stadium":
+      p.flags.stadium_used = s.turn;
+      yield* g.def(s.stadium!).stadiumAction!.use(g, me);
       break;
     case "trainer": {
       const d = g.def(a.card);
@@ -298,6 +382,7 @@ function* apply(g: G, a: Action): Gen<boolean> {
         p.stadiumPlayed = true;
       } else {
         if (d.sub === "supporter") p.supporterPlayed = true;
+        if (d.turnPassive) s.turnEffects.push({ card: a.card, owner: me, until: s.turn });
         if (d.play) yield* d.play(g, me);
         p.discard.push(a.card);
       }
@@ -329,14 +414,27 @@ function* apply(g: G, a: Action): Gen<boolean> {
   return false;
 }
 
+/**
+ * Danno di un attacco: modificatori "prima" (es. +40 di Black Belt), poi debolezza
+ * e resistenza solo sull'attivo, poi modificatori "dopo" (es. riduzioni del danno subito).
+ */
 export function applyDamage(g: G, attacker: Mon, target: Mon, base: number, toActive = true): number {
-  let dmg = base;
-  if (toActive && dmg > 0) {
-    const at = g.top(attacker).type, td = g.top(target);
-    if (td.weakness && td.weakness === at) dmg *= 2;
-    if (td.resistance && td.resistance === at) dmg -= 30;
+  const ctx: DamageCtx = {
+    attacker, attackerOwner: ownerOf(g, attacker), target, targetOwner: ownerOf(g, target), toActive, damage: base,
+  };
+  // regola Tera: in panchina non subisce danni dagli attacchi
+  if (!toActive && (g.top(target).tags ?? []).includes("tera")) return 0;
+  // protezione "durante il prossimo turno dell'avversario" (es. Dig di Dunsparce)
+  if (target.used.protect === g.s.turn && ctx.attackerOwner !== ctx.targetOwner) return 0;
+  const ps = passives(g);
+  if (ctx.damage > 0) for (const a of ps) if (a.p.damageBefore) ctx.damage = a.p.damageBefore(g, ctx, a.owner, a.self);
+  if (toActive && ctx.damage > 0) {
+    const at = g.top(attacker).type, td = g.top(target), w = weaknessOf(g, target);
+    if (w && w === at) ctx.damage *= 2;
+    if (td.resistance && td.resistance === at) ctx.damage -= 30;
   }
-  dmg = Math.max(0, dmg);
+  if (ctx.damage > 0) for (const a of ps) if (a.p.damageAfter) ctx.damage = a.p.damageAfter(g, ctx, a.owner, a.self);
+  const dmg = Math.max(0, ctx.damage);
   target.damage += dmg;
   return dmg;
 }
@@ -352,6 +450,7 @@ function* attack(g: G, index: number): Gen {
     yield* checkKO(g);
     return;
   }
+  s.attacking = s.current;
   let dmg = atk.damage;
   if (atk.effect) {
     const r = yield* atk.effect(g, s.current);
@@ -359,6 +458,7 @@ function* attack(g: G, index: number): Gen {
   }
   if (dmg && o.active) applyDamage(g, att, o.active, dmg);
   yield* checkKO(g);
+  s.attacking = -1;
 }
 
 /** KO, premi, fine partita e promozione dei nuovi attivi. */
@@ -369,7 +469,10 @@ export function* checkKO(g: G): Gen {
     const p = g.p(i);
     for (const m of g.inPlay(i)) {
       if (m.damage < (g.top(m).hp ?? 0)) continue;
-      const prizes = g.top(m).prizes ?? 1;
+      let prizes = g.top(m).prizes ?? 1;
+      const byAttack = s.attacking === 1 - i;
+      for (const a of passives(g)) if (a.p.prizes) prizes += a.p.prizes(g, m, i, byAttack, a.owner, a.self);
+      prizes = Math.max(0, prizes);
       g.say(`KO ${g.top(m).name} di P${i}`);
       if (m === p.active) p.active = null;
       else p.bench.splice(p.bench.indexOf(m), 1);
@@ -404,6 +507,7 @@ export function takePrizes(g: G, i: number, n: number): void {
 
 function* betweenTurns(g: G): Gen {
   const s = g.s;
+  s.turnEffects = s.turnEffects.filter(e => e.until > s.turn);
   for (const i of [s.current, 1 - s.current]) {
     const m = g.p(i).active;
     if (!m) continue;
@@ -459,11 +563,11 @@ export function newState(decks: CardDef[][], seed: number): { s: State; reg: Map
     });
     return {
       deck: ids, hand: [], prizes: [], discard: [], active: null, bench: [],
-      supporterPlayed: false, energyAttached: false, retreated: false, stadiumPlayed: false,
+      supporterPlayed: false, energyAttached: false, retreated: false, stadiumPlayed: false, flags: {},
     } as Player;
   }) as [Player, Player];
   const s: State = {
-    cards, players, turn: 0, current: 0, first: 0, stadium: null, stadiumOwner: 0,
+    cards, players, turn: 0, current: 0, first: 0, stadium: null, stadiumOwner: 0, turnEffects: [], attacking: -1,
     winner: null, why: "", rng: seed | 0,
   };
   return { s, reg };

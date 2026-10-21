@@ -1,0 +1,30 @@
+# Nome: Mega Excadrill (Keiyo Watanabe, 1° Yokohama)
+# Archetipo: Mega Excadrill
+# Fonte: Torneo di Yokohama (Giappone, formato giapponese con il set M6), 1° posto, Keiyo Watanabe. Lista raccolta da tcgmasters.net
+
+Pokémon: 18
+4 Beldum TEF 113
+4 Metang TEF 114
+2 Metagross CRI 61
+3 Drilbur PBL 46
+2 Mega Excadrill ex PBL 65
+2 Genesect ex BLK 67
+1 Fezandipiti ex ASC 142
+
+Trainer: 26
+4 Team Rocket's Petrel DRI 176
+3 Lillie's Determination MEG 119
+3 Boss's Orders MEG 114
+1 Brock's Scouting JTG 146
+4 Buddy-Buddy Poffin TEF 144
+3 Pokégear 3.0 SVI 186
+2 Special Red Card CRI 82
+1 Energy Recycler DRI 164
+1 Jumbo Ice Cream PFL 91
+1 Iron Defender MEG 118
+1 Ultra Ball MEG 131
+1 Precious Trolley SSP 185
+1 Gravity Mountain SSP 177
+
+Energy: 16
+16 Metal Energy MEE 16

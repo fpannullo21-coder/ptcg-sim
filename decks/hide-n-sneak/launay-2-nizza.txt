@@ -1,0 +1,32 @@
+# Nome: Launay (2° Nizza)
+# Archetipo: Hide n' Sneak
+# Fonte: Maxime Launay, 2° Regional di Nizza (ottobre 2026)
+
+Pokémon: 25
+4 Shuppet PBL 33
+4 Banette PBL 34
+4 Poltchageist PBL 5
+4 Sinistcha PBL 6
+4 Dhelmise PBL 91
+2 Lillie's Clefairy ex JTG 184
+1 Spiritomb PBL 35
+1 Latias ex SSP 239
+1 Bloodmoon Ursaluna ex TWM 216
+
+Trainer: 27
+4 Explorer's Guidance TEF 200
+3 Lillie's Determination MEG 184
+3 Gwynn PBL 119
+3 Boss's Orders MEG 114
+2 Naveen POR 79
+4 Ultra Ball ASC 264
+3 Poké Pad POR 113
+3 Night Stretcher SSP 251
+2 Prism Tower CRI 111
+
+Energy: 8
+4 Telepathic Psychic Energy POR 88
+3 Psychic Energy MEE 13
+1 Legacy Energy TWM 167
+
+Total Cards: 60

@@ -1,0 +1,35 @@
+# Nome: Dragapult (Tomori Sugiyama, 8° Yokohama)
+# Archetipo: Dragapult
+# Fonte: Torneo di Yokohama (Giappone, formato giapponese con il set M6), 8° posto, Tomori Sugiyama. Lista raccolta da tcgmasters.net
+
+Pokémon: 18
+4 Dreepy TWM 128
+4 Drakloak TWM 129
+3 Dragapult ex TWM 130
+2 Budew ASC 16
+1 Duskull PRE 35
+1 Dusknoir PRE 37
+1 Munkidori TWM 95
+1 Fezandipiti ex ASC 142
+1 Meowth ex POR 62
+
+Trainer: 34
+4 Lillie's Determination MEG 119
+3 Boss's Orders MEG 114
+2 Crispin SCR 133
+1 Rosa's Encouragement POR 84
+4 Buddy-Buddy Poffin TEF 144
+4 Poké Pad POR 81
+4 Ultra Ball MEG 131
+4 Crushing Hammer POR 71
+2 Night Stretcher ASC 196
+2 Rare Candy MEG 125
+1 Special Red Card CRI 82
+1 Unfair Stamp TWM 165
+1 Risky Ruins MEG 127
+1 Team Rocket's Watchtower DRI 180
+
+Energy: 8
+3 Fire Energy MEE 10
+3 Psychic Energy MEE 13
+2 Darkness Energy MEE 15

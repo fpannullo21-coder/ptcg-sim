@@ -2,7 +2,7 @@
  * Effetti di base da comporre per descrivere le carte.
  * Ogni effetto che richiede una scelta è un generatore: si usa con `yield*`.
  */
-import { choose, chooseOne, draw as drawCards, G, newMon, shuffle, switchActive } from "../engine/game.js";
+import { canHeal, choose, chooseOne, draw as drawCards, G, newMon, prevented, rand, shuffle, switchActive } from "../engine/game.js";
 import type { Gen, Mon } from "../engine/types.js";
 
 export type Filter = (g: G, c: number) => boolean;
@@ -37,6 +37,12 @@ export function shuffleHandIntoDeck(g: G, me: number): void {
   p.hand = [];
   shuffle(g.s, p.deck);
 }
+
+export function shuffleDeck(g: G, me: number): void {
+  shuffle(g.s, g.p(me).deck);
+}
+
+export { choose, chooseOne, prevented };
 
 export function discardHand(g: G, me: number): void {
   const p = g.p(me);
@@ -110,22 +116,25 @@ export function* gust(g: G, me: number, kind = "gust"): Gen<boolean> {
   return true;
 }
 
-/** Piazza n segnalini (10 danni ciascuno), uno alla volta, sui Pokémon scelti. */
+/**
+ * Piazza n segnalini (10 danni ciascuno), uno alla volta, sui Pokémon scelti.
+ * I segnalini sono un effetto: i Pokémon protetti (es. Hide 'n' Sneak) non si possono scegliere.
+ */
 export function* placeCounters(g: G, me: number, n: number, side: "opp" | "own" = "opp", kind = "counters"): Gen {
   const who = side === "opp" ? 1 - me : me;
   for (let k = 0; k < n; k++) {
-    const mons = g.inPlay(who);
+    const mons = g.inPlay(who).filter(m => !prevented(g, m, me));
     if (!mons.length) return;
     (yield* chooseOne(g, me, kind, mons)).damage += 10;
   }
 }
 
 export function countersEach(g: G, me: number, n: number, side: "opp" | "own" = "opp", skip: (m: Mon) => boolean = () => false): void {
-  for (const m of g.inPlay(side === "opp" ? 1 - me : me)) if (!skip(m)) m.damage += 10 * n;
+  for (const m of g.inPlay(side === "opp" ? 1 - me : me)) if (!skip(m) && !prevented(g, m, me)) m.damage += 10 * n;
 }
 
-export function heal(m: Mon, amount: number): void {
-  m.damage = Math.max(0, m.damage - amount);
+export function heal(g: G, m: Mon, amount: number): void {
+  if (canHeal(g, m)) m.damage = Math.max(0, m.damage - amount);
 }
 
 export function* attachFromDiscard(g: G, me: number, f: Filter, k = 1, kind = "attach_discard"): Gen {
@@ -139,4 +148,40 @@ export function* attachFromDiscard(g: G, me: number, f: Filter, k = 1, kind = "a
 
 export function discardEnergy(g: G, m: Mon, owner: number, n = 1): void {
   for (const e of m.energies.splice(Math.max(0, m.energies.length - n))) g.p(owner).discard.push(e);
+}
+
+/**
+ * Guarda le prime n carte del mazzo e ne sceglie da min a k che rispettano il filtro.
+ * Le scelte vanno in mano; le altre vanno negli scarti, in fondo al mazzo o vengono rimescolate.
+ */
+export function* lookTop(
+  g: G, me: number, n: number, f: Filter, k: number, min = 0,
+  rest: "discard" | "shuffle" | "bottom" = "shuffle", kind = "look_top",
+): Gen<number[]> {
+  const p = g.p(me);
+  const top = p.deck.splice(Math.max(0, p.deck.length - n)).reverse();   // la prima è la cima
+  const picks = yield* choose(g, me, kind, top.filter(c => f(g, c)), min, k);
+  p.hand.push(...picks);
+  const others = top.filter(c => !picks.includes(c));
+  if (rest === "discard") p.discard.push(...others);
+  else if (rest === "bottom") p.deck.unshift(...others);
+  else { p.deck.push(...others); shuffle(g.s, p.deck); }
+  return picks;
+}
+
+/** Nessuna Regola: niente Pokémon ex, Mega, V e simili. */
+export const noRuleBox: Filter = (g, c) => {
+  const t = g.def(c).tags ?? [];
+  return g.def(c).kind === "pokemon" && !t.includes("ex") && !t.includes("mega");
+};
+
+export function hasRuleBox(g: G, m: Mon): boolean {
+  const t = g.top(m).tags ?? [];
+  return t.includes("ex") || t.includes("mega");
+}
+
+export const ofType = (t: string): Filter => (g, c) => g.def(c).type === t;
+
+export function flip(g: G): boolean {
+  return rand(g.s) < 0.5;
 }
