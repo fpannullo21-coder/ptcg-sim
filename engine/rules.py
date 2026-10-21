@@ -135,6 +135,14 @@ def legal_actions(g: Game) -> list[Action]:
             if d.can_play and not d.can_play(g, g.current):
                 continue
             acts.append(Action("trainer", c))
+    for t in slots(p):
+        m = slot(p, t)
+        for i, ab in enumerate(m.top.abilities):
+            if ab.once_per_turn and m.abilities_used.get(ab.name) == g.turn:
+                continue
+            if ab.can_use and not ab.can_use(g, g.current, m):
+                continue
+            acts.append(Action("ability", None, t, i))
     if p.active and p.bench and not p.retreated and "asleep" not in p.active.conditions \
             and "paralyzed" not in p.active.conditions \
             and len(p.active.energies) >= retreat_cost(g, p.active):
@@ -186,6 +194,11 @@ def step(g: Game, a: Action) -> bool:
             if d.play:
                 d.play(g, me)
             p.discard.append(a.card)
+    elif a.kind == "ability":
+        m = slot(p, a.target)
+        ab = m.top.abilities[a.index]
+        m.abilities_used[ab.name] = g.turn
+        ab.use(g, me, m)
     elif a.kind == "retreat":
         cost = retreat_cost(g, p.active)
         if cost:

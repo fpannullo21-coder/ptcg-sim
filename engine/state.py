@@ -21,6 +21,14 @@ class Attack:
 
 
 @dataclass
+class Ability:
+    name: str
+    use: Callable                  # use(game, player, mon) -> None
+    can_use: Optional[Callable] = None   # can_use(game, player, mon) -> bool
+    once_per_turn: bool = True
+
+
+@dataclass
 class CardDef:
     name: str
     kind: str                      # POKEMON / TRAINER / ENERGY
@@ -31,6 +39,7 @@ class CardDef:
     resistance: Optional[str] = None
     retreat: int = 0
     attacks: tuple[Attack, ...] = ()
+    abilities: tuple[Ability, ...] = ()
     evolves_from: Optional[str] = None
     prizes: int = 1                # 2 per gli ex, 3 per i Mega ex
     tags: frozenset = frozenset()  # "ex", "ace_spec", "hide_n_sneak", ...
@@ -70,6 +79,7 @@ class InPlay:
     entered_turn: int = 0
     evolved_turn: int = -1
     conditions: set = field(default_factory=set)
+    abilities_used: dict = field(default_factory=dict)   # nome -> turno
 
     @property
     def top(self) -> CardDef:
