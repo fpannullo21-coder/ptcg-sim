@@ -6,7 +6,7 @@
 - [x] Avversario forte con ricerca Monte Carlo (Timbro, ritirata, Crushing Hammer, Boss's Orders)
 - [ ] Simulazione finale con avversario forte e lista per Danzica bloccata
 - [x] Struttura del progetto, README, roadmap
-- [ ] Motore di regole: stato, azioni legali, turni, KO, premi, primo turno
+- [x] Motore di regole: stato, azioni legali, turni, KO, premi, primo turno, condizioni speciali (prima versione, 6 test)
 - [ ] Libreria di effetti base: pesca, cerca, scarta, danno, segnalini, cura, cambio
 - [ ] Primo mazzo completo nel nuovo motore: Hide n' Sneak (lista per Danzica)
 
