@@ -2,9 +2,22 @@
 
 Simulatore del Pokémon TCG per prepararsi ai tornei: confrontare liste, studiare i matchup e allenare le decisioni al tavolo.
 
-## Cosa farà
+## Obiettivo
 
-- **Matrice dei matchup** di un mazzo contro il meta, aggiornata dopo ogni Regional con le liste e le quote di Limitless.
+Dare in input una lista qualsiasi e ottenere percentuali su quanto funziona, carta per carta, contro il meta del momento. Le carte sono dati: per un mazzo nuovo non serve riscrivere il simulatore, basta aggiungere le carte che mancano.
+
+## Cosa misura
+
+| Domanda | Come risponde |
+| --- | --- |
+| Quanto vince questa lista? | Win rate contro ogni mazzo del meta e media pesata sulle quote di Limitless |
+| Quanto vale questa carta? | Win rate con e senza la carta (−1/+1), e win rate quando la carta viene pescata o giocata |
+| Quanto è costante? | Probabilità di setup al turno 2, di arrivare a una soglia (es. 13 nello scarto), di avere carte chiave nei premi |
+| Cosa conviene giocare adesso? | Win rate di ogni giocata possibile in una posizione, calcolato dal giocatore forte |
+
+## Strumenti
+
+- **Matrice dei matchup**, aggiornata dopo ogni Regional con le liste e le quote di Limitless.
 - **Ottimizzatore di lista:** prova in automatico gli scambi di 1-2 carte e misura quanto valgono sul meta.
 - **Allenatore di decisioni:** mostra una posizione, chiede la giocata, confronta la risposta con quella del giocatore forte.
 - **Partite contro l'IA.**
