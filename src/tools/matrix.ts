@@ -18,8 +18,17 @@ import { loadDecks, type DeckFile } from "../data/decks.js";
 import { playGame } from "../engine/game.js";
 import { BasicAgent } from "../ai/basic.js";
 import { EvalAgent } from "../ai/eval.js";
+import { MonteCarloAgent } from "../ai/montecarlo.js";
 
-export const AGENTS: Record<string, () => BasicAgent> = { basic: () => new BasicAgent(), eval: () => new EvalAgent() };
+/**
+ * Giocatori disponibili. "mc" accetta parametri: "mc:8:2" = 8 continuazioni per mossa, 2 turni di profondità.
+ */
+export function makeAgent(spec = "basic", seed = 1): BasicAgent {
+  const [kind, r, d] = spec.split(":");
+  if (kind === "eval") return new EvalAgent();
+  if (kind === "mc") return new MonteCarloAgent({ rollouts: Number(r ?? 6), depth: Number(d ?? 2), seed });
+  return new BasicAgent();
+}
 
 export interface Job { a: string; b: string; games: number; seed: number; agent?: string }
 export interface Result { a: string; b: string; games: number; winsA: number; winsB: number; draws: number; winsAFirst: number; gamesAFirst: number; turns: number; errors: string[] }
@@ -31,8 +40,7 @@ function playJob(decks: Map<string, DeckFile>, job: Job): Result {
   for (let k = 0; k < job.games; k++) {
     const first = k % 2;
     try {
-      const make = AGENTS[job.agent ?? "basic"];
-      const m = playGame([da, db], [make(), make()], job.seed + k, { first });
+      const m = playGame([da, db], [makeAgent(job.agent, job.seed + k), makeAgent(job.agent, job.seed + k + 7919)], job.seed + k, { first });
       const w = m.g.s.winner;
       r.games++;
       r.turns += m.g.s.turn;
@@ -128,6 +136,6 @@ if (process.argv.includes("--worker")) {
   const reg = registry();
   const decks = new Map(loadDecks(reg.db).map(d => [d.path, d]));
   process.on("message", (job: Job) => process.send!(playJob(decks, job)));
-} else if (process.argv[1]?.endsWith("matrix.ts")) {
+} else if (/(^|[\/])matrix\.ts$/.test(process.argv[1] ?? "")) {
   main().catch(e => { console.error(e); process.exit(1); });
 }

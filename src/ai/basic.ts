@@ -16,7 +16,17 @@ const SEARCH = new Set(["search", "ultra_ball", "poke_pad", "puppet_pull", "poff
 const DISCARD = new Set(["discard", "ultra_ball_discard", "prism_discard", "retreat_discard"]);
 
 export class BasicAgent implements Agent {
-  constructor(public opts: { benchMax?: number } = {}) {}
+  /** fast: niente prove su copie della partita (per le continuazioni del giocatore Monte Carlo). */
+  constructor(public opts: { benchMax?: number; fast?: boolean } = {}) {}
+
+  /** Danno stimato dell'attacco senza provarlo (modalità veloce). */
+  quickAttackValue(g: G, me: number, index: number, from?: number): number {
+    const p = g.p(me), o = g.p(1 - me);
+    const m = from !== undefined ? p.bench[from] : p.active!;
+    const atk = g.top(m).attacks![index];
+    const dmg = atkDamage(atk);
+    return dmg + (o.active && dmg >= g.hpLeft(o.active) ? 1000 * (g.top(o.active).prizes ?? 1) : 0);
+  }
 
   private plans: (Plan | null)[] = [null, null];
   /** Piano della lista del giocatore (ricavato una volta sola alla prima decisione). */
@@ -217,6 +227,10 @@ export class BasicAgent implements Agent {
         case "trainer": return this.trainerScore(g, me, g.def(a.card), a.card);
         case "retreat": {
           if (!o.active || (g.s.turn === 1 && g.s.first === me)) return -1;
+          if (this.opts.fast) {
+            const t = p.bench[a.target];
+            return this.bestDamage(g, t).dmg > Math.max(0, this.bestDamage(g, p.active!).dmg) + 30 && retreatCost(g, p.active!) <= 2 ? 30 : -1;
+          }
           const now = this.bestAttackValue(g, me);
           const then = this.valueIfActive(g, me, a.target);
           // conviene se il Pokémon in panchina fa molto di più, tenendo conto delle Energie scartate
@@ -232,7 +246,9 @@ export class BasicAgent implements Agent {
     if (attacks.length && o.active) {
       let bi = attacks[0][1], bv = -Infinity;
       for (const [a, i] of attacks) {
-        const v = this.attackValue(g, me, (a as { index: number }).index, (a as { from?: number }).from);
+        const v = this.opts.fast
+          ? this.quickAttackValue(g, me, (a as { index: number }).index, (a as { from?: number }).from)
+          : this.attackValue(g, me, (a as { index: number }).index, (a as { from?: number }).from);
         if (v > bv) { bv = v; bi = i; }
       }
       return bi;

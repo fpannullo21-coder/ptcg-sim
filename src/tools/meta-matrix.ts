@@ -11,7 +11,7 @@
  *
  * Scrive reports/meta-matrix-<nome>.md e .json.
  */
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { availableParallelism } from "node:os";
 import { registry } from "../cards/index.js";
 import { loadDecks, type DeckFile } from "../data/decks.js";
@@ -63,13 +63,31 @@ async function main() {
   for (const r of refs.values()) for (const a of meta) pairs.push([r, a.deck!]);
   if (validate) for (let i = 0; i < meta.length; i++) for (let j = i + 1; j < meta.length; j++) pairs.push([meta[i].deck!, meta[j].deck!]);
   const uniq = [...new Map(pairs.map(p => [p.join("|"), p])).values()];
-  console.log(`${uniq.length} coppie x ${games} partite su ${workers} processi...`);
-  const t0 = performance.now();
-  let lastLog = 0;
   const agent = arg("agent", "basic");
-  const res = await runPairs(uniq, games, workers, (d, t) => {
-    if (Date.now() - lastLog > 30000) { lastLog = Date.now(); console.log(`  ${d}/${t} blocchi`); }
-  }, agent);
+  // --shard i/N: gioca solo una parte delle coppie e salva i risultati grezzi (per i job in parallelo su GitHub)
+  // --merge: non gioca, legge le parti salvate e scrive il report
+  const shard = arg("shard", "");
+  const t0 = performance.now();
+  let res: Result[];
+  if (process.argv.includes("--merge")) {
+    const dir = "reports/parts";
+    res = readdirSync(dir).filter(f => f.startsWith(`${name}-`) && f.endsWith(".json")).flatMap(f => JSON.parse(readFileSync(`${dir}/${f}`, "utf8")).results as Result[]);
+    console.log(`${res.length} coppie lette da ${dir}`);
+  } else {
+    const [si, sn] = shard ? shard.split("/").map(Number) : [0, 1];
+    const mine = uniq.filter((_, k) => k % sn === si);
+    console.log(`${mine.length} coppie (di ${uniq.length}) x ${games} partite su ${workers} processi, giocatore ${agent}...`);
+    let lastLog = 0;
+    res = await runPairs(mine, games, workers, (d, t) => {
+      if (Date.now() - lastLog > 30000) { lastLog = Date.now(); console.log(`  ${d}/${t} blocchi`); }
+    }, agent);
+    if (shard) {
+      mkdirSync("reports/parts", { recursive: true });
+      writeFileSync(`reports/parts/${name}-${si}.json`, JSON.stringify({ shard, agent, games, results: res }));
+      console.log(`parte ${shard} salvata`);
+      return;
+    }
+  }
   const sec = (performance.now() - t0) / 1000;
   const get = (a: string, b: string): number => {
     const r = res.find(x => x.a === a && x.b === b);

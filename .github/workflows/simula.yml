@@ -1,0 +1,105 @@
+# Simulazione in cloud: divide le coppie di liste tra più macchine di GitHub,
+# poi unisce i risultati e salva il report in reports/.
+#
+# Si lancia da GitHub: Actions -> simula -> Run workflow.
+# Ogni macchina ha 2 processori. Nei repository privati i minuti gratuiti sono limitati
+# (2.000 al mese con il piano gratuito): vedi docs/CLOUD.md per le stime.
+name: simula
+
+on:
+  workflow_dispatch:
+    inputs:
+      lists:
+        description: "Liste da provare (percorsi in decks/, separati da virgola)"
+        default: "hide-n-sneak/lista-per-danzica,nizza-2026/02-dhelmise-maxime-launay"
+      top:
+        description: "Quanti archetipi del meta"
+        default: "12"
+      games:
+        description: "Partite per coppia"
+        default: "60"
+      agent:
+        description: "Giocatore: basic, eval, mc:<continuazioni>:<turni> (es. mc:6:2)"
+        default: "mc:6:2"
+      shards:
+        description: "Macchine in parallelo (1-20)"
+        default: "10"
+      validate:
+        description: "Confronta anche tutti gli archetipi tra loro con i dati reali (sì/no)"
+        default: "no"
+      name:
+        description: "Nome del report"
+        default: "cloud"
+
+permissions:
+  contents: write
+
+jobs:
+  piano:
+    runs-on: ubuntu-latest
+    outputs:
+      shards: ${{ steps.s.outputs.shards }}
+    steps:
+      - id: s
+        run: |
+          n=${{ github.event.inputs.shards }}
+          if [ "$n" -gt 20 ]; then n=20; fi
+          echo "shards=$(seq -s, 0 $((n-1)) | sed 's/^/[/;s/$/]/')" >> "$GITHUB_OUTPUT"
+
+  gioca:
+    needs: piano
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: ${{ fromJson(needs.piano.outputs.shards) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Partite
+        run: |
+          V=""; if [ "${{ github.event.inputs.validate }}" = "sì" ] || [ "${{ github.event.inputs.validate }}" = "si" ]; then V="--validate"; fi
+          npx tsx src/tools/meta-matrix.ts --lists "${{ github.event.inputs.lists }}" --top ${{ github.event.inputs.top }} \
+            --games ${{ github.event.inputs.games }} --agent "${{ github.event.inputs.agent }}" --workers 2 $V \
+            --shard ${{ matrix.shard }}/${{ github.event.inputs.shards }} --name ${{ github.event.inputs.name }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: parte-${{ matrix.shard }}
+          path: reports/parts/
+
+  unisci:
+    needs: gioca
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - uses: actions/download-artifact@v4
+        with:
+          path: reports/parts
+          merge-multiple: true
+      - name: Report
+        run: |
+          V=""; if [ "${{ github.event.inputs.validate }}" = "sì" ] || [ "${{ github.event.inputs.validate }}" = "si" ]; then V="--validate"; fi
+          npx tsx src/tools/meta-matrix.ts --lists "${{ github.event.inputs.lists }}" --top ${{ github.event.inputs.top }} \
+            --games ${{ github.event.inputs.games }} --agent "${{ github.event.inputs.agent }}" $V --merge --name ${{ github.event.inputs.name }}
+          rm -rf reports/parts
+      - name: Salva il report
+        run: |
+          git config user.name "ptcg-sim"
+          git config user.email "actions@github.com"
+          git add -f reports/meta-matrix-${{ github.event.inputs.name }}.md reports/meta-matrix-${{ github.event.inputs.name }}.json
+          git commit -m "Report ${{ github.event.inputs.name }} (${{ github.event.inputs.agent }}, ${{ github.event.inputs.games }} partite per coppia)" || exit 0
+          git pull --rebase && git push
+      - uses: actions/upload-artifact@v4
+        with:
+          name: report
+          path: reports/meta-matrix-${{ github.event.inputs.name }}.*

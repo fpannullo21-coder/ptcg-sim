@@ -636,6 +636,11 @@ function* turn(g: G, maxActions = 300): Gen {
   p.supporterPlayed = p.energyAttached = p.retreated = p.stadiumPlayed = false;
   if (!p.deck.length) g.end(1 - g.s.current, "mazzo finito");
   draw(g, g.s.current, 1);
+  yield* restOfTurn(g, maxActions);
+}
+
+/** Le azioni rimanenti del turno in corso e la sua chiusura (usata anche per continuare una partita a metà turno). */
+function* restOfTurn(g: G, maxActions = 300): Gen {
   for (let k = 0; k < maxActions; k++) {
     markActive(g);
     const a = yield* chooseOne(g, g.s.current, "action", legalActions(g));
@@ -647,6 +652,27 @@ function* turn(g: G, maxActions = 300): Gen {
   // effetti "alla fine del tuo turno" (es. Powerglass, Ignition Energy)
   for (const x of passives(g)) x.p.endOfTurn?.(g, g.s.current, x.owner, x.self);
   yield* checkKO(g);
+}
+
+/**
+ * Continua una partita ferma a metà turno (dopo un'azione che non ha chiuso il turno, o dopo un attacco)
+ * fino alla fine del turno `untilTurn`. Serve ai giocatori che provano continuazioni su copie della partita.
+ */
+export function* playOn(g: G, turnEnded: boolean, untilTurn: number, maxTurns = 100): Gen {
+  if (!turnEnded) yield* restOfTurn(g);
+  else {
+    for (const x of passives(g)) x.p.endOfTurn?.(g, g.s.current, x.owner, x.self);
+    yield* checkKO(g);
+  }
+  yield* betweenTurns(g);
+  g.s.current = 1 - g.s.current;
+  for (let t = g.s.turn + 1; t <= Math.min(untilTurn, maxTurns); t++) {
+    g.s.turn = t;
+    yield* turn(g);
+    yield* betweenTurns(g);
+    g.s.current = 1 - g.s.current;
+  }
+  if (g.s.turn >= maxTurns) g.end(-1, "limite di turni");
 }
 
 export function* gameLoop(g: G, maxTurns = 100): Gen {
