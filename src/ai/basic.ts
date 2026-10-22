@@ -40,7 +40,13 @@ export class BasicAgent implements Agent {
     if (!e) return 20;
     const inPlay = g.inPlay(me).filter(m => g.top(m).name === d.name || m.stack.some(x => g.def(x).name === d.name)).length;
     if (inPlay >= e.max) return 5;
-    return e.value - 10 * inPlay;
+    let v = e.value - 10 * inPlay;
+    const p = g.p(me);
+    // Pokémon che servono solo in certi momenti (Meowth ex: cerca un Supporter; Fezandipiti ex: pesca dopo un KO subito)
+    const abil = d.abilities ?? [];
+    if (abil.some(a => a.trigger === "bench") && !p.supporterPlayed && !p.hand.some(x => g.def(x).sub === "supporter")) v = Math.max(v, 55);
+    if (abil.some(a => a.name === "Flip the Script") && p.flags.ko_turn === g.s.turn - 1) v = Math.max(v, 60);
+    return v;
   }
 
   // --- valutazioni --------------------------------------------------------
@@ -175,7 +181,12 @@ export class BasicAgent implements Agent {
     if (d.kind === "action") return [this.action(g, me, d.options as Action[])];
     if (d.kind === "mulligan_draw") return [d.options.length - 1];
     if (d.kind === "setup_active") {
-      // in attivo il Pokémon meno prezioso e più facile da ritirare; mai la base di una linea evolutiva se c'è altro
+      // in attivo: il preferito dal piano di mazzo, altrimenti il Pokémon meno prezioso e più facile da ritirare
+      const openers = this.plan(g, me).openers;
+      if (openers) {
+        const o = openers.map(n => d.options.findIndex(c => g.def(c as number).name === n)).find(i => i >= 0);
+        if (o !== undefined) return [o];
+      }
       return top(c => -(g.def(c as number).retreat ?? 0) * 10 - ((g.def(c as number).tags ?? []).includes("ex") ? 50 : 0)
         - (this.plan(g, me).get(g.def(c as number).name)?.role === "line" ? 25 : 0), 1);
     }
@@ -193,8 +204,20 @@ export class BasicAgent implements Agent {
       const dmg = mine ? this.bestDamage(g, mine).dmg : 0;
       return top(t => { const m = typeof t === "number" ? slot(o, t) : (t as Mon); return (g.hpLeft(m) <= dmg ? 100 * (g.top(m).prizes ?? 1) : 0) - g.hpLeft(m) / 10; }, 1);
     }
-    if (d.kind === "counters" || d.kind === "spiritual_end") {
+    if (d.kind === "counters") {
+      // un segnalino alla volta: prima dove completa un KO presto (pochi segnalini mancanti, più premi)
+      return top(m => {
+        const left = Math.ceil(g.hpLeft(m as Mon) / 10), prizes = g.top(m as Mon).prizes ?? 1;
+        return left <= 6 ? 1000 * prizes - 100 * left : 10 * prizes - left;
+      }, d.max);
+    }
+    if (d.kind === "spiritual_end") {
       return top(m => (m as Mon).damage * (g.top(m as Mon).prizes ?? 1) - g.hpLeft(m as Mon) / 10, d.max);
+    }
+    if (d.kind === "hammer") {
+      // l'Energia dell'avversario più pericoloso: l'attivo, o chi ha più Energie e il danno più alto
+      const o = g.p(1 - me);
+      return top(m => (m === o.active ? 50 : 0) + 20 * (m as Mon).energies.length + this.bestDamage(g, m as Mon).dmg / 10, 1);
     }
     if (d.kind.endsWith("_target")) return top(m => this.energyGap(g, m as Mon) * 10 + (g.top(m as Mon).attacks?.length ?? 0), 1);
     if (d.kind === "copy_attack") {

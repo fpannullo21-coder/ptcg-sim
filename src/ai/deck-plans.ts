@@ -12,6 +12,8 @@ export interface DeckPlan {
   name: string;
   detect: string[];
   entries: Record<string, Partial<PlanEntry>>;
+  /** Chi mettere in attivo all'inizio, in ordine di preferenza. */
+  openers?: string[];
 }
 
 export const DECK_PLANS: DeckPlan[] = [
@@ -32,16 +34,19 @@ export const DECK_PLANS: DeckPlan[] = [
     },
   },
   {
+    // docs/piani/dragapult.md
     name: "Dragapult",
     detect: ["Dragapult ex", "Drakloak"],
+    openers: ["Budew", "Dreepy", "Dunsparce"],
     entries: {
       Dreepy: { value: 110, max: 3 },
       Drakloak: { value: 115, max: 3 },
       "Dragapult ex": { value: 125, max: 2 },
       Budew: { value: 45, max: 1 },
-      Munkidori: { value: 55, max: 1 },
-      "Fezandipiti ex": { value: 30, max: 1 },
-      "Meowth ex": { value: 30, max: 1 },
+      Munkidori: { value: 60, max: 1 },
+      Dunsparce: { value: 35, max: 1 },
+      "Fezandipiti ex": { value: 10, max: 1 },
+      "Meowth ex": { value: 10, max: 1 },
     },
   },
   {

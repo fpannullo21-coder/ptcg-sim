@@ -32,7 +32,7 @@ export function atkDamage(a: Attack): number {
 }
 
 export interface PlanEntry { value: number; max: number; role: "line" | "attacker" | "support" | "other" }
-export type Plan = Map<string, PlanEntry> & { fuel?: string };
+export type Plan = Map<string, PlanEntry> & { fuel?: string; openers?: string[] };
 
 /** Attacchi che contano le carte negli scarti: le carte con quel tag vanno scartate volentieri. */
 const FUEL: Record<string, string> = {
@@ -78,6 +78,7 @@ export function derivePlan(g: G, me: number): Plan {
   // piani scritti a mano per gli archetipi principali
   for (const dp of DECK_PLANS) {
     if (!dp.detect.every(n => defs.has(n))) continue;
+    if (dp.openers) plan.openers = dp.openers;
     for (const [n, e] of Object.entries(dp.entries)) {
       const cur = plan.get(n);
       if (cur || defs.has(n)) plan.set(n, { value: 50, max: 1, role: "other", ...cur, ...e });
