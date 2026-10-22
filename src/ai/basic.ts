@@ -6,7 +6,7 @@
  * Ordine del turno: Abilità ed evoluzioni, panchina, ricerca, Energia,
  * Supporter, poi l'attacco migliore. Boss's Orders solo se dà un KO.
  */
-import { attack, attackCost, canPay, G, GameOver, provided, retreatCost, slot } from "../engine/game.js";
+import { apply, attack, attackCost, canPay, G, GameOver, provided, retreatCost, slot } from "../engine/game.js";
 import type { Agent } from "../engine/game.js";
 import { atkDamage, derivePlan, type Plan } from "./plan.js";
 import type { Action, Attack, CardDef, Decision, Mon } from "../engine/types.js";
@@ -90,6 +90,26 @@ export class BasicAgent implements Agent {
     return Math.max(0, attackCost(g, m, strongest).length - m.energies.length);
   }
 
+  private drawAbility = new Map<string, boolean>();
+  /** Vero se l'Abilità serve soprattutto a pescare (provata una volta su una copia della partita). */
+  isDrawAbility(g: G, me: number, a: Action): boolean {
+    const m = slot(g.p(me), (a as { target: number }).target);
+    const name = g.top(m).abilities![(a as { index: number }).index].name;
+    const known = this.drawAbility.get(name);
+    if (known !== undefined) return known;
+    const copy = new G(structuredClone(g.s), g.reg);
+    const before = { hand: copy.p(me).hand.length, deck: copy.p(me).deck.length };
+    let draw = false;
+    try {
+      const it = apply(copy, a);
+      let r = it.next();
+      for (let k = 0; !r.done && k < 50; k++) r = it.next(this.decide(copy, r.value));
+      draw = copy.p(me).deck.length < before.deck && copy.p(me).hand.length > before.hand;
+    } catch { draw = false; }
+    this.drawAbility.set(name, draw);
+    return draw;
+  }
+
   /** Quanto conviene tenere una carta invece di scartarla: le carte "carburante" (es. Hide 'n' Sneak) si scartano volentieri. */
   keep(g: G, me: number, c: number): number {
     const fuel = this.plan(g, me).fuel;
@@ -146,6 +166,10 @@ export class BasicAgent implements Agent {
       return top(m => (m as Mon).damage * (g.top(m as Mon).prizes ?? 1) - g.hpLeft(m as Mon) / 10, d.max);
     }
     if (d.kind.endsWith("_target")) return top(m => this.energyGap(g, m as Mon) * 10 + (g.top(m as Mon).attacks?.length ?? 0), 1);
+    if (d.kind === "copy_attack") {
+      // attacco copiato (Night Joker): il più forte, il costo dell'attacco copiato non conta
+      return top(o => { const [card, i] = o as [number, number]; return atkDamage(g.def(card).attacks![i]); }, 1);
+    }
     if (d.kind === "gwynn") return top(c => -this.keep(g, me, c as number), d.max);
     if (d.kind === "mill" || d.kind === "blender") {
       // scarta prima le carte che contano negli scarti (Hide 'n' Sneak), poi le meno utili
@@ -164,8 +188,13 @@ export class BasicAgent implements Agent {
     const benchMax = this.opts.benchMax ?? 4;
     const score = (a: Action): number => {
       switch (a.kind) {
-        // con il mazzo corto non si pesca più del necessario (si perde a mazzo finito)
-        case "ability": return p.deck.length > 15 ? 70 : p.hand.length <= 3 && p.deck.length > 6 ? 30 : -1;
+        case "ability": {
+          // le Abilità che pescano si usano con giudizio: con la mano piena o il mazzo corto si perde a mazzo finito
+          if (!this.isDrawAbility(g, me, a)) return 70;
+          if (p.deck.length <= 6) return -1;
+          if (p.hand.length >= 7) return -1;
+          return p.deck.length > 15 ? (p.hand.length <= 4 ? 70 : 30) : p.hand.length <= 3 ? 30 : -1;
+        }
         case "evolve": return 80;
         case "bench": {
           // lascia un posto libero per le linee evolutive, metti prima ciò che serve al piano

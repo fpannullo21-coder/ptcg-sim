@@ -10,6 +10,7 @@
  */
 import type { G } from "../engine/game.js";
 import type { Attack, CardDef } from "../engine/types.js";
+import { DECK_PLANS } from "./deck-plans.js";
 
 /**
  * Danno tipico di attacchi il cui danno stampato non dice quanto fanno davvero
@@ -73,6 +74,14 @@ export function derivePlan(g: G, me: number): Plan {
     if (dmg >= 120 && n >= 2) plan.set(name, { value: 65 + Math.min(30, dmg / 8), max: 2, role: "attacker" });
     else if ((d.abilities?.length ?? 0) > 0 || d.passive) plan.set(name, { value: n >= 3 ? 55 : 40, max: n >= 3 ? 2 : 1, role: "support" });
     else plan.set(name, { value: 30 + Math.min(30, dmg / 8), max: 1, role: "other" });
+  }
+  // piani scritti a mano per gli archetipi principali
+  for (const dp of DECK_PLANS) {
+    if (!dp.detect.every(n => defs.has(n))) continue;
+    for (const [n, e] of Object.entries(dp.entries)) {
+      const cur = plan.get(n);
+      if (cur || defs.has(n)) plan.set(n, { value: 50, max: 1, role: "other", ...cur, ...e });
+    }
   }
   return plan;
 }
