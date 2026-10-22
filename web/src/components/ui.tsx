@@ -77,7 +77,7 @@ export function BenchTile({ m }: { m: MonView }) {
   return (
     <div class="btile" style={{ background: tint(t.c), borderColor: t.c }}>
       <span style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 4 }}>
-        <span style={{ fontSize: 13, fontWeight: 600, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{m.name}</span>
+        <span style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.2, overflowWrap: "anywhere", minWidth: 0 }}>{m.name}</span>
         <span class="num" style={{ fontSize: 16, flex: "none" }}>{m.hp}</span>
       </span>
       <span class="hpbar" aria-hidden="true"><div style={{ width: `${(100 * m.hp) / Math.max(1, m.maxHp)}%`, background: t.c }}></div></span>

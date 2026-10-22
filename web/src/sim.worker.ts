@@ -1,6 +1,8 @@
 /**
- * Simulazioni nel browser, in un thread a parte: le liste contro gli avversari, giocatore base
- * per entrambi, primo giocatore alternato e semi comuni tra le liste (per confrontare varianti).
+ * Simulazioni nel browser, in un thread a parte:
+ * - "sim": le liste contro gli avversari, giocatore base per entrambi, primo giocatore alternato e
+ *   semi comuni tra le liste (per confrontare varianti);
+ * - "position": una nuova posizione per l'Allenatore, con la percentuale di vittoria di ogni mossa.
  */
 import { CardDB } from "../../src/data/carddb";
 import { parseDeck } from "../../src/data/decklist";
@@ -8,8 +10,18 @@ import { Registry } from "../../src/cards/registry";
 import { IMPLS } from "../../src/cards/impl/index";
 import { playGame } from "../../src/engine/game";
 import { BasicAgent } from "../../src/ai/basic";
+import { findPosition, type TrainerPosition } from "../../src/ai/trainer";
 
+export interface PositionRequest {
+  type: "position";
+  mine: string;
+  opp: { name: string; text: string };
+  seed: number;
+  rollouts: number;
+  cardsUrl: string;
+}
 export interface SimRequest {
+  type?: "sim";
   lists: { id: string; text: string }[];
   opponents: { name: string; text: string }[];
   games: number;
@@ -21,17 +33,27 @@ export type SimMessage =
   | { type: "progress"; done: number; total: number }
   | { type: "result"; id: string; vs: string; wins: number; games: number }
   | { type: "done" }
-  | { type: "error"; message: string };
+  | { type: "error"; message: string }
+  | { type: "status"; text: string }
+  | { type: "position"; position: TrainerPosition | null };
 
 let reg: Registry | null = null;
 
-self.onmessage = async (ev: MessageEvent<SimRequest>) => {
+self.onmessage = async (ev: MessageEvent<SimRequest | PositionRequest>) => {
   const post = (m: SimMessage) => (self as unknown as Worker).postMessage(m);
   try {
     if (!reg) {
       const r = await fetch(ev.data.cardsUrl);
       if (!r.ok) throw new Error(`dati delle carte: ${r.status}`);
       reg = new Registry(new CardDB(await r.json()), IMPLS);
+    }
+    if (ev.data.type === "position") {
+      const q = ev.data;
+      const mine = reg.deck(parseDeck(q.mine, reg.db, "mine"));
+      const opp = reg.deck(parseDeck(q.opp.text, reg.db, q.opp.name));
+      const position = findPosition(mine, opp, q.opp.name, q.seed, { rollouts: q.rollouts, maxGames: 8, onProgress: text => post({ type: "status", text }) });
+      post({ type: "position", position });
+      return;
     }
     const { lists, opponents, games, seed } = ev.data;
     const total = lists.length * opponents.length * games;

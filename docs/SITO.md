@@ -10,7 +10,7 @@ Cartella `web/`: Vite + Preact, stesso motore del simulatore (`src/`), nessuna c
 | Matchup | La lista contro i 16 archetipi principali: stima sui dati reali (prima "ancorato"), solo simulato, reale. Le liste già calcolate in cloud si mostrano subito; le altre si simulano nel browser (10, 20 o 50 partite per coppia) | cloud o browser |
 | Varianti | Togli e aggiungi fino a due carte: la lista e la variante giocano le stesse partite di partenza contro gli archetipi principali | browser |
 | Consistenza | Probabilità esatte: mulligan, ogni carta in mano entro il turno 1-4, carte nei premi | browser |
-| Allenatore | Posizioni da partite simulate: scegli la mossa, vedi con quale percentuale vince ognuna | calcolate prima (`trainer.json`) |
+| Allenatore | Posizioni da partite simulate, con mano, campo e scarti di entrambi (Hide 'n' Sneak contati a parte): scegli la mossa, vedi con quale percentuale vince ognuna. 12 posizioni pronte, più quelle nuove generate nel browser contro l'avversario scelto (40 partite per mossa, mezzo minuto-un minuto) | pronte (`trainer.json`) o browser |
 | Note legali | Avviso di sito non ufficiale, fonti, segnalazioni | — |
 
 La simulazione nel browser gira in un Web Worker con il giocatore base: circa 20 partite al secondo su un portatile, quindi 320 partite (20 per coppia) in meno di un minuto.

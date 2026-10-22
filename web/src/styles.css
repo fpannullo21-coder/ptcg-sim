@@ -107,8 +107,8 @@ select { min-height: 48px; }
 /* Carte disegnate da noi (docs/LEGALE.md): niente grafica ufficiale */
 .card { width: 172px; min-height: 240px; flex: none; padding: 10px; border-radius: 12px; display: flex; flex-direction: column; gap: 8px; border: 1.5px solid; }
 .card-stage { font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--text-2); }
-.card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; }
-.card-name { font-size: 14px; min-width: 0; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 6px; }
+.card-name { font-size: 14px; min-width: 0; font-weight: 700; line-height: 1.2; overflow-wrap: anywhere; }
 .card-hp { display: flex; align-items: center; gap: 4px; flex: none; }
 .card-win { min-height: 52px; border-radius: 8px; padding: 6px 8px; display: flex; flex-direction: column; justify-content: space-between; gap: 4px; background: color-mix(in srgb, var(--bg) 55%, transparent); border: 1px solid var(--line-soft); }
 .card-atk { display: flex; align-items: center; gap: 6px; }
@@ -141,3 +141,8 @@ table.t td { text-align: right; padding: 8px 4px; border-top: 1px solid var(--li
 .verdict.large { font-size: 15px; padding: 5px 14px; }
 .meta-bar { display: flex; height: 14px; border-radius: 7px; overflow: hidden; background: var(--track); gap: 2px; }
 .meta-bar > span { display: block; height: 100%; }
+
+.discard summary { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 44px; cursor: pointer; font-size: 13px; color: var(--text-2); list-style: none; border-top: 1px solid var(--line-soft); padding-top: 8px; }
+.discard summary::-webkit-details-marker { display: none; }
+.discard summary::after { content: "▾"; color: var(--muted); margin-left: auto; }
+.discard[open] summary::after { content: "▴"; }

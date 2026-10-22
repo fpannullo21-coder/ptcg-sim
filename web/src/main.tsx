@@ -65,11 +65,12 @@ function App() {
         if (m.type === "progress") return { ...s, done: m.done, total: m.total };
         if (m.type === "result") return { ...s, results: { ...s.results, [m.id]: { ...(s.results[m.id] ?? {}), [m.vs]: { wins: m.wins, games: m.games } } } };
         if (m.type === "done") return { ...s, running: false };
-        return { ...s, running: false, error: m.message };
+        if (m.type === "error") return { ...s, running: false, error: m.message };
+        return s;
       });
       if (m.type === "done" || m.type === "error") w.terminate();
     };
-    w.postMessage({ ...req, cardsUrl: new URL("./data/cards.json", location.href).href });
+    w.postMessage({ ...req, type: "sim", cardsUrl: new URL("./data/cards.json", location.href).href });
   };
   const stopSim = () => { worker.current?.terminate(); setSim(s => ({ ...s, running: false })); };
 

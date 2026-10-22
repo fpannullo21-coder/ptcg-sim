@@ -19,16 +19,8 @@ export interface Meta {
   sim: Record<string, Record<string, number>>;
   team: { name: string; list: string; sim: Record<string, number> }[];
 }
-export interface MonView {
-  name: string; hp: number; maxHp: number; type: string; stage: string; weak: string | null; retreat: number;
-  energies: string[]; attacks: { name: string; cost: string[]; damage: number }[]; tools: string[];
-}
-export interface SideView { active: MonView | null; bench: MonView[]; prizes: number; deck: number; handCount: number; discard: number }
-export interface Position {
-  vs: string; rollouts: number;
-  position: { turn: number; me: SideView; opp: SideView; hand: string[]; stadium: string | null; energyAttached: boolean; supporterPlayed: boolean };
-  options: { label: string; wr: number }[];
-}
+export type { MonView, SideView, DiscardView, TrainerPosition as Position } from "../../src/ai/trainer";
+import type { TrainerPosition as Position } from "../../src/ai/trainer";
 export interface Trainer { list: string; generated: string; rollouts: number; positions: Position[] }
 
 export interface Data { db: CardDB; reg: Registry; meta: Meta; trainer: Trainer | null; cardsRaw: unknown }
