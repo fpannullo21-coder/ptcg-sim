@@ -1,6 +1,6 @@
 # Il sito
 
-Cartella `web/`: Vite + Preact, stesso motore del simulatore (`src/`), nessuna copia del codice. Pensato prima per il telefono, tema scuro predefinito e chiaro se il sistema lo chiede.
+Cartella `web/`: Vite + Preact, stesso motore del simulatore (`src/`), nessuna copia del codice. Un solo sito per telefono e computer: sotto i 1024 pixel barra in basso e pagine su una colonna; sopra, barra laterale e pagine su due colonne (riepilogo e comandi a sinistra, dettaglio a destra). Tema scuro predefinito, chiaro se il sistema lo chiede.
 
 ## Pagine
 

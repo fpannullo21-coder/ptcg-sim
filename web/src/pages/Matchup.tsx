@@ -74,113 +74,119 @@ export function MatchupPage({ data, analyzed, deckText, deckName, sim, runSim, s
 
   return (
     <div class="page">
-      <a href="#/mazzo" class="box" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", textDecoration: "none", color: "var(--text)" }}>
-        <span style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-          <span style={{ fontSize: 17, fontWeight: 600, overflowWrap: "anywhere" }}>{deckName}</span>
-          <span class="sub">{arch ?? "archetipo non riconosciuto"} · {analyzed.check.total} carte · cambia lista</span>
-        </span>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
-      </a>
-
-      <div class="big">
-        <span class="sub">{mode === "real" ? "Contro il meta, nei Regional veri" : "Contro il meta"}</span>
-        {weighted !== null ? (
-          <>
-            <span style={{ display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
-              <span style={{ fontSize: 20, color: "var(--text-2)" }}>vinci circa</span>
-              <span class="big-num">{outOf10(weighted)}</span>
-              <span style={{ fontSize: 20, color: "var(--text-2)" }}>match su 10</span>
+      <div class="split">
+        <div class="col sticky">
+          <a href="#/mazzo" class="box" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", textDecoration: "none", color: "var(--text)" }}>
+            <span style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+              <span style={{ fontSize: 17, fontWeight: 600, overflowWrap: "anywhere" }}>{deckName}</span>
+              <span class="sub">{arch ?? "archetipo non riconosciuto"} · {analyzed.check.total} carte · cambia lista</span>
             </span>
-            <span style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-              <Verdict v={weighted} large />
-              <span class="sub">{pct(weighted)} · {mode === "anchored" ? "stima sui dati reali" : mode === "sim" ? "solo simulazione" : "dati reali"}</span>
-            </span>
-          </>
-        ) : <span class="num" style={{ fontSize: 34, color: "var(--muted)" }}>da simulare</span>}
-      </div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
+          </a>
 
-      {weighted !== null && (
-        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-          <span class="section-label">Quanti avversari ti sono favorevoli</span>
-          <span class="meta-bar" role="img" aria-label={`A favore ${pct(split.good, 0)} del meta, pari ${pct(split.even, 0)}, contro ${pct(split.bad, 0)}`}>
-            <span style={{ width: `${split.good * 100}%`, background: "var(--good)" }}></span>
-            <span style={{ width: `${split.even * 100}%`, background: "var(--neutral)" }}></span>
-            <span style={{ width: `${split.bad * 100}%`, background: "var(--bad)" }}></span>
-          </span>
-          <span class="legend">
-            <span><span class="sw" style={{ background: "var(--good)" }}></span>a favore {pct(split.good, 0)} del meta</span>
-            <span><span class="sw" style={{ background: "var(--neutral)" }}></span>pari {pct(split.even, 0)}</span>
-            <span><span class="sw" style={{ background: "var(--bad)" }}></span>contro {pct(split.bad, 0)}</span>
-          </span>
-        </div>
-      )}
-
-      {(!simGame || running) && (
-        <div class="box" style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          <span style={{ fontWeight: 600 }}>{running ? "Simulazione in corso" : "Questa lista non è ancora stata simulata"}</span>
-          <span class="sub">La simulazione gira in questo browser: {games} partite contro ognuno dei {meta.archetypes.length} archetipi, {games * meta.archetypes.length} partite in tutto. Con {games} partite per coppia ogni matchup ha un margine di circa ±{Math.round(100 / Math.sqrt(games))} punti; il dato pesato è più stabile.</span>
-          {!analyzed.check.ok && <div class="msg err">La lista ha errori: correggili nella pagina Mazzo prima di simulare.</div>}
-          <div class="field">
-            <label for="games">Partite per coppia</label>
-            <select id="games" value={String(games)} onChange={e => setGames(Number((e.target as HTMLSelectElement).value))}>
-              <option value="10">10 (veloce)</option><option value="20">20</option><option value="50">50 (più precisa, più lenta)</option>
-            </select>
-          </div>
-          {running ? (
-            <>
-              <div class="progress" role="progressbar" aria-valuenow={sim.done} aria-valuemax={sim.total}><div style={{ width: `${(100 * sim.done) / Math.max(1, sim.total)}%` }}></div></div>
-              <span class="sub">{sim.done} di {sim.total} partite</span>
-              <button class="btn" onClick={stopSim}>Ferma</button>
-            </>
-          ) : (
-            <button class="btn primary" onClick={startSim} disabled={!analyzed.check.ok}>Simula contro il meta</button>
-          )}
-          {sim.error && <div class="msg err">{sim.error}</div>}
-        </div>
-      )}
-
-      <div>
-        {rows.map(r => {
-          const level = !r.real ? 0 : r.real.n >= 200 ? 3 : r.real.n >= 100 ? 2 : 1;
-          return (
-            <div class="mrow">
-              <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
-                <span style={{ display: "flex", flexDirection: "column", gap: 3, minWidth: 0 }}>
-                  <span class="mname">{r.a.name}{r.mirror ? " (mirror)" : ""}</span>
-                  <span class="mmeta">{pct(r.a.share / 100, 0)} del meta · <Dots level={level} />{["nessun dato reale", "pochi match reali", "dato indicativo", "dato solido"][level]}</span>
-                  {r.unreliable && mode !== "real" && <span class="mmeta" style={{ color: "var(--bad)" }}>simulazione poco affidabile in questo matchup</span>}
+          <div class="big">
+            <span class="sub">{mode === "real" ? "Contro il meta, nei Regional veri" : "Contro il meta"}</span>
+            {weighted !== null ? (
+              <>
+                <span style={{ display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
+                  <span style={{ fontSize: 20, color: "var(--text-2)" }}>vinci circa</span>
+                  <span class="big-num">{outOf10(weighted)}</span>
+                  <span style={{ fontSize: 20, color: "var(--text-2)" }}>match su 10</span>
                 </span>
-                {r.value !== null ? (
-                  <span style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 4, flex: "none" }}>
-                    <Verdict v={r.value} />
-                    <span style={{ fontSize: 13, color: "var(--text-2)" }}><span class="num" style={{ fontSize: 20, color: tone(r.value) }}>{outOf10(r.value)}</span> su 10</span>
-                  </span>
-                ) : <span class="sub">da simulare</span>}
-              </span>
-              {r.value !== null && <Bar value={r.value} real={mode !== "real" ? r.real?.wr ?? null : null} color={tone(r.value)} />}
-            </div>
-          );
-        })}
-      </div>
-      <div class="legend">
-        <span>La barra parte dal centro: verso destra a tuo favore, verso sinistra contro.</span>
-        <span><span style={{ width: 2, height: 12, background: "var(--text)" }}></span>risultato reale dell'archetipo</span>
-      </div>
+                <span style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                  <Verdict v={weighted} large />
+                  <span class="sub">{pct(weighted)} · {mode === "anchored" ? "stima sui dati reali" : mode === "sim" ? "solo simulazione" : "dati reali"}</span>
+                </span>
+              </>
+            ) : <span class="num" style={{ fontSize: 34, color: "var(--muted)" }}>da simulare</span>}
+          </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-        <span class="section-label">Da dove viene il numero</span>
-        <div class="seg" role="group" aria-label="Da dove viene il numero">
-          {(Object.keys(LABEL) as Mode[]).map(m => <button aria-pressed={mode === m} onClick={() => setMode(m)}>{LABEL[m]}</button>)}
+          {weighted !== null && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <span class="section-label">Quanti avversari ti sono favorevoli</span>
+              <span class="meta-bar" role="img" aria-label={`A favore ${pct(split.good, 0)} del meta, pari ${pct(split.even, 0)}, contro ${pct(split.bad, 0)}`}>
+                <span style={{ width: `${split.good * 100}%`, background: "var(--good)" }}></span>
+                <span style={{ width: `${split.even * 100}%`, background: "var(--neutral)" }}></span>
+                <span style={{ width: `${split.bad * 100}%`, background: "var(--bad)" }}></span>
+              </span>
+              <span class="legend">
+                <span><span class="sw" style={{ background: "var(--good)" }}></span>a favore {pct(split.good, 0)} del meta</span>
+                <span><span class="sw" style={{ background: "var(--neutral)" }}></span>pari {pct(split.even, 0)}</span>
+                <span><span class="sw" style={{ background: "var(--bad)" }}></span>contro {pct(split.bad, 0)}</span>
+              </span>
+            </div>
+          )}
+
+          {(!simGame || running) && (
+            <div class="box" style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              <span style={{ fontWeight: 600 }}>{running ? "Simulazione in corso" : "Questa lista non è ancora stata simulata"}</span>
+              <span class="sub">La simulazione gira in questo browser: {games} partite contro ognuno dei {meta.archetypes.length} archetipi, {games * meta.archetypes.length} partite in tutto. Con {games} partite per avversario ogni matchup ha un margine di errore di circa ±{Math.round(100 / Math.sqrt(games))} punti: il numero vero può essere più alto o più basso di tanto. Il dato su tutto il meta è più stabile.</span>
+              {!analyzed.check.ok && <div class="msg err">La lista ha errori: correggili nella pagina Mazzo prima di simulare.</div>}
+              <div class="field">
+                <label for="games">Partite per coppia</label>
+                <select id="games" value={String(games)} onChange={e => setGames(Number((e.target as HTMLSelectElement).value))}>
+                  <option value="10">10 (veloce)</option><option value="20">20</option><option value="50">50 (più precisa, più lenta)</option>
+                </select>
+              </div>
+              {running ? (
+                <>
+                  <div class="progress" role="progressbar" aria-valuenow={sim.done} aria-valuemax={sim.total}><div style={{ width: `${(100 * sim.done) / Math.max(1, sim.total)}%` }}></div></div>
+                  <span class="sub">{sim.done} di {sim.total} partite</span>
+                  <button class="btn" onClick={stopSim}>Ferma</button>
+                </>
+              ) : (
+                <button class="btn primary" onClick={startSim} disabled={!analyzed.check.ok}>Simula contro il meta</button>
+              )}
+              {sim.error && <div class="msg err">{sim.error}</div>}
+            </div>
+          )}
+
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            <span class="section-label">Da dove viene il numero</span>
+            <div class="seg" role="group" aria-label="Da dove viene il numero">
+              {(Object.keys(LABEL) as Mode[]).map(m => <button aria-pressed={mode === m} onClick={() => setMode(m)}>{LABEL[m]}</button>)}
+            </div>
+            <p class="sub">{HELP[mode]}</p>
+            <p class="sub">
+              Media pesata sulle quote dei {rows.length} archetipi principali
+              {coveredShare < totalShare - 0.01 && weighted !== null ? ` (copre il ${pct(coveredShare / totalShare, 0)} del meta considerato)` : ""}.
+              {source ? ` ${source}.` : ""}
+            </p>
+          </div>
+          <p class="sub"><span class="beta">Beta</span> Il simulatore gioca ancora alcuni mazzi peggio della realtà: dove la simulazione delle liste tipo si discosta di oltre 20 punti dai risultati veri, il matchup è segnato come poco affidabile. In media lo scarto oggi è di circa 25 punti.</p>
+          <p class="sub">Simulazioni aggiornate al {new Date(meta.updated).toLocaleDateString("it-IT")}. Le liste tipo sono le meglio piazzate nei Regional del formato.</p>
         </div>
-        <p class="sub">{HELP[mode]}</p>
-        <p class="sub">
-          Media pesata sulle quote dei {rows.length} archetipi principali
-          {coveredShare < totalShare - 0.01 && weighted !== null ? ` (copre il ${pct(coveredShare / totalShare, 0)} del meta considerato)` : ""}.
-          {source ? ` ${source}.` : ""}
-        </p>
+        <div class="col">
+          <div>
+            {rows.map(r => {
+              const level = !r.real ? 0 : r.real.n >= 200 ? 3 : r.real.n >= 100 ? 2 : 1;
+              return (
+                <div class="mrow">
+                  <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
+                    <span style={{ display: "flex", flexDirection: "column", gap: 3, minWidth: 0 }}>
+                      <span class="mname">{r.a.name}{r.mirror ? " (mirror)" : ""}</span>
+                      <span class="mmeta">{pct(r.a.share / 100, 0)} del meta · <Dots level={level} />{["nessun dato reale", "pochi match reali", "dato indicativo", "dato solido"][level]}</span>
+                      {r.unreliable && mode !== "real" && <span class="mmeta" style={{ color: "var(--bad)" }}>simulazione poco affidabile in questo matchup</span>}
+                    </span>
+                    {r.value !== null ? (
+                      <span style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 4, flex: "none" }}>
+                        <Verdict v={r.value} />
+                        <span style={{ fontSize: 13, color: "var(--text-2)" }}><span class="num" style={{ fontSize: 20, color: tone(r.value) }}>{outOf10(r.value)}</span> su 10</span>
+                      </span>
+                    ) : <span class="sub">da simulare</span>}
+                  </span>
+                  {r.value !== null && <Bar value={r.value} real={mode !== "real" ? r.real?.wr ?? null : null} color={tone(r.value)} />}
+                </div>
+              );
+            })}
+          </div>
+          <div class="legend">
+            <span>La barra parte dal centro: verso destra a tuo favore, verso sinistra contro.</span>
+            <span><span style={{ width: 2, height: 12, background: "var(--text)" }}></span>risultato reale dell'archetipo</span>
+          </div>
+
+        </div>
       </div>
-      <p class="sub"><span class="beta">Beta</span> Il simulatore gioca ancora alcuni mazzi peggio della realtà: dove la simulazione delle liste tipo si discosta di oltre 20 punti dai risultati veri, il matchup è segnato come poco affidabile. In media lo scarto oggi è di circa 25 punti.</p>
-      <p class="sub">Simulazioni aggiornate al {new Date(meta.updated).toLocaleDateString("it-IT")}. Le liste tipo sono le meglio piazzate nei Regional del formato.</p>
     </div>
   );
 }

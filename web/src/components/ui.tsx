@@ -107,6 +107,7 @@ export function Nav({ route }: { route: Route }) {
   const items: [Route, string][] = [["mazzo", "Mazzo"], ["matchup", "Matchup"], ["varianti", "Varianti"], ["consistenza", "Consistenza"], ["allenatore", "Allenatore"]];
   return (
     <nav class="nav" aria-label="Sezioni">
+      <div class="nav-brand">PTCG Sim <span class="beta">Beta</span></div>
       <div class="nav-in">
         {items.map(([r, label]) => (
           <a href={`#/${r}`} aria-current={route === r ? "page" : undefined}>{ICONS[r as keyof typeof ICONS]}{label}</a>

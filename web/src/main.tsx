@@ -99,9 +99,11 @@ function App() {
   const props = { data, analyzed, deckText, deckName, useDeck, sim, runSim, stopSim, lists, active, selectList, upsertList, deleteList };
   const sources = `Dati dei tornei: ${data.meta.sources.tournaments}. Matchup reali: ${data.meta.sources.matchups}.`;
   return (
+    <div class="shell">
+    <Nav route={route} />
     <div class="app">
       <header class="top">
-        <span class="brand">PTCG Sim <span class="beta">Beta</span>{data.meta.private ? " · privato" : ""}</span>
+        <span class="brand">PTCG Sim <span class="beta">Beta</span></span>
         <a href="#/mazzo" class="list-pill" title="Cambia lista">{deckName}</a>
       </header>
       <main>
@@ -113,7 +115,7 @@ function App() {
         {route === "legale" && <LegalePage data={data} />}
       </main>
       <Footer sources={sources} />
-      <Nav route={route} />
+    </div>
     </div>
   );
 }

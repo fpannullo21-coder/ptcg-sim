@@ -78,20 +78,33 @@ export function SuggestBox({ data, analyzed, deckText, deckName, active, useDeck
 
       {result && (
         <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 4 }}>
-          <span class="sub">Contro {result.opp} la tua lista vince {pct(bo3(result.base.wr), 0)} dei match nel simulatore ({result.base.games} partite).</span>
+          <div class="msg" style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+            <strong>Come leggere i punti</strong>
+            <span>I punti sono la differenza nei match vinti contro {result.opp}, su 100 match. "+10 punti" vuol dire che su 100 match la variante ne vince 10 in più della tua lista.</span>
+            <span>Ogni numero viene da un numero limitato di partite simulate, quindi ha un margine di errore, come un sondaggio. Se il vantaggio è più grande del margine, il miglioramento è sicuro; se è più piccolo, potrebbe essere solo fortuna delle pescate e va confermato con più partite.</span>
+          </div>
+          <span class="sub">Oggi la tua lista vince {Math.round(100 * bo3(result.base.wr))} match su 100 contro {result.opp}, secondo il simulatore ({result.base.games} partite).</span>
           {best.map((it, k) => {
-            const dm = bo3(it.wr) - bo3(it.baseWr);
-            const sure = it.delta > 2 * it.se;
-            const good = dm > 0;
+            const before = bo3(it.baseWr), after = bo3(it.wr), dm = after - before;
+            // margine di errore in punti di match: due errori standard della differenza, portati da partite a match
+            const p0 = Math.min(0.95, Math.max(0.05, it.baseWr));
+            const margin = Math.max(1, Math.round(100 * 2 * it.se * 6 * p0 * (1 - p0)));
+            const pts = Math.round(100 * dm);
+            const level = pts > margin ? "sure" : pts > 0 ? "maybe" : "no";
+            const chip = { sure: ["Miglioramento sicuro", "var(--good)"], maybe: ["Forse: da confermare", "var(--neutral)"], no: ["Nessun miglioramento", "var(--bad)"] }[level];
             return (
               <div style={{ display: "flex", flexDirection: "column", gap: 6, padding: "12px 0", borderTop: k ? "1px solid var(--line-soft)" : "none" }}>
                 <span style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10 }}>
                   <span style={{ fontWeight: 600 }}>−1 {it.swap.out}, +1 {it.swap.in}</span>
-                  <span class="num" style={{ fontSize: 22, flex: "none", color: good ? "var(--good)" : "var(--bad)" }}>{good ? "+" : ""}{Math.round(100 * dm)} punti</span>
+                  <span class="num" style={{ fontSize: 22, flex: "none", color: pts > 0 ? "var(--good)" : "var(--bad)" }}>{pts > 0 ? "+" : ""}{pts} punti</span>
                 </span>
-                <span class="sub">Match vinti: da {pct(bo3(it.baseWr), 0)} a {pct(bo3(it.wr), 0)} su {it.games} partite. {good ? (sure ? "Miglioramento probabile." : "Da confermare: la differenza è vicina al rumore.") : "Nessun miglioramento."}</span>
-                <span class="sub">{it.swap.why}.</span>
-                {good && (
+                <span><span class="verdict" style={{ color: chip[1], background: `color-mix(in srgb, ${chip[1]} 16%, var(--surface))` }}>{chip[0]}</span></span>
+                <span class="sub">
+                  {Math.round(100 * after)} match vinti su 100 invece di {Math.round(100 * before)}, con un margine di errore di ±{margin} punti ({it.games} partite).{" "}
+                  {level === "sure" ? `Anche nel caso peggiore la variante resta avanti.` : level === "maybe" ? `Il vantaggio (${pts}) è più piccolo del margine (${margin}): potrebbe essere fortuna.` : "In queste partite la variante non ha fatto meglio della tua lista."}
+                </span>
+                <span class="sub">Perché provarla: {it.swap.why}.</span>
+                {pts > 0 && (
                   <span class="row-btns">
                     <button class="btn" onClick={() => onCompare(it.swap.out, it.swap.in)}>Prova sul meta</button>
                     <button class="btn" onClick={() => useDeck(it.swap.text, `${deckName.replace(/^Esempio: /, "")} (−1 ${it.swap.out}, +1 ${it.swap.in})`, active?.archetype ?? "")}>Salva come nuova lista</button>

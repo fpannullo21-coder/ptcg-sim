@@ -107,80 +107,89 @@ export function AllenatorePage({ data, deckText, deckName, analyzed }: PageProps
         <span class="num box" style={{ fontSize: 18, padding: "8px 12px", color: "var(--accent)" }} aria-label={`${score.right} giuste su ${score.done}`}>{score.right}/{score.done}</span>
       </div>
 
-      <div class="box" style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-        <span style={{ fontWeight: 600 }}>Nuova posizione</span>
-        <span class="sub">Il simulatore gioca una partita con {listName} finché arriva una scelta che conta, poi prova ogni mossa giocando 40 partite fino in fondo. Sul telefono serve da mezzo minuto a un minuto.</span>
-        <div class="field">
-          <label for="t-opp">Avversario</label>
-          <select id="t-opp" value={opp} onChange={e => setOpp((e.target as HTMLSelectElement).value)}>
-            {data.meta.archetypes.map(a => <option value={a.name}>{a.name}</option>)}
-          </select>
+      <div class="split">
+        <div class="col">
+          <div class="box" style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            <span style={{ fontWeight: 600 }}>Nuova posizione</span>
+            <span class="sub">Il simulatore gioca una partita con {listName} finché arriva una scelta che conta, poi prova ogni mossa giocando 40 partite fino in fondo. Sul telefono serve da mezzo minuto a un minuto.</span>
+            <div class="field">
+              <label for="t-opp">Avversario</label>
+              <select id="t-opp" value={opp} onChange={e => setOpp((e.target as HTMLSelectElement).value)}>
+                {data.meta.archetypes.map(a => <option value={a.name}>{a.name}</option>)}
+              </select>
+            </div>
+            {busy ? (
+              <>
+                <span class="sub" aria-live="polite">{busy}</span>
+                <button class="btn" onClick={stop}>Ferma</button>
+              </>
+            ) : (
+              <button class="btn primary" onClick={generate} disabled={!analyzed.check.ok}>Genera una posizione</button>
+            )}
+            {!analyzed.check.ok && <div class="msg err">La lista ha errori: correggili nella pagina Mazzo.</div>}
+            {err && <div class="msg">{err}</div>}
+          </div>
+
+          {p && (
+            <>
+              <span class="sub">
+                {fromMine ? "Posizione generata ora" : `Posizione pronta (${readyList.replace(/^.*\//, "").replace(/-/g, " ")})`} · contro {p.vs} · {(i % all.length) + 1} di {all.length}.
+                {" "}Per ogni mossa, {p.rollouts} partite giocate fino in fondo dal simulatore, con le carte nascoste rimescolate ogni volta.
+              </span>
+              <Side title={`Avversario · ${p.vs}`} side={p.position.opp} />
+              <Side title="Tu" side={p.position.me} hand={p.position.hand} openDiscard />
+              {p.position.stadium && <span class="sub">Stadio in gioco: {p.position.stadium}</span>}
+            </>
+          )}
         </div>
-        {busy ? (
-          <>
-            <span class="sub" aria-live="polite">{busy}</span>
-            <button class="btn" onClick={stop}>Ferma</button>
-          </>
-        ) : (
-          <button class="btn primary" onClick={generate} disabled={!analyzed.check.ok}>Genera una posizione</button>
-        )}
-        {!analyzed.check.ok && <div class="msg err">La lista ha errori: correggili nella pagina Mazzo.</div>}
-        {err && <div class="msg">{err}</div>}
-      </div>
-
-      {p && (
-        <>
-          <span class="sub">
-            {fromMine ? "Posizione generata ora" : `Posizione pronta (${readyList.replace(/^.*\//, "").replace(/-/g, " ")})`} · contro {p.vs} · {(i % all.length) + 1} di {all.length}.
-            {" "}Per ogni mossa, {p.rollouts} partite giocate fino in fondo dal simulatore, con le carte nascoste rimescolate ogni volta.
-          </span>
-          <Side title={`Avversario · ${p.vs}`} side={p.position.opp} />
-          <Side title="Tu" side={p.position.me} hand={p.position.hand} openDiscard />
-          {p.position.stadium && <span class="sub">Stadio in gioco: {p.position.stadium}</span>}
-
-          <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-            <span style={{ fontSize: 20, fontWeight: 700 }}>Tocca a te. Cosa fai adesso?</span>
-            <span class="sub">
-              Turno {p.position.turn} della partita. {p.position.energyAttached ? "Hai già attaccato l'Energia del turno. " : ""}
-              {p.position.supporterPlayed ? "Hai già giocato un Supporter. " : ""}
-              Scegli la prossima azione; il resto del turno lo gioca il simulatore.
-            </span>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            {p.options.map((o, k) => {
-              const best = Math.max(...p.options.map(x => x.wr));
-              const isBest = o.wr === best;
-              const cls = picked === null ? "opt" : isBest ? "opt best" : picked === k ? "opt wrong" : "opt";
-              return (
-                <button class={cls} onClick={() => pick(k)} aria-pressed={picked === k}>
-                  <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
-                    <span style={{ fontSize: 15, fontWeight: 600 }}>{o.label}</span>
-                    {picked !== null && <span class="num" style={{ fontSize: 24, color: isBest ? "var(--good)" : "var(--text-2)" }}>{pct(o.wr, 0)}</span>}
-                  </span>
-                  {picked !== null && <span class="bar" style={{ display: "block" }}><span class="bar-fill" style={{ left: 0, width: `${o.wr * 100}%`, background: isBest ? "var(--good)" : "var(--muted)" }}></span></span>}
-                </button>
-              );
-            })}
-          </div>
-          {picked !== null && (() => {
-            const best = Math.max(...p.options.map(x => x.wr));
-            const right = p.options[picked].wr >= best - 0.02;
-            const bestOpt = p.options.find(o => o.wr === best)!;
-            return (
-              <div class="box" style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                <span style={{ fontWeight: 700, color: right ? "var(--good)" : "var(--bad)" }}>
-                  {right ? "Giusto: è la mossa che vince di più." : `Si poteva fare meglio: "${bestOpt.label}" vince il ${pct(best, 0)}.`}
+        <div class="col sticky">
+          {p && (
+            <>
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                <span style={{ fontSize: 20, fontWeight: 700 }}>Tocca a te. Cosa fai adesso?</span>
+                <span class="sub">
+                  Turno {p.position.turn} della partita. {p.position.energyAttached ? "Hai già attaccato l'Energia del turno. " : ""}
+                  {p.position.supporterPlayed ? "Hai già giocato un Supporter. " : ""}
+                  Scegli la prossima azione; il resto del turno lo gioca il simulatore.
                 </span>
-                <span class="sub">Le percentuali vengono dal simulatore, che gioca ancora alcuni mazzi peggio della realtà: differenze sotto i 5 punti sono quasi pari.</span>
               </div>
-            );
-          })()}
-          <div class="row-btns">
-            <button class="btn" onClick={() => setPicked(null)} disabled={picked === null}>Riprova</button>
-            <button class="btn primary" onClick={next}>Prossima posizione</button>
-          </div>
-        </>
-      )}
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                {p.options.map((o, k) => {
+                  const best = Math.max(...p.options.map(x => x.wr));
+                  const isBest = o.wr === best;
+                  const cls = picked === null ? "opt" : isBest ? "opt best" : picked === k ? "opt wrong" : "opt";
+                  return (
+                    <button class={cls} onClick={() => pick(k)} aria-pressed={picked === k}>
+                      <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
+                        <span style={{ fontSize: 15, fontWeight: 600 }}>{o.label}</span>
+                        {picked !== null && <span class="num" style={{ fontSize: 24, color: isBest ? "var(--good)" : "var(--text-2)" }}>{pct(o.wr, 0)}</span>}
+                      </span>
+                      {picked !== null && <span class="bar" style={{ display: "block" }}><span class="bar-fill" style={{ left: 0, width: `${o.wr * 100}%`, background: isBest ? "var(--good)" : "var(--muted)" }}></span></span>}
+                    </button>
+                  );
+                })}
+              </div>
+              {picked !== null && (() => {
+                const best = Math.max(...p.options.map(x => x.wr));
+                const right = p.options[picked].wr >= best - 0.02;
+                const bestOpt = p.options.find(o => o.wr === best)!;
+                return (
+                  <div class="box" style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                    <span style={{ fontWeight: 700, color: right ? "var(--good)" : "var(--bad)" }}>
+                      {right ? "Giusto: è la mossa che vince di più." : `Si poteva fare meglio: "${bestOpt.label}" vince il ${pct(best, 0)}.`}
+                    </span>
+                    <span class="sub">Le percentuali vengono dal simulatore, che gioca ancora alcuni mazzi peggio della realtà: differenze sotto i 5 punti sono quasi pari.</span>
+                  </div>
+                );
+              })()}
+              <div class="row-btns">
+                <button class="btn" onClick={() => setPicked(null)} disabled={picked === null}>Riprova</button>
+                <button class="btn primary" onClick={next}>Prossima posizione</button>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
