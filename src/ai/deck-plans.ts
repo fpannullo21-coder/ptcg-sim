@@ -14,6 +14,10 @@ export interface DeckPlan {
   entries: Record<string, Partial<PlanEntry>>;
   /** Chi mettere in attivo all'inizio, in ordine di preferenza. */
   openers?: string[];
+  /** Stadio da avere sempre in gioco (si gioca appena possibile). */
+  stadium?: string;
+  /** Riempire la panchina (attacchi che contano i Pokémon in panchina). */
+  fillBench?: boolean;
 }
 
 export const DECK_PLANS: DeckPlan[] = [
@@ -67,6 +71,27 @@ export const DECK_PLANS: DeckPlan[] = [
       "Lillie's Clefairy ex": { value: 20, max: 1 },
       "Fezandipiti ex": { value: 10, max: 1 },
       "Meowth ex": { value: 10, max: 1 },
+    },
+  },
+  {
+    // Festival Lead: Festival Grounds sempre in gioco, panchina piena per Do the Wave, Thwackey cerca qualsiasi carta
+    name: "Festival Lead",
+    detect: ["Dipplin", "Thwackey"],
+    openers: ["Applin", "Goldeen", "Grookey"],
+    stadium: "Festival Grounds",
+    fillBench: true,
+    entries: {
+      Applin: { value: 110, max: 3 },
+      Dipplin: { value: 120, max: 3 },
+      Grookey: { value: 100, max: 2 },
+      Thwackey: { value: 105, max: 2 },
+      Goldeen: { value: 70, max: 2 },
+      Seaking: { value: 75, max: 1 },
+      Rellor: { value: 60, max: 1 },
+      Rabsca: { value: 80, max: 1 },
+      Psyduck: { value: 50, max: 1 },
+      Shaymin: { value: 60, max: 1 },
+      Moltres: { value: 50, max: 1 },
     },
   },
   {

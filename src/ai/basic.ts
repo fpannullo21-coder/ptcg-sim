@@ -356,7 +356,7 @@ export class BasicAgent implements Agent {
 
   action(g: G, me: number, acts: Action[]): number {
     const p = g.p(me), o = g.p(1 - me);
-    const benchMax = this.opts.benchMax ?? 4;
+    const benchMax = this.plan(g, me).fillBench ? 5 : this.opts.benchMax ?? 4;
     const score = (a: Action): number => {
       switch (a.kind) {
         case "ability": {
@@ -496,7 +496,11 @@ export class BasicAgent implements Agent {
       if (p.deck.length < 10 && p.hand.length >= 4) return -1;
       return p.hand.length <= 5 ? 35 : 20;
     }
-    if (d.sub === "stadium") return 15;
+    if (d.sub === "stadium") {
+      const want = this.plan(g, me).stadium;
+      if (want) return d.name === want ? (g.s.stadium !== null && g.name(g.s.stadium) === want ? -1 : 75) : -1;
+      return 15;
+    }
     if (d.sub === "tool") return 25;
     void card;
     return 40;

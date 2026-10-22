@@ -10,7 +10,7 @@ Contro nizza-2026/02-dhelmise-maxime-launay, 20 partite, giocatore basic. Primo 
 | Slowking | 4.7 | 70% | 0.9 | 5% |
 | Dragapult Dusknoir | 3.0 | 35% | 4.0 | 45% |
 | Dragapult Blaziken | 2.3 | 33% | 2.8 | 30% |
-| Festival Lead | 2.7 | 52% | 1.2 | 10% |
+| Festival Lead | 3.0 | 51% | 1.9 | 15% |
 | Alakazam Dudunsparce | 2.5 | 20% | 3.3 | 35% |
 | Crustle | 4.3 | 52% | 4.1 | 65% |
 | Dhelmise | 2.3 | 22% | 3.6 | 45% |
