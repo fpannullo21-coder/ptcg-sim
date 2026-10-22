@@ -112,7 +112,8 @@ export const DECK_PLANS: DeckPlan[] = [
       "N's Zorua": { value: 115, max: 3 },
       "N's Zoroark ex": { value: 125, max: 3 },
       "N's Zekrom": { value: 60, max: 1 },
-      "N's Reshiram": { value: 50, max: 1 },
+      // Powerful Rage (20 per ogni segnalino su Zoroark ex) è l'attacco che vince contro Dragapult: Reshiram in panchina presto
+      "N's Reshiram": { value: 80, max: 1 },
       "N's Darmanitan": { value: 50, max: 1 },
       "Pecharunt ex": { value: 35, max: 1 },
       Munkidori: { value: 45, max: 1 },
@@ -135,6 +136,22 @@ export const DECK_PLANS: DeckPlan[] = [
       "Team Rocket's Porygon2": { value: 70, max: 1 },
       // Articuno (Repelling Veil) protegge dagli effetti degli attacchi i Base Team Rocket: con lui in campo la panchina di Base è al sicuro
       "Team Rocket's Articuno": { value: 95, max: 1 },
+    },
+  },
+  {
+    // Basic Box contro Dragapult (Francesco): Lillie's Clefairy ex rende i Draghi deboli al Psico,
+    // quindi Latias ex (Eon Blade) e Clefairy (Full Moon Rondo) fanno il doppio; Ogerpon Maschera Pozzo colpisce la panchina
+    name: "Basic Box",
+    detect: ["Mega Kangaskhan ex", "Teal Mask Ogerpon ex", "Lillie's Clefairy ex"],
+    openers: ["Mega Kangaskhan ex", "Teal Mask Ogerpon ex"],
+    entries: {
+      "Mega Kangaskhan ex": { value: 90, max: 2, role: "attacker" },
+      "Latias ex": { value: 85, max: 1, role: "attacker" },
+      "Lillie's Clefairy ex": { value: 60, max: 1 },
+      "Wellspring Mask Ogerpon ex": { value: 70, max: 1, role: "attacker" },
+      "Teal Mask Ogerpon ex": { value: 75, max: 1, role: "attacker" },
+      "Meowth ex": { value: 20, max: 1 },
+      "Fezandipiti ex": { value: 15, max: 1 },
     },
   },
 ];

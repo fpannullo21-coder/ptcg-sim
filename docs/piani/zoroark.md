@@ -21,3 +21,7 @@ Le righe segnate **[nel simulatore]** sono nel codice. Le risposte di Francesco 
 
 ## Come gioca oggi
 Contro Hide n' Sneak, 30 partite: vince il 47% (prima circa il 10%; reale 82%). Turni senza attacco dal 58% al 34%. Perde ancora 2 partite su 30 a mazzo finito.
+
+## Contro Dragapult
+- **Vince l'attacco che moltiplica i danni** (Francesco): Powerful Rage di N's Reshiram, copiato da Night Joker, fa 20 per ogni segnalino su Zoroark ex. Dopo un Phantom Dive (200 danni) fa 400 e manda KO Dragapult ex. N's Reshiram va in panchina presto; la scelta dell'attacco copiato lo trova da sola [nel simulatore].
+- Contro Dragapult, 40 partite: Zoroark vince il 30% delle partite (prima il 17%); reale 58% dei match.

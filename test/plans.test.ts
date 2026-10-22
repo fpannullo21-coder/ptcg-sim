@@ -44,3 +44,20 @@ suite("Honchkrow (risposte di Francesco)", () => {
     expect(pick.map(i => g.name(opts[i])).sort()).toEqual(["Team Rocket's Archer", "Team Rocket's Giovanni"]);
   });
 });
+
+suite("contro Dragapult (risposte di Francesco)", () => {
+  test("Zoroark ex danneggiato copia Powerful Rage di N's Reshiram", () => {
+    const g = position({ active: ["N's Zoroark ex", "Darkness Energy", "Darkness Energy"], bench: ["JTG-116", "ASC-155"] }, { active: "Dragapult ex" });
+    g.p(0).active!.damage = 200;
+    const a = new BasicAgent();
+    const opts = g.p(0).bench.flatMap(m => (g.top(m).attacks ?? []).map((_, i) => [topCard(m), i] as [number, number]));
+    const [c, i] = opts.reduce((x, y) => (a.copyValue(g, 0, y[0], y[1]) > a.copyValue(g, 0, x[0], x[1]) ? y : x));
+    expect(g.def(c).attacks![i].name).toBe("Powerful Rage");
+  });
+
+  test("Basic Box: Lillie's Clefairy ex in panchina appena l'avversario ha un Drago in campo", () => {
+    const g = position({ active: "Mega Kangaskhan ex", bench: ["Latias ex"], hand: ["Lillie's Clefairy ex"] }, { active: "Dreepy" });
+    const a = new BasicAgent();
+    expect(a.benchValue(g, 0, g.p(0).hand[0])).toBeGreaterThanOrEqual(95);
+  });
+});

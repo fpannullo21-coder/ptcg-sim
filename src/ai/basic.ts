@@ -6,7 +6,7 @@
  * Ordine del turno: Abilità ed evoluzioni, panchina, ricerca, Energia,
  * Supporter, poi l'attacco migliore. Boss's Orders solo se dà un KO.
  */
-import { apply, applyDamage, attack, attackCost, canPay, G, GameOver, provided, retreatCost, slot } from "../engine/game.js";
+import { apply, applyDamage, attack, attackCost, canPay, G, GameOver, provided, retreatCost, slot, weaknessOf } from "../engine/game.js";
 import type { Agent } from "../engine/game.js";
 import { atkDamage, derivePlan, type Plan } from "./plan.js";
 import type { Action, Attack, CardDef, Decision, Mon } from "../engine/types.js";
@@ -46,6 +46,8 @@ export class BasicAgent implements Agent {
     const abil = d.abilities ?? [];
     if (abil.some(a => a.trigger === "bench") && !p.supporterPlayed && !p.hand.some(x => g.def(x).sub === "supporter")) v = Math.max(v, 55);
     if (abil.some(a => a.name === "Flip the Script") && p.flags.ko_turn === g.s.turn - 1) v = Math.max(v, 60);
+    // Lillie's Clefairy ex (Fairy Zone) contro i Pokémon Drago: diventano deboli al Psico (piano di Basic Box contro Dragapult)
+    if (d.name === "Lillie's Clefairy ex" && g.inPlay(1 - me).some(m => g.top(m).type === "N")) v = Math.max(v, 95);
     return v;
   }
 
@@ -136,7 +138,10 @@ export class BasicAgent implements Agent {
         for (const a of def.attacks ?? []) {
           // il piano di mazzo pesa: l'attaccante principale dell'archetipo riceve le Energie prima degli altri
           const need = this.need(g, m.energies, [...a.cost]);
-          const v = w * (atkDamage(a) / (1 + need) + planV / 3) + (m === p.active ? 5 : 0);
+          // la debolezza dell'attivo avversario raddoppia il valore dell'attaccante del tipo giusto
+          const oa = g.p(1 - me).active;
+          const weak = oa && weaknessOf(g, oa) === def.type ? 2 : 1;
+          const v = w * ((weak * atkDamage(a)) / (1 + need) + planV / 3) + (m === p.active ? 5 : 0);
           if (v > bv) { bv = v; best = m; }
         }
       }

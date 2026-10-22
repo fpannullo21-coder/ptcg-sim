@@ -21,7 +21,7 @@ const ESTIMATE: Record<string, number> = {
   "Vengeful Anchor": 170, "Matcha Spin": 100, "Spiritual End": 200, "Night Joker": 160,
   "Gale Thrust": 150, "Hungry Jaws": 200, "Maximum Drilling": 250, "Full Moon Rondo": 100,
   "Tenacious Tail": 120, "Rocket Feathers": 180, "R Command": 100, "Psychic": 110,
-  "Powerful Hand": 160, "Dark Frost": 120,
+  "Powerful Hand": 160, "Dark Frost": 120, "Torrential Pump": 180,
   // attacchi usati da Seek Inspiration (Slowking): valore tipico
   "Destined Fight": 250, Trifrost: 300, "Ghostly Blow": 150, "Metallic Hammer": 150, "Seek Inspiration": 200,
 };
