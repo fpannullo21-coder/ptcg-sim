@@ -27,7 +27,7 @@ Delta Reign esce il 6 novembre: il primo formato di riferimento è quello con De
 
 - [x] Import automatico delle liste da Limitless e delle quote da Limitless Labs
 - [ ] I 12 mazzi principali del nuovo formato, carta per carta, con test
-- [ ] Giocatore migliore: lo scarto medio dai risultati reali è sceso da 29,6 a 25,3 punti (correlazione da 0,11 a 0,24) con i piani di mazzo di Dragapult, Slowking, Zoroark, Festival Lead e Honchkrow (22 ottobre). Obiettivo: sotto i 10 punti
+- [ ] Giocatore migliore: lo scarto medio dai risultati reali è sceso da 29,6 a 25,0 punti (correlazione da 0,11 a 0,24) con i piani di mazzo di Dragapult, Slowking, Zoroark, Festival Lead e Honchkrow (22 ottobre). Obiettivo: sotto i 10 punti
 - [ ] Giocatore base per archetipo
 
 ## Fase 2 · novembre, settimane 4-5
