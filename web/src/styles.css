@@ -136,3 +136,8 @@ table.t td { text-align: right; padding: 8px 4px; border-top: 1px solid var(--li
 .deck-line { display: flex; justify-content: space-between; gap: 8px; font-size: 14px; padding: 6px 0; border-bottom: 1px solid var(--line-soft); }
 .legal p { font-size: 14px; line-height: 1.6; color: var(--text-2); margin: 0; }
 .legal h2 { font-size: 16px; margin: 8px 0 0; }
+
+.verdict { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.verdict.large { font-size: 15px; padding: 5px 14px; }
+.meta-bar { display: flex; height: 14px; border-radius: 7px; overflow: hidden; background: var(--track); gap: 2px; }
+.meta-bar > span { display: block; height: 100%; }

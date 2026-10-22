@@ -7,10 +7,20 @@ import { Bar, Dots } from "../components/ui";
 type Mode = "anchored" | "sim" | "real";
 const LABEL: Record<Mode, string> = { anchored: "Stima", sim: "Simulato", real: "Reale" };
 const HELP: Record<Mode, string> = {
-  anchored: "Percentuale di match che ti aspetti di vincere: sopra il 50% il matchup è a tuo favore (blu), sotto è contro (arancione). Parte dal risultato reale dell'archetipo e lo corregge di quanto la simulazione dice che la tua lista fa meglio o peggio della lista tipo.",
+  anchored: "Stima: parte dal risultato reale dell'archetipo nei Regional e lo corregge di quanto la simulazione dice che la tua lista fa meglio o peggio della lista tipo. È il numero da guardare.",
   sim: "Percentuale di match vinti secondo il solo simulatore, al meglio delle tre. Utile per confrontare varianti, non ancora affidabile in assoluto.",
   real: "Percentuale di match vinti davvero dall'archetipo nei Regional, da Limitless Labs. Il pareggio vale un terzo.",
 };
+
+/** Giudizio in parole: si legge prima del numero. */
+export function verdict(v: number): string {
+  return v >= 0.65 ? "Molto favorevole" : v >= 0.55 ? "Favorevole" : v > 0.45 ? "Pari" : v > 0.35 ? "Sfavorevole" : "Molto sfavorevole";
+}
+const outOf10 = (v: number) => String(Math.round(v * 10));
+
+function Verdict({ v, large }: { v: number; large?: boolean }) {
+  return <span class={`verdict${large ? " large" : ""}`} style={{ color: tone(v), background: `color-mix(in srgb, ${tone(v)} 16%, var(--surface))` }}>{verdict(v)}</span>;
+}
 
 export function MatchupPage({ data, analyzed, deckText, sim, runSim, stopSim }: PageProps) {
   const [mode, setMode] = useState<Mode>("anchored");
@@ -43,6 +53,13 @@ export function MatchupPage({ data, analyzed, deckText, sim, runSim, stopSim }: 
     for (const r of rows) if (r.value !== null) { s += r.value * r.a.share; w += r.a.share; }
     return w ? s / w : null;
   })();
+  // quota del meta a favore, pari e contro (sugli archetipi con un numero)
+  const split = (() => {
+    let g = 0, e = 0, b = 0;
+    for (const r of rows) if (r.value !== null) { if (r.value >= 0.55) g += r.a.share; else if (r.value > 0.45) e += r.a.share; else b += r.a.share; }
+    const t = g + e + b || 1;
+    return { good: g / t, even: e / t, bad: b / t };
+  })();
   const coveredShare = rows.filter(r => r.value !== null).reduce((s, r) => s + r.a.share, 0);
   const totalShare = rows.reduce((s, r) => s + r.a.share, 0);
 
@@ -64,22 +81,37 @@ export function MatchupPage({ data, analyzed, deckText, sim, runSim, stopSim }: 
       </a>
 
       <div class="big">
-        <span class="sub">{mode === "real" ? "Risultato reale dell'archetipo contro il meta" : `Match che ti aspetti di vincere contro il meta${mode === "anchored" ? " (stima sui dati reali)" : " (solo simulazione)"}`}</span>
-        <span style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
-          {weighted !== null ? <span class="big-num">{pct(weighted)}</span> : <span class="num" style={{ fontSize: 34, color: "var(--muted)" }}>da simulare</span>}
-          <span style={{ fontSize: 15, color: "var(--text-2)" }}>dei match</span>
-        </span>
-        <span class="sub">
-          Media pesata sulle quote dei {rows.length} archetipi principali
-          {weighted !== null && coveredShare < totalShare - 0.01 ? ` (copre il ${pct(coveredShare / totalShare, 0)} del meta considerato)` : ""}.
-          {source ? ` ${source}.` : ""}
-        </span>
+        <span class="sub">{mode === "real" ? "Contro il meta, nei Regional veri" : "Contro il meta"}</span>
+        {weighted !== null ? (
+          <>
+            <span style={{ display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
+              <span style={{ fontSize: 20, color: "var(--text-2)" }}>vinci circa</span>
+              <span class="big-num">{outOf10(weighted)}</span>
+              <span style={{ fontSize: 20, color: "var(--text-2)" }}>match su 10</span>
+            </span>
+            <span style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+              <Verdict v={weighted} large />
+              <span class="sub">{pct(weighted)} · {mode === "anchored" ? "stima sui dati reali" : mode === "sim" ? "solo simulazione" : "dati reali"}</span>
+            </span>
+          </>
+        ) : <span class="num" style={{ fontSize: 34, color: "var(--muted)" }}>da simulare</span>}
       </div>
 
-      <div class="seg" role="group" aria-label="Quale numero mostrare">
-        {(Object.keys(LABEL) as Mode[]).map(m => <button aria-pressed={mode === m} onClick={() => setMode(m)}>{LABEL[m]}</button>)}
-      </div>
-      <p class="sub">{HELP[mode]}</p>
+      {weighted !== null && (
+        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+          <span class="section-label">Quanti avversari ti sono favorevoli</span>
+          <span class="meta-bar" role="img" aria-label={`A favore ${pct(split.good, 0)} del meta, pari ${pct(split.even, 0)}, contro ${pct(split.bad, 0)}`}>
+            <span style={{ width: `${split.good * 100}%`, background: "var(--good)" }}></span>
+            <span style={{ width: `${split.even * 100}%`, background: "var(--neutral)" }}></span>
+            <span style={{ width: `${split.bad * 100}%`, background: "var(--bad)" }}></span>
+          </span>
+          <span class="legend">
+            <span><span class="sw" style={{ background: "var(--good)" }}></span>a favore {pct(split.good, 0)} del meta</span>
+            <span><span class="sw" style={{ background: "var(--neutral)" }}></span>pari {pct(split.even, 0)}</span>
+            <span><span class="sw" style={{ background: "var(--bad)" }}></span>contro {pct(split.bad, 0)}</span>
+          </span>
+        </div>
+      )}
 
       {(!simGame || running) && (
         <div class="box" style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -106,20 +138,21 @@ export function MatchupPage({ data, analyzed, deckText, sim, runSim, stopSim }: 
       )}
 
       <div>
-        <div class="mrow-grid section-label" style={{ padding: "0 8px 6px" }}>
-          <span>Contro</span><span style={{ textAlign: "right" }}>Quota</span><span style={{ textAlign: "right" }}>{LABEL[mode]}</span>
-        </div>
         {rows.map(r => {
           const level = !r.real ? 0 : r.real.n >= 200 ? 3 : r.real.n >= 100 ? 2 : 1;
           return (
             <div class="mrow">
-              <span class="mrow-grid">
+              <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
                 <span style={{ display: "flex", flexDirection: "column", gap: 3, minWidth: 0 }}>
                   <span class="mname">{r.a.name}{r.mirror ? " (mirror)" : ""}</span>
-                  <span class="mmeta"><Dots level={level} />{r.real ? `reale ${pct(r.real.wr)} · ${r.real.n} match` : "nessun dato reale"}</span>
+                  <span class="mmeta">{pct(r.a.share / 100, 0)} del meta · <Dots level={level} />{["nessun dato reale", "pochi match reali", "dato indicativo", "dato solido"][level]}</span>
                 </span>
-                <span style={{ textAlign: "right", fontSize: 13, color: "var(--muted)" }}>{pct(r.a.share / 100)}</span>
-                <span class="num" style={{ textAlign: "right", fontSize: 22, color: r.value !== null ? tone(r.value) : "var(--muted)" }}>{r.value !== null ? pct(r.value) : "—"}</span>
+                {r.value !== null ? (
+                  <span style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 4, flex: "none" }}>
+                    <Verdict v={r.value} />
+                    <span style={{ fontSize: 13, color: "var(--text-2)" }}><span class="num" style={{ fontSize: 20, color: tone(r.value) }}>{outOf10(r.value)}</span> su 10</span>
+                  </span>
+                ) : <span class="sub">da simulare</span>}
               </span>
               {r.value !== null && <Bar value={r.value} real={mode !== "real" ? r.real?.wr ?? null : null} color={tone(r.value)} />}
             </div>
@@ -127,10 +160,21 @@ export function MatchupPage({ data, analyzed, deckText, sim, runSim, stopSim }: 
         })}
       </div>
       <div class="legend">
-        <span><span class="sw" style={{ background: "var(--good)" }}></span>favorevole</span>
-        <span><span class="sw" style={{ background: "var(--bad)" }}></span>sfavorevole</span>
-        <span><span style={{ width: 2, height: 12, background: "var(--text)" }}></span>dato reale</span>
-        <span><Dots level={3} />affidabilità (match reali)</span>
+        <span>La barra parte dal centro: verso destra a tuo favore, verso sinistra contro.</span>
+        <span><span style={{ width: 2, height: 12, background: "var(--text)" }}></span>risultato reale dell'archetipo</span>
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        <span class="section-label">Da dove viene il numero</span>
+        <div class="seg" role="group" aria-label="Da dove viene il numero">
+          {(Object.keys(LABEL) as Mode[]).map(m => <button aria-pressed={mode === m} onClick={() => setMode(m)}>{LABEL[m]}</button>)}
+        </div>
+        <p class="sub">{HELP[mode]}</p>
+        <p class="sub">
+          Media pesata sulle quote dei {rows.length} archetipi principali
+          {coveredShare < totalShare - 0.01 && weighted !== null ? ` (copre il ${pct(coveredShare / totalShare, 0)} del meta considerato)` : ""}.
+          {source ? ` ${source}.` : ""}
+        </p>
       </div>
       <p class="sub">Simulazioni aggiornate al {new Date(meta.updated).toLocaleDateString("it-IT")}. Le liste tipo sono le meglio piazzate nei Regional del formato.</p>
     </div>
