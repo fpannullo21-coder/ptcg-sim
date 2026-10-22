@@ -1,0 +1,152 @@
+{
+ "date": "2026-10-22T08:47:32.378Z",
+ "games": 10,
+ "meta": [
+  {
+   "name": "Dragapult",
+   "labs": "Dragapult",
+   "share": 18.1023911710607,
+   "deck": "brisbane-2026/01-dragapult-edmund-khoo"
+  },
+  {
+   "name": "Basic Box",
+   "labs": "Basic Box",
+   "share": 6.361128142244022,
+   "deck": "baltimore-2026/01-basic-box-dylan-kasturi"
+  },
+  {
+   "name": "N's Zoroark",
+   "labs": "N's Zoroark",
+   "share": 6.353464132434089,
+   "deck": "recife-2026/04-n-s-zoroark-marco-cifuentes-meta"
+  },
+  {
+   "name": "Slowking",
+   "labs": "Slowking",
+   "share": 6.246167995095034,
+   "deck": "baltimore-2026/04-slowking-mark-dreitzler"
+  }
+ ],
+ "lists": {
+  "hide-n-sneak/lista-per-danzica": {
+   "metaMatch": 0.8009437551695615,
+   "metaGame": 0.7366211745244002,
+   "rows": [
+    {
+     "vs": "Dragapult",
+     "game": 0.6
+    },
+    {
+     "vs": "Basic Box",
+     "game": 0.9
+    },
+    {
+     "vs": "N's Zoroark",
+     "game": 0.9
+    },
+    {
+     "vs": "Slowking",
+     "game": 0.8
+    }
+   ]
+  }
+ },
+ "results": [
+  {
+   "a": "hide-n-sneak/lista-per-danzica",
+   "b": "recife-2026/04-n-s-zoroark-marco-cifuentes-meta",
+   "games": 10,
+   "winsA": 9,
+   "winsB": 1,
+   "draws": 0,
+   "winsAFirst": 5,
+   "gamesAFirst": 5,
+   "turns": 179,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica",
+   "b": "brisbane-2026/01-dragapult-edmund-khoo",
+   "games": 10,
+   "winsA": 6,
+   "winsB": 4,
+   "draws": 0,
+   "winsAFirst": 4,
+   "gamesAFirst": 5,
+   "turns": 135,
+   "errors": []
+  },
+  {
+   "a": "nizza-2026/02-dhelmise-maxime-launay",
+   "b": "recife-2026/04-n-s-zoroark-marco-cifuentes-meta",
+   "games": 10,
+   "winsA": 10,
+   "winsB": 0,
+   "draws": 0,
+   "winsAFirst": 5,
+   "gamesAFirst": 5,
+   "turns": 198,
+   "errors": []
+  },
+  {
+   "a": "nizza-2026/02-dhelmise-maxime-launay",
+   "b": "brisbane-2026/01-dragapult-edmund-khoo",
+   "games": 10,
+   "winsA": 6,
+   "winsB": 4,
+   "draws": 0,
+   "winsAFirst": 3,
+   "gamesAFirst": 5,
+   "turns": 158,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica",
+   "b": "baltimore-2026/01-basic-box-dylan-kasturi",
+   "games": 10,
+   "winsA": 9,
+   "winsB": 1,
+   "draws": 0,
+   "winsAFirst": 5,
+   "gamesAFirst": 5,
+   "turns": 189,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica",
+   "b": "baltimore-2026/04-slowking-mark-dreitzler",
+   "games": 10,
+   "winsA": 8,
+   "winsB": 2,
+   "draws": 0,
+   "winsAFirst": 4,
+   "gamesAFirst": 5,
+   "turns": 182,
+   "errors": []
+  },
+  {
+   "a": "nizza-2026/02-dhelmise-maxime-launay",
+   "b": "baltimore-2026/04-slowking-mark-dreitzler",
+   "games": 10,
+   "winsA": 7,
+   "winsB": 3,
+   "draws": 0,
+   "winsAFirst": 5,
+   "gamesAFirst": 5,
+   "turns": 197,
+   "errors": []
+  },
+  {
+   "a": "nizza-2026/02-dhelmise-maxime-launay",
+   "b": "baltimore-2026/01-basic-box-dylan-kasturi",
+   "games": 10,
+   "winsA": 8,
+   "winsB": 2,
+   "draws": 0,
+   "winsAFirst": 4,
+   "gamesAFirst": 5,
+   "turns": 167,
+   "errors": []
+  }
+ ]
+}
