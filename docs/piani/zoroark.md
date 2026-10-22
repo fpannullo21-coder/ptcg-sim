@@ -25,3 +25,14 @@ Contro Hide n' Sneak, 30 partite: vince il 47% (prima circa il 10%; reale 82%). 
 ## Contro Dragapult
 - **Vince l'attacco che moltiplica i danni** (Francesco): Powerful Rage di N's Reshiram, copiato da Night Joker, fa 20 per ogni segnalino su Zoroark ex. Dopo un Phantom Dive (200 danni) fa 400 e manda KO Dragapult ex. N's Reshiram va in panchina presto; la scelta dell'attacco copiato lo trova da sola [nel simulatore].
 - Contro Dragapult, 40 partite: Zoroark vince il 30% delle partite (prima il 17%); reale 58% dei match.
+
+## Correzioni del 22 ottobre (sera)
+Dai registri delle partite contro Hide n' Sneak:
+- **Night Joker restava a vuoto**: la panchina si riempiva di Zorua e Zoroark ex prima di N's Zekrom e N's Reshiram, e senza un N's da copiare l'attacco non fa danni. Ora Zekrom e Reshiram entrano subito dopo il primo Zorua [nel simulatore].
+- **Le ricerche prendevano Reshiram invece di Zoroark ex** con uno Zorua già in campo: ora un'evoluzione pronta vale più di qualsiasi Base [nel simulatore, tutti i mazzi].
+- **Panchina a 5 posti** invece di 4 [nel simulatore, tutti i mazzi].
+- **Punk Helmet** va su Zoroark ex, non su Meowth ex in attivo; **Munkidori** riceve l'Energia Oscurità e con Adrena-Brain toglie i segnalini da Zoroark ex [nel simulatore].
+- Contro la Lista per Danzica, 40 partite: Zoroark dal 33% al 43% delle partite. Nella realtà vince l'82% dei match: il matchup resta segnato nel sito come poco affidabile.
+
+## Domanda per te
+1. Contro Hide n' Sneak, Zoroark mette Meowth ex e Pecharunt ex in panchina? Il simulatore li mette, e Hide n' Sneak li manda KO con Boss's Orders per due premi.
