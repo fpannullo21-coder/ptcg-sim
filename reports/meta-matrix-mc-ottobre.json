@@ -1,0 +1,2442 @@
+{
+ "date": "2026-10-22T09:13:55.141Z",
+ "games": 40,
+ "meta": [
+  {
+   "name": "Dragapult",
+   "labs": "Dragapult",
+   "share": 18.1023911710607,
+   "deck": "brisbane-2026/01-dragapult-edmund-khoo"
+  },
+  {
+   "name": "Basic Box",
+   "labs": "Basic Box",
+   "share": 6.361128142244022,
+   "deck": "baltimore-2026/01-basic-box-dylan-kasturi"
+  },
+  {
+   "name": "N's Zoroark",
+   "labs": "N's Zoroark",
+   "share": 6.353464132434089,
+   "deck": "recife-2026/04-n-s-zoroark-marco-cifuentes-meta"
+  },
+  {
+   "name": "Slowking",
+   "labs": "Slowking",
+   "share": 6.246167995095034,
+   "deck": "baltimore-2026/04-slowking-mark-dreitzler"
+  },
+  {
+   "name": "Alakazam Dudunsparce",
+   "labs": "Alakazam Dudunsparce",
+   "share": 5.564071122011036,
+   "deck": "baltimore-2026/05-alakazam-dudunsparce-joshua-frink"
+  },
+  {
+   "name": "Dragapult Dusknoir",
+   "labs": "Dragapult Dusknoir",
+   "share": 5.502759043531576,
+   "deck": "brisbane-2026/04-dragapult-dusknoir-daigo-yoshihara"
+  },
+  {
+   "name": "Mega Excadrill",
+   "labs": "Mega Excadrill",
+   "share": 4.644389944819129,
+   "deck": "recife-2026/05-mega-excadrill-riguel-assis"
+  },
+  {
+   "name": "Dragapult Blaziken",
+   "labs": "Dragapult Blaziken",
+   "share": 4.491109748620478,
+   "deck": "louisville-2026/02-dragapult-blaziken-austin-charles"
+  },
+  {
+   "name": "Dhelmise",
+   "labs": "Dhelmise",
+   "share": 3.740036787247088,
+   "deck": "nizza-2026/02-dhelmise-maxime-launay"
+  },
+  {
+   "name": "Festival Lead",
+   "labs": "Festival Lead",
+   "share": 3.4334763948497855,
+   "deck": "frankfurt-2026/03-festival-lead-eliot-duclos"
+  },
+  {
+   "name": "Hydrapple",
+   "labs": "Ogerpon Meganium Hydrapple",
+   "share": 3.2801961986511343,
+   "deck": "baltimore-2026/02-hydrapple-ben-dobberstein"
+  },
+  {
+   "name": "Crustle",
+   "labs": "Crustle",
+   "share": 3.0349478847332922,
+   "deck": "frankfurt-2026/19-crustle-eemeli-reijonen"
+  }
+ ],
+ "lists": {
+  "hide-n-sneak/lista-per-danzica": {
+   "metaMatch": 0.8571124823981802,
+   "metaGame": 0.7770851386481801,
+   "rows": [
+    {
+     "vs": "Dragapult",
+     "game": 0.75
+    },
+    {
+     "vs": "Basic Box",
+     "game": 0.7
+    },
+    {
+     "vs": "N's Zoroark",
+     "game": 0.825
+    },
+    {
+     "vs": "Slowking",
+     "game": 0.925
+    },
+    {
+     "vs": "Alakazam Dudunsparce",
+     "game": 0.85
+    },
+    {
+     "vs": "Dragapult Dusknoir",
+     "game": 0.85
+    },
+    {
+     "vs": "Mega Excadrill",
+     "game": 0.55
+    },
+    {
+     "vs": "Dragapult Blaziken",
+     "game": 0.875
+    },
+    {
+     "vs": "Dhelmise",
+     "game": 0.65
+    },
+    {
+     "vs": "Festival Lead",
+     "game": 0.9
+    },
+    {
+     "vs": "Hydrapple",
+     "game": 0.8
+    },
+    {
+     "vs": "Crustle",
+     "game": 0.625
+    }
+   ]
+  },
+  "hide-n-sneak/lista-per-danzica-1-black-belt": {
+   "metaMatch": 0.8737870416756931,
+   "metaGame": 0.7876814341421142,
+   "rows": [
+    {
+     "vs": "Dragapult",
+     "game": 0.75
+    },
+    {
+     "vs": "Basic Box",
+     "game": 0.875
+    },
+    {
+     "vs": "N's Zoroark",
+     "game": 0.825
+    },
+    {
+     "vs": "Slowking",
+     "game": 0.85
+    },
+    {
+     "vs": "Alakazam Dudunsparce",
+     "game": 0.8
+    },
+    {
+     "vs": "Dragapult Dusknoir",
+     "game": 0.9
+    },
+    {
+     "vs": "Mega Excadrill",
+     "game": 0.775
+    },
+    {
+     "vs": "Dragapult Blaziken",
+     "game": 0.75
+    },
+    {
+     "vs": "Dhelmise",
+     "game": 0.6
+    },
+    {
+     "vs": "Festival Lead",
+     "game": 0.9
+    },
+    {
+     "vs": "Hydrapple",
+     "game": 0.65
+    },
+    {
+     "vs": "Crustle",
+     "game": 0.725
+    }
+   ]
+  },
+  "hide-n-sneak/lista-per-danzica-con-mixer": {
+   "metaMatch": 0.8414374221457971,
+   "metaGame": 0.7678590771230502,
+   "rows": [
+    {
+     "vs": "Dragapult",
+     "game": 0.775
+    },
+    {
+     "vs": "Basic Box",
+     "game": 0.775
+    },
+    {
+     "vs": "N's Zoroark",
+     "game": 0.875
+    },
+    {
+     "vs": "Slowking",
+     "game": 0.9
+    },
+    {
+     "vs": "Alakazam Dudunsparce",
+     "game": 0.775
+    },
+    {
+     "vs": "Dragapult Dusknoir",
+     "game": 0.875
+    },
+    {
+     "vs": "Mega Excadrill",
+     "game": 0.75
+    },
+    {
+     "vs": "Dragapult Blaziken",
+     "game": 0.7
+    },
+    {
+     "vs": "Dhelmise",
+     "game": 0.425
+    },
+    {
+     "vs": "Festival Lead",
+     "game": 0.975
+    },
+    {
+     "vs": "Hydrapple",
+     "game": 0.65
+    },
+    {
+     "vs": "Crustle",
+     "game": 0.45
+    }
+   ]
+  },
+  "hide-n-sneak/tua-dunsparce": {
+   "metaMatch": 0.7218542298526862,
+   "metaGame": 0.6655870883882147,
+   "rows": [
+    {
+     "vs": "Dragapult",
+     "game": 0.525
+    },
+    {
+     "vs": "Basic Box",
+     "game": 0.75
+    },
+    {
+     "vs": "N's Zoroark",
+     "game": 0.75
+    },
+    {
+     "vs": "Slowking",
+     "game": 0.85
+    },
+    {
+     "vs": "Alakazam Dudunsparce",
+     "game": 0.725
+    },
+    {
+     "vs": "Dragapult Dusknoir",
+     "game": 0.85
+    },
+    {
+     "vs": "Mega Excadrill",
+     "game": 0.575
+    },
+    {
+     "vs": "Dragapult Blaziken",
+     "game": 0.725
+    },
+    {
+     "vs": "Dhelmise",
+     "game": 0.5
+    },
+    {
+     "vs": "Festival Lead",
+     "game": 0.825
+    },
+    {
+     "vs": "Hydrapple",
+     "game": 0.575
+    },
+    {
+     "vs": "Crustle",
+     "game": 0.5
+    }
+   ]
+  },
+  "hide-n-sneak/vostra-2-black-belt": {
+   "metaMatch": 0.7690859408849653,
+   "metaGame": 0.7013079506065856,
+   "rows": [
+    {
+     "vs": "Dragapult",
+     "game": 0.6
+    },
+    {
+     "vs": "Basic Box",
+     "game": 0.725
+    },
+    {
+     "vs": "N's Zoroark",
+     "game": 0.725
+    },
+    {
+     "vs": "Slowking",
+     "game": 0.9
+    },
+    {
+     "vs": "Alakazam Dudunsparce",
+     "game": 0.825
+    },
+    {
+     "vs": "Dragapult Dusknoir",
+     "game": 0.85
+    },
+    {
+     "vs": "Mega Excadrill",
+     "game": 0.675
+    },
+    {
+     "vs": "Dragapult Blaziken",
+     "game": 0.65
+    },
+    {
+     "vs": "Dhelmise",
+     "game": 0.65
+    },
+    {
+     "vs": "Festival Lead",
+     "game": 0.825
+    },
+    {
+     "vs": "Hydrapple",
+     "game": 0.6
+    },
+    {
+     "vs": "Crustle",
+     "game": 0.45
+    }
+   ]
+  }
+ },
+ "validation": {
+  "mae": 0.31434667333196614,
+  "within": 11,
+  "total": 66,
+  "corr": 0.09434892983282739,
+  "cmp": [
+   {
+    "a": "Dragapult",
+    "b": "N's Zoroark",
+    "sim": 0.9392499999999999,
+    "real": 0.41479260369815096,
+    "n": 1334
+   },
+   {
+    "a": "Dragapult",
+    "b": "Slowking",
+    "sim": 0.95703125,
+    "real": 0.42220464135021096,
+    "n": 1264
+   },
+   {
+    "a": "Dragapult",
+    "b": "Basic Box",
+    "sim": 0.8709062500000001,
+    "real": 0.4263170672493324,
+    "n": 1373
+   },
+   {
+    "a": "Dragapult",
+    "b": "Mega Excadrill",
+    "sim": 0.8709062500000001,
+    "real": 0.49035187287173665,
+    "n": 881
+   },
+   {
+    "a": "Dragapult",
+    "b": "Dhelmise",
+    "sim": 0.08115624999999999,
+    "real": 0.4297666226332012,
+    "n": 757
+   },
+   {
+    "a": "Slowking",
+    "b": "Crustle",
+    "sim": 0.007250000000000001,
+    "real": 0.688663282571912,
+    "n": 197
+   },
+   {
+    "a": "Dragapult",
+    "b": "Dragapult Blaziken",
+    "sim": 0.81471875,
+    "real": 0.5135135135135135,
+    "n": 999
+   },
+   {
+    "a": "Alakazam Dudunsparce",
+    "b": "Dragapult Dusknoir",
+    "sim": 0.91884375,
+    "real": 0.3947089947089947,
+    "n": 315
+   },
+   {
+    "a": "Dragapult",
+    "b": "Festival Lead",
+    "sim": 0.95703125,
+    "real": 0.6114180478821363,
+    "n": 724
+   },
+   {
+    "a": "Mega Excadrill",
+    "b": "Crustle",
+    "sim": 0.04296875,
+    "real": 0.7659574468085106,
+    "n": 141
+   },
+   {
+    "a": "Basic Box",
+    "b": "Dhelmise",
+    "sim": 0.08115624999999999,
+    "real": 0.5814814814814815,
+    "n": 270
+   },
+   {
+    "a": "Slowking",
+    "b": "Mega Excadrill",
+    "sim": 0.15625,
+    "real": 0.6221498371335505,
+    "n": 307
+   },
+   {
+    "a": "N's Zoroark",
+    "b": "Dhelmise",
+    "sim": 0.24821875000000004,
+    "real": 0.775,
+    "n": 240
+   },
+   {
+    "a": "N's Zoroark",
+    "b": "Alakazam Dudunsparce",
+    "sim": 0.08115624999999999,
+    "real": 0.5164728682170542,
+    "n": 344
+   },
+   {
+    "a": "Basic Box",
+    "b": "Alakazam Dudunsparce",
+    "sim": 0.028000000000000004,
+    "real": 0.4323858742463394,
+    "n": 387
+   },
+   {
+    "a": "Dragapult Blaziken",
+    "b": "Dhelmise",
+    "sim": 0.04296875,
+    "real": 0.5979381443298969,
+    "n": 194
+   },
+   {
+    "a": "Alakazam Dudunsparce",
+    "b": "Dragapult Blaziken",
+    "sim": 0.81471875,
+    "real": 0.33981841763942927,
+    "n": 257
+   },
+   {
+    "a": "Slowking",
+    "b": "Dragapult Blaziken",
+    "sim": 0.10400000000000002,
+    "real": 0.5188583078491336,
+    "n": 327
+   },
+   {
+    "a": "Dragapult",
+    "b": "Dragapult Dusknoir",
+    "sim": 0.7839999999999999,
+    "real": 0.5547169811320755,
+    "n": 1060
+   },
+   {
+    "a": "Festival Lead",
+    "b": "Crustle",
+    "sim": 0.08115624999999999,
+    "real": 0.746031746031746,
+    "n": 126
+   },
+   {
+    "a": "Slowking",
+    "b": "Dragapult Dusknoir",
+    "sim": 0.18528125000000004,
+    "real": 0.5596590909090909,
+    "n": 352
+   },
+   {
+    "a": "Alakazam Dudunsparce",
+    "b": "Festival Lead",
+    "sim": 0.91884375,
+    "real": 0.4095744680851064,
+    "n": 188
+   },
+   {
+    "a": "N's Zoroark",
+    "b": "Dragapult Blaziken",
+    "sim": 0.216,
+    "real": 0.6058700209643606,
+    "n": 318
+   },
+   {
+    "a": "Dhelmise",
+    "b": "Festival Lead",
+    "sim": 0.972,
+    "real": 0.4211711711711712,
+    "n": 148
+   },
+   {
+    "a": "Basic Box",
+    "b": "Festival Lead",
+    "sim": 0.8709062500000001,
+    "real": 0.47853535353535354,
+    "n": 264
+   },
+   {
+    "a": "Dragapult Dusknoir",
+    "b": "Crustle",
+    "sim": 0.007250000000000001,
+    "real": 0.4478114478114478,
+    "n": 198
+   },
+   {
+    "a": "Festival Lead",
+    "b": "Hydrapple",
+    "sim": 0.04296875,
+    "real": 0.5612745098039216,
+    "n": 136
+   },
+   {
+    "a": "Basic Box",
+    "b": "Slowking",
+    "sim": 0.7839999999999999,
+    "real": 0.5021834061135371,
+    "n": 458
+   },
+   {
+    "a": "N's Zoroark",
+    "b": "Dragapult Dusknoir",
+    "sim": 0.24821875000000004,
+    "real": 0.5416666666666667,
+    "n": 392
+   },
+   {
+    "a": "Dragapult Blaziken",
+    "b": "Festival Lead",
+    "sim": 0.8960000000000001,
+    "real": 0.4962962962962963,
+    "n": 180
+   },
+   {
+    "a": "Dragapult Dusknoir",
+    "b": "Hydrapple",
+    "sim": 0.216,
+    "real": 0.5917602996254682,
+    "n": 178
+   },
+   {
+    "a": "Dragapult Dusknoir",
+    "b": "Dhelmise",
+    "sim": 0.007250000000000001,
+    "real": 0.35784313725490197,
+    "n": 204
+   },
+   {
+    "a": "N's Zoroark",
+    "b": "Slowking",
+    "sim": 0.7517812500000001,
+    "real": 0.5263888888888889,
+    "n": 480
+   },
+   {
+    "a": "Slowking",
+    "b": "Dhelmise",
+    "sim": 0.01603125,
+    "real": 0.3079710144927536,
+    "n": 276
+   },
+   {
+    "a": "N's Zoroark",
+    "b": "Crustle",
+    "sim": 0.007250000000000001,
+    "real": 0.30404463040446306,
+    "n": 239
+   },
+   {
+    "a": "Alakazam Dudunsparce",
+    "b": "Crustle",
+    "sim": 0.01603125,
+    "real": 0.3652694610778443,
+    "n": 167
+   },
+   {
+    "a": "Dhelmise",
+    "b": "Hydrapple",
+    "sim": 0.68359375,
+    "real": 0.302158273381295,
+    "n": 139
+   },
+   {
+    "a": "Slowking",
+    "b": "Hydrapple",
+    "sim": 0.028000000000000004,
+    "real": 0.3225308641975309,
+    "n": 216
+   },
+   {
+    "a": "Slowking",
+    "b": "Alakazam Dudunsparce",
+    "sim": 0.01603125,
+    "real": 0.23744292237442924,
+    "n": 365
+   },
+   {
+    "a": "Alakazam Dudunsparce",
+    "b": "Mega Excadrill",
+    "sim": 0.91884375,
+    "real": 0.6549019607843137,
+    "n": 255
+   },
+   {
+    "a": "Dragapult",
+    "b": "Hydrapple",
+    "sim": 0.7839999999999999,
+    "real": 0.6210045662100456,
+    "n": 657
+   },
+   {
+    "a": "Dragapult",
+    "b": "Alakazam Dudunsparce",
+    "sim": 0.5,
+    "real": 0.6170692431561996,
+    "n": 1035
+   },
+   {
+    "a": "N's Zoroark",
+    "b": "Hydrapple",
+    "sim": 0.08115624999999999,
+    "real": 0.3348484848484849,
+    "n": 220
+   },
+   {
+    "a": "Mega Excadrill",
+    "b": "Festival Lead",
+    "sim": 0.84375,
+    "real": 0.5333333333333333,
+    "n": 140
+   },
+   {
+    "a": "Dragapult",
+    "b": "Crustle",
+    "sim": 0.4252500000000001,
+    "real": 0.2904339250493097,
+    "n": 676
+   },
+   {
+    "a": "Dragapult Blaziken",
+    "b": "Crustle",
+    "sim": 0.06075,
+    "real": 0.33563218390804594,
+    "n": 145
+   },
+   {
+    "a": "Mega Excadrill",
+    "b": "Dhelmise",
+    "sim": 0.28174999999999994,
+    "real": 0.5175438596491228,
+    "n": 190
+   },
+   {
+    "a": "Basic Box",
+    "b": "N's Zoroark",
+    "sim": 0.6116562499999999,
+    "real": 0.4758220502901354,
+    "n": 517
+   },
+   {
+    "a": "Basic Box",
+    "b": "Crustle",
+    "sim": 0.216,
+    "real": 0.4166666666666667,
+    "n": 232
+   },
+   {
+    "a": "Basic Box",
+    "b": "Dragapult Dusknoir",
+    "sim": 0.68359375,
+    "real": 0.5308641975308642,
+    "n": 378
+   },
+   {
+    "a": "N's Zoroark",
+    "b": "Festival Lead",
+    "sim": 0.38834374999999993,
+    "real": 0.20848938826466915,
+    "n": 267
+   },
+   {
+    "a": "Alakazam Dudunsparce",
+    "b": "Dhelmise",
+    "sim": 0.10400000000000002,
+    "real": 0.2868988391376451,
+    "n": 201
+   },
+   {
+    "a": "N's Zoroark",
+    "b": "Mega Excadrill",
+    "sim": 0.24821875000000004,
+    "real": 0.39665471923536444,
+    "n": 279
+   },
+   {
+    "a": "Hydrapple",
+    "b": "Crustle",
+    "sim": 0.18528125000000004,
+    "real": 0.4329896907216495,
+    "n": 97
+   },
+   {
+    "a": "Dragapult Dusknoir",
+    "b": "Dragapult Blaziken",
+    "sim": 0.31640625,
+    "real": 0.4631043256997455,
+    "n": 262
+   },
+   {
+    "a": "Slowking",
+    "b": "Festival Lead",
+    "sim": 0.5747500000000001,
+    "real": 0.4857142857142857,
+    "n": 245
+   },
+   {
+    "a": "Basic Box",
+    "b": "Hydrapple",
+    "sim": 0.24821875000000004,
+    "real": 0.32170542635658916,
+    "n": 258
+   },
+   {
+    "a": "Dhelmise",
+    "b": "Crustle",
+    "sim": 0.5747500000000001,
+    "real": 0.48427672955974843,
+    "n": 106
+   },
+   {
+    "a": "Dragapult Dusknoir",
+    "b": "Festival Lead",
+    "sim": 0.71825,
+    "real": 0.6573208722741433,
+    "n": 214
+   },
+   {
+    "a": "Basic Box",
+    "b": "Mega Excadrill",
+    "sim": 0.5,
+    "real": 0.5468926553672316,
+    "n": 295
+   },
+   {
+    "a": "Dragapult Blaziken",
+    "b": "Hydrapple",
+    "sim": 0.5747500000000001,
+    "real": 0.6363636363636364,
+    "n": 165
+   },
+   {
+    "a": "Mega Excadrill",
+    "b": "Hydrapple",
+    "sim": 0.31640625,
+    "real": 0.36926147704590817,
+    "n": 167
+   },
+   {
+    "a": "Basic Box",
+    "b": "Dragapult Blaziken",
+    "sim": 0.46253124999999995,
+    "real": 0.49503968253968256,
+    "n": 336
+   },
+   {
+    "a": "Dragapult Dusknoir",
+    "b": "Mega Excadrill",
+    "sim": 0.5,
+    "real": 0.46871008939974457,
+    "n": 261
+   },
+   {
+    "a": "Mega Excadrill",
+    "b": "Dragapult Blaziken",
+    "sim": 0.28174999999999994,
+    "real": 0.25396825396825395,
+    "n": 210
+   },
+   {
+    "a": "Alakazam Dudunsparce",
+    "b": "Hydrapple",
+    "sim": 0.5747500000000001,
+    "real": 0.5969868173258004,
+    "n": 177
+   }
+  ]
+ },
+ "results": [
+  {
+   "a": "hide-n-sneak/lista-per-danzica",
+   "b": "brisbane-2026/01-dragapult-edmund-khoo",
+   "games": 40,
+   "winsA": 30,
+   "winsB": 10,
+   "draws": 0,
+   "winsAFirst": 16,
+   "gamesAFirst": 20,
+   "turns": 701,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica-1-black-belt",
+   "b": "nizza-2026/02-dhelmise-maxime-launay",
+   "games": 40,
+   "winsA": 24,
+   "winsB": 16,
+   "draws": 0,
+   "winsAFirst": 10,
+   "gamesAFirst": 20,
+   "turns": 731,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/tua-dunsparce",
+   "b": "baltimore-2026/05-alakazam-dudunsparce-joshua-frink",
+   "games": 40,
+   "winsA": 29,
+   "winsB": 11,
+   "draws": 0,
+   "winsAFirst": 14,
+   "gamesAFirst": 20,
+   "turns": 870,
+   "errors": []
+  },
+  {
+   "a": "nizza-2026/02-dhelmise-maxime-launay",
+   "b": "brisbane-2026/01-dragapult-edmund-khoo",
+   "games": 40,
+   "winsA": 34,
+   "winsB": 6,
+   "draws": 0,
+   "winsAFirst": 18,
+   "gamesAFirst": 20,
+   "turns": 735,
+   "errors": []
+  },
+  {
+   "a": "brisbane-2026/01-dragapult-edmund-khoo",
+   "b": "frankfurt-2026/03-festival-lead-eliot-duclos",
+   "games": 40,
+   "winsA": 35,
+   "winsB": 5,
+   "draws": 0,
+   "winsAFirst": 16,
+   "gamesAFirst": 20,
+   "turns": 613,
+   "errors": []
+  },
+  {
+   "a": "recife-2026/04-n-s-zoroark-marco-cifuentes-meta",
+   "b": "baltimore-2026/02-hydrapple-ben-dobberstein",
+   "games": 40,
+   "winsA": 7,
+   "winsB": 33,
+   "draws": 0,
+   "winsAFirst": 3,
+   "gamesAFirst": 20,
+   "turns": 971,
+   "errors": []
+  },
+  {
+   "a": "brisbane-2026/04-dragapult-dusknoir-daigo-yoshihara",
+   "b": "frankfurt-2026/03-festival-lead-eliot-duclos",
+   "games": 40,
+   "winsA": 26,
+   "winsB": 14,
+   "draws": 0,
+   "winsAFirst": 14,
+   "gamesAFirst": 20,
+   "turns": 613,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica",
+   "b": "baltimore-2026/01-basic-box-dylan-kasturi",
+   "games": 40,
+   "winsA": 28,
+   "winsB": 12,
+   "draws": 0,
+   "winsAFirst": 13,
+   "gamesAFirst": 20,
+   "turns": 716,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica-1-black-belt",
+   "b": "frankfurt-2026/03-festival-lead-eliot-duclos",
+   "games": 40,
+   "winsA": 36,
+   "winsB": 4,
+   "draws": 0,
+   "winsAFirst": 19,
+   "gamesAFirst": 20,
+   "turns": 571,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/tua-dunsparce",
+   "b": "brisbane-2026/04-dragapult-dusknoir-daigo-yoshihara",
+   "games": 40,
+   "winsA": 34,
+   "winsB": 5,
+   "draws": 1,
+   "winsAFirst": 19,
+   "gamesAFirst": 20,
+   "turns": 875,
+   "errors": []
+  },
+  {
+   "a": "nizza-2026/02-dhelmise-maxime-launay",
+   "b": "baltimore-2026/01-basic-box-dylan-kasturi",
+   "games": 40,
+   "winsA": 32,
+   "winsB": 8,
+   "draws": 0,
+   "winsAFirst": 15,
+   "gamesAFirst": 20,
+   "turns": 739,
+   "errors": []
+  },
+  {
+   "a": "brisbane-2026/01-dragapult-edmund-khoo",
+   "b": "baltimore-2026/02-hydrapple-ben-dobberstein",
+   "games": 40,
+   "winsA": 28,
+   "winsB": 12,
+   "draws": 0,
+   "winsAFirst": 14,
+   "gamesAFirst": 20,
+   "turns": 803,
+   "errors": []
+  },
+  {
+   "a": "recife-2026/04-n-s-zoroark-marco-cifuentes-meta",
+   "b": "frankfurt-2026/19-crustle-eemeli-reijonen",
+   "games": 40,
+   "winsA": 2,
+   "winsB": 38,
+   "draws": 0,
+   "winsAFirst": 2,
+   "gamesAFirst": 20,
+   "turns": 1081,
+   "errors": []
+  },
+  {
+   "a": "brisbane-2026/04-dragapult-dusknoir-daigo-yoshihara",
+   "b": "baltimore-2026/02-hydrapple-ben-dobberstein",
+   "games": 40,
+   "winsA": 12,
+   "winsB": 28,
+   "draws": 0,
+   "winsAFirst": 5,
+   "gamesAFirst": 20,
+   "turns": 872,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica",
+   "b": "baltimore-2026/02-hydrapple-ben-dobberstein",
+   "games": 40,
+   "winsA": 32,
+   "winsB": 8,
+   "draws": 0,
+   "winsAFirst": 16,
+   "gamesAFirst": 20,
+   "turns": 719,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica-con-mixer",
+   "b": "recife-2026/05-mega-excadrill-riguel-assis",
+   "games": 40,
+   "winsA": 30,
+   "winsB": 10,
+   "draws": 0,
+   "winsAFirst": 17,
+   "gamesAFirst": 20,
+   "turns": 612,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/vostra-2-black-belt",
+   "b": "recife-2026/04-n-s-zoroark-marco-cifuentes-meta",
+   "games": 40,
+   "winsA": 29,
+   "winsB": 11,
+   "draws": 0,
+   "winsAFirst": 13,
+   "gamesAFirst": 20,
+   "turns": 968,
+   "errors": []
+  },
+  {
+   "a": "nizza-2026/02-dhelmise-maxime-launay",
+   "b": "baltimore-2026/02-hydrapple-ben-dobberstein",
+   "games": 40,
+   "winsA": 25,
+   "winsB": 15,
+   "draws": 0,
+   "winsAFirst": 14,
+   "gamesAFirst": 20,
+   "turns": 733,
+   "errors": []
+  },
+  {
+   "a": "baltimore-2026/01-basic-box-dylan-kasturi",
+   "b": "frankfurt-2026/03-festival-lead-eliot-duclos",
+   "games": 40,
+   "winsA": 31,
+   "winsB": 9,
+   "draws": 0,
+   "winsAFirst": 19,
+   "gamesAFirst": 20,
+   "turns": 919,
+   "errors": []
+  },
+  {
+   "a": "baltimore-2026/05-alakazam-dudunsparce-joshua-frink",
+   "b": "brisbane-2026/04-dragapult-dusknoir-daigo-yoshihara",
+   "games": 40,
+   "winsA": 33,
+   "winsB": 7,
+   "draws": 0,
+   "winsAFirst": 18,
+   "gamesAFirst": 20,
+   "turns": 701,
+   "errors": []
+  },
+  {
+   "a": "louisville-2026/02-dragapult-blaziken-austin-charles",
+   "b": "baltimore-2026/02-hydrapple-ben-dobberstein",
+   "games": 40,
+   "winsA": 22,
+   "winsB": 18,
+   "draws": 0,
+   "winsAFirst": 11,
+   "gamesAFirst": 20,
+   "turns": 870,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica",
+   "b": "frankfurt-2026/19-crustle-eemeli-reijonen",
+   "games": 40,
+   "winsA": 25,
+   "winsB": 15,
+   "draws": 0,
+   "winsAFirst": 11,
+   "gamesAFirst": 20,
+   "turns": 765,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica-con-mixer",
+   "b": "louisville-2026/02-dragapult-blaziken-austin-charles",
+   "games": 40,
+   "winsA": 28,
+   "winsB": 12,
+   "draws": 0,
+   "winsAFirst": 14,
+   "gamesAFirst": 20,
+   "turns": 640,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/vostra-2-black-belt",
+   "b": "baltimore-2026/04-slowking-mark-dreitzler",
+   "games": 40,
+   "winsA": 36,
+   "winsB": 2,
+   "draws": 2,
+   "winsAFirst": 19,
+   "gamesAFirst": 20,
+   "turns": 951,
+   "errors": []
+  },
+  {
+   "a": "nizza-2026/02-dhelmise-maxime-launay",
+   "b": "frankfurt-2026/19-crustle-eemeli-reijonen",
+   "games": 40,
+   "winsA": 22,
+   "winsB": 18,
+   "draws": 0,
+   "winsAFirst": 13,
+   "gamesAFirst": 20,
+   "turns": 976,
+   "errors": []
+  },
+  {
+   "a": "baltimore-2026/01-basic-box-dylan-kasturi",
+   "b": "baltimore-2026/02-hydrapple-ben-dobberstein",
+   "games": 40,
+   "winsA": 13,
+   "winsB": 27,
+   "draws": 0,
+   "winsAFirst": 7,
+   "gamesAFirst": 20,
+   "turns": 748,
+   "errors": []
+  },
+  {
+   "a": "baltimore-2026/05-alakazam-dudunsparce-joshua-frink",
+   "b": "recife-2026/05-mega-excadrill-riguel-assis",
+   "games": 40,
+   "winsA": 33,
+   "winsB": 7,
+   "draws": 0,
+   "winsAFirst": 17,
+   "gamesAFirst": 20,
+   "turns": 635,
+   "errors": []
+  },
+  {
+   "a": "louisville-2026/02-dragapult-blaziken-austin-charles",
+   "b": "frankfurt-2026/19-crustle-eemeli-reijonen",
+   "games": 40,
+   "winsA": 6,
+   "winsB": 34,
+   "draws": 0,
+   "winsAFirst": 1,
+   "gamesAFirst": 20,
+   "turns": 1058,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica-1-black-belt",
+   "b": "brisbane-2026/01-dragapult-edmund-khoo",
+   "games": 40,
+   "winsA": 30,
+   "winsB": 10,
+   "draws": 0,
+   "winsAFirst": 17,
+   "gamesAFirst": 20,
+   "turns": 642,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica-con-mixer",
+   "b": "nizza-2026/02-dhelmise-maxime-launay",
+   "games": 40,
+   "winsA": 17,
+   "winsB": 23,
+   "draws": 0,
+   "winsAFirst": 11,
+   "gamesAFirst": 20,
+   "turns": 779,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/vostra-2-black-belt",
+   "b": "baltimore-2026/05-alakazam-dudunsparce-joshua-frink",
+   "games": 40,
+   "winsA": 33,
+   "winsB": 7,
+   "draws": 0,
+   "winsAFirst": 17,
+   "gamesAFirst": 20,
+   "turns": 981,
+   "errors": []
+  },
+  {
+   "a": "brisbane-2026/01-dragapult-edmund-khoo",
+   "b": "baltimore-2026/01-basic-box-dylan-kasturi",
+   "games": 40,
+   "winsA": 31,
+   "winsB": 9,
+   "draws": 0,
+   "winsAFirst": 17,
+   "gamesAFirst": 20,
+   "turns": 831,
+   "errors": []
+  },
+  {
+   "a": "baltimore-2026/01-basic-box-dylan-kasturi",
+   "b": "frankfurt-2026/19-crustle-eemeli-reijonen",
+   "games": 40,
+   "winsA": 12,
+   "winsB": 28,
+   "draws": 0,
+   "winsAFirst": 11,
+   "gamesAFirst": 20,
+   "turns": 958,
+   "errors": []
+  },
+  {
+   "a": "baltimore-2026/05-alakazam-dudunsparce-joshua-frink",
+   "b": "louisville-2026/02-dragapult-blaziken-austin-charles",
+   "games": 40,
+   "winsA": 29,
+   "winsB": 11,
+   "draws": 0,
+   "winsAFirst": 14,
+   "gamesAFirst": 20,
+   "turns": 858,
+   "errors": []
+  },
+  {
+   "a": "frankfurt-2026/03-festival-lead-eliot-duclos",
+   "b": "baltimore-2026/02-hydrapple-ben-dobberstein",
+   "games": 40,
+   "winsA": 5,
+   "winsB": 35,
+   "draws": 0,
+   "winsAFirst": 3,
+   "gamesAFirst": 20,
+   "turns": 751,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica-1-black-belt",
+   "b": "baltimore-2026/01-basic-box-dylan-kasturi",
+   "games": 40,
+   "winsA": 35,
+   "winsB": 5,
+   "draws": 0,
+   "winsAFirst": 19,
+   "gamesAFirst": 20,
+   "turns": 716,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica-con-mixer",
+   "b": "frankfurt-2026/03-festival-lead-eliot-duclos",
+   "games": 40,
+   "winsA": 39,
+   "winsB": 1,
+   "draws": 0,
+   "winsAFirst": 19,
+   "gamesAFirst": 20,
+   "turns": 624,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/vostra-2-black-belt",
+   "b": "brisbane-2026/04-dragapult-dusknoir-daigo-yoshihara",
+   "games": 40,
+   "winsA": 34,
+   "winsB": 6,
+   "draws": 0,
+   "winsAFirst": 17,
+   "gamesAFirst": 20,
+   "turns": 613,
+   "errors": []
+  },
+  {
+   "a": "brisbane-2026/01-dragapult-edmund-khoo",
+   "b": "recife-2026/04-n-s-zoroark-marco-cifuentes-meta",
+   "games": 40,
+   "winsA": 34,
+   "winsB": 6,
+   "draws": 0,
+   "winsAFirst": 17,
+   "gamesAFirst": 20,
+   "turns": 910,
+   "errors": []
+  },
+  {
+   "a": "recife-2026/04-n-s-zoroark-marco-cifuentes-meta",
+   "b": "baltimore-2026/04-slowking-mark-dreitzler",
+   "games": 40,
+   "winsA": 27,
+   "winsB": 12,
+   "draws": 1,
+   "winsAFirst": 13,
+   "gamesAFirst": 20,
+   "turns": 1182,
+   "errors": []
+  },
+  {
+   "a": "baltimore-2026/05-alakazam-dudunsparce-joshua-frink",
+   "b": "nizza-2026/02-dhelmise-maxime-launay",
+   "games": 40,
+   "winsA": 8,
+   "winsB": 32,
+   "draws": 0,
+   "winsAFirst": 3,
+   "gamesAFirst": 20,
+   "turns": 826,
+   "errors": []
+  },
+  {
+   "a": "frankfurt-2026/03-festival-lead-eliot-duclos",
+   "b": "frankfurt-2026/19-crustle-eemeli-reijonen",
+   "games": 40,
+   "winsA": 7,
+   "winsB": 33,
+   "draws": 0,
+   "winsAFirst": 4,
+   "gamesAFirst": 20,
+   "turns": 952,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica-1-black-belt",
+   "b": "recife-2026/04-n-s-zoroark-marco-cifuentes-meta",
+   "games": 40,
+   "winsA": 33,
+   "winsB": 7,
+   "draws": 0,
+   "winsAFirst": 16,
+   "gamesAFirst": 20,
+   "turns": 729,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica-con-mixer",
+   "b": "baltimore-2026/02-hydrapple-ben-dobberstein",
+   "games": 40,
+   "winsA": 26,
+   "winsB": 14,
+   "draws": 0,
+   "winsAFirst": 12,
+   "gamesAFirst": 20,
+   "turns": 721,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/vostra-2-black-belt",
+   "b": "recife-2026/05-mega-excadrill-riguel-assis",
+   "games": 40,
+   "winsA": 27,
+   "winsB": 13,
+   "draws": 0,
+   "winsAFirst": 12,
+   "gamesAFirst": 20,
+   "turns": 766,
+   "errors": []
+  },
+  {
+   "a": "brisbane-2026/01-dragapult-edmund-khoo",
+   "b": "baltimore-2026/04-slowking-mark-dreitzler",
+   "games": 40,
+   "winsA": 35,
+   "winsB": 4,
+   "draws": 1,
+   "winsAFirst": 18,
+   "gamesAFirst": 20,
+   "turns": 798,
+   "errors": []
+  },
+  {
+   "a": "recife-2026/04-n-s-zoroark-marco-cifuentes-meta",
+   "b": "baltimore-2026/05-alakazam-dudunsparce-joshua-frink",
+   "games": 40,
+   "winsA": 7,
+   "winsB": 33,
+   "draws": 0,
+   "winsAFirst": 2,
+   "gamesAFirst": 20,
+   "turns": 980,
+   "errors": []
+  },
+  {
+   "a": "baltimore-2026/05-alakazam-dudunsparce-joshua-frink",
+   "b": "frankfurt-2026/03-festival-lead-eliot-duclos",
+   "games": 40,
+   "winsA": 33,
+   "winsB": 7,
+   "draws": 0,
+   "winsAFirst": 17,
+   "gamesAFirst": 20,
+   "turns": 579,
+   "errors": []
+  },
+  {
+   "a": "baltimore-2026/02-hydrapple-ben-dobberstein",
+   "b": "frankfurt-2026/19-crustle-eemeli-reijonen",
+   "games": 40,
+   "winsA": 11,
+   "winsB": 29,
+   "draws": 0,
+   "winsAFirst": 6,
+   "gamesAFirst": 20,
+   "turns": 1061,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica-1-black-belt",
+   "b": "baltimore-2026/04-slowking-mark-dreitzler",
+   "games": 40,
+   "winsA": 34,
+   "winsB": 5,
+   "draws": 1,
+   "winsAFirst": 18,
+   "gamesAFirst": 20,
+   "turns": 717,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica-con-mixer",
+   "b": "frankfurt-2026/19-crustle-eemeli-reijonen",
+   "games": 40,
+   "winsA": 18,
+   "winsB": 22,
+   "draws": 0,
+   "winsAFirst": 8,
+   "gamesAFirst": 20,
+   "turns": 788,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/vostra-2-black-belt",
+   "b": "louisville-2026/02-dragapult-blaziken-austin-charles",
+   "games": 40,
+   "winsA": 26,
+   "winsB": 14,
+   "draws": 0,
+   "winsAFirst": 13,
+   "gamesAFirst": 20,
+   "turns": 806,
+   "errors": []
+  },
+  {
+   "a": "brisbane-2026/01-dragapult-edmund-khoo",
+   "b": "baltimore-2026/05-alakazam-dudunsparce-joshua-frink",
+   "games": 40,
+   "winsA": 20,
+   "winsB": 20,
+   "draws": 0,
+   "winsAFirst": 10,
+   "gamesAFirst": 20,
+   "turns": 747,
+   "errors": []
+  },
+  {
+   "a": "recife-2026/04-n-s-zoroark-marco-cifuentes-meta",
+   "b": "brisbane-2026/04-dragapult-dusknoir-daigo-yoshihara",
+   "games": 40,
+   "winsA": 13,
+   "winsB": 27,
+   "draws": 0,
+   "winsAFirst": 7,
+   "gamesAFirst": 20,
+   "turns": 938,
+   "errors": []
+  },
+  {
+   "a": "baltimore-2026/05-alakazam-dudunsparce-joshua-frink",
+   "b": "baltimore-2026/02-hydrapple-ben-dobberstein",
+   "games": 40,
+   "winsA": 22,
+   "winsB": 18,
+   "draws": 0,
+   "winsAFirst": 14,
+   "gamesAFirst": 20,
+   "turns": 790,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica-1-black-belt",
+   "b": "baltimore-2026/05-alakazam-dudunsparce-joshua-frink",
+   "games": 40,
+   "winsA": 32,
+   "winsB": 8,
+   "draws": 0,
+   "winsAFirst": 16,
+   "gamesAFirst": 20,
+   "turns": 834,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/tua-dunsparce",
+   "b": "brisbane-2026/01-dragapult-edmund-khoo",
+   "games": 40,
+   "winsA": 21,
+   "winsB": 19,
+   "draws": 0,
+   "winsAFirst": 10,
+   "gamesAFirst": 20,
+   "turns": 866,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/vostra-2-black-belt",
+   "b": "nizza-2026/02-dhelmise-maxime-launay",
+   "games": 40,
+   "winsA": 26,
+   "winsB": 14,
+   "draws": 0,
+   "winsAFirst": 14,
+   "gamesAFirst": 20,
+   "turns": 777,
+   "errors": []
+  },
+  {
+   "a": "brisbane-2026/01-dragapult-edmund-khoo",
+   "b": "brisbane-2026/04-dragapult-dusknoir-daigo-yoshihara",
+   "games": 40,
+   "winsA": 28,
+   "winsB": 11,
+   "draws": 1,
+   "winsAFirst": 15,
+   "gamesAFirst": 20,
+   "turns": 719,
+   "errors": []
+  },
+  {
+   "a": "recife-2026/04-n-s-zoroark-marco-cifuentes-meta",
+   "b": "recife-2026/05-mega-excadrill-riguel-assis",
+   "games": 40,
+   "winsA": 13,
+   "winsB": 27,
+   "draws": 0,
+   "winsAFirst": 7,
+   "gamesAFirst": 20,
+   "turns": 1117,
+   "errors": []
+  },
+  {
+   "a": "baltimore-2026/05-alakazam-dudunsparce-joshua-frink",
+   "b": "frankfurt-2026/19-crustle-eemeli-reijonen",
+   "games": 40,
+   "winsA": 3,
+   "winsB": 37,
+   "draws": 0,
+   "winsAFirst": 0,
+   "gamesAFirst": 20,
+   "turns": 989,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica-1-black-belt",
+   "b": "brisbane-2026/04-dragapult-dusknoir-daigo-yoshihara",
+   "games": 40,
+   "winsA": 36,
+   "winsB": 4,
+   "draws": 0,
+   "winsAFirst": 19,
+   "gamesAFirst": 20,
+   "turns": 669,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/tua-dunsparce",
+   "b": "baltimore-2026/01-basic-box-dylan-kasturi",
+   "games": 40,
+   "winsA": 30,
+   "winsB": 10,
+   "draws": 0,
+   "winsAFirst": 14,
+   "gamesAFirst": 20,
+   "turns": 790,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/vostra-2-black-belt",
+   "b": "frankfurt-2026/03-festival-lead-eliot-duclos",
+   "games": 40,
+   "winsA": 33,
+   "winsB": 7,
+   "draws": 0,
+   "winsAFirst": 15,
+   "gamesAFirst": 20,
+   "turns": 663,
+   "errors": []
+  },
+  {
+   "a": "brisbane-2026/01-dragapult-edmund-khoo",
+   "b": "recife-2026/05-mega-excadrill-riguel-assis",
+   "games": 40,
+   "winsA": 31,
+   "winsB": 9,
+   "draws": 0,
+   "winsAFirst": 14,
+   "gamesAFirst": 20,
+   "turns": 669,
+   "errors": []
+  },
+  {
+   "a": "recife-2026/04-n-s-zoroark-marco-cifuentes-meta",
+   "b": "louisville-2026/02-dragapult-blaziken-austin-charles",
+   "games": 40,
+   "winsA": 12,
+   "winsB": 28,
+   "draws": 0,
+   "winsAFirst": 9,
+   "gamesAFirst": 20,
+   "turns": 1018,
+   "errors": []
+  },
+  {
+   "a": "brisbane-2026/04-dragapult-dusknoir-daigo-yoshihara",
+   "b": "recife-2026/05-mega-excadrill-riguel-assis",
+   "games": 40,
+   "winsA": 20,
+   "winsB": 19,
+   "draws": 1,
+   "winsAFirst": 13,
+   "gamesAFirst": 20,
+   "turns": 763,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica-1-black-belt",
+   "b": "recife-2026/05-mega-excadrill-riguel-assis",
+   "games": 40,
+   "winsA": 31,
+   "winsB": 9,
+   "draws": 0,
+   "winsAFirst": 17,
+   "gamesAFirst": 20,
+   "turns": 770,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/tua-dunsparce",
+   "b": "recife-2026/04-n-s-zoroark-marco-cifuentes-meta",
+   "games": 40,
+   "winsA": 30,
+   "winsB": 10,
+   "draws": 0,
+   "winsAFirst": 16,
+   "gamesAFirst": 20,
+   "turns": 905,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/vostra-2-black-belt",
+   "b": "baltimore-2026/02-hydrapple-ben-dobberstein",
+   "games": 40,
+   "winsA": 24,
+   "winsB": 16,
+   "draws": 0,
+   "winsAFirst": 13,
+   "gamesAFirst": 20,
+   "turns": 752,
+   "errors": []
+  },
+  {
+   "a": "brisbane-2026/01-dragapult-edmund-khoo",
+   "b": "louisville-2026/02-dragapult-blaziken-austin-charles",
+   "games": 40,
+   "winsA": 29,
+   "winsB": 11,
+   "draws": 0,
+   "winsAFirst": 16,
+   "gamesAFirst": 20,
+   "turns": 781,
+   "errors": []
+  },
+  {
+   "a": "recife-2026/04-n-s-zoroark-marco-cifuentes-meta",
+   "b": "nizza-2026/02-dhelmise-maxime-launay",
+   "games": 40,
+   "winsA": 13,
+   "winsB": 27,
+   "draws": 0,
+   "winsAFirst": 8,
+   "gamesAFirst": 20,
+   "turns": 929,
+   "errors": []
+  },
+  {
+   "a": "brisbane-2026/04-dragapult-dusknoir-daigo-yoshihara",
+   "b": "louisville-2026/02-dragapult-blaziken-austin-charles",
+   "games": 40,
+   "winsA": 15,
+   "winsB": 25,
+   "draws": 0,
+   "winsAFirst": 11,
+   "gamesAFirst": 20,
+   "turns": 694,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica-1-black-belt",
+   "b": "louisville-2026/02-dragapult-blaziken-austin-charles",
+   "games": 40,
+   "winsA": 30,
+   "winsB": 10,
+   "draws": 0,
+   "winsAFirst": 15,
+   "gamesAFirst": 20,
+   "turns": 781,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/tua-dunsparce",
+   "b": "baltimore-2026/04-slowking-mark-dreitzler",
+   "games": 40,
+   "winsA": 34,
+   "winsB": 6,
+   "draws": 0,
+   "winsAFirst": 16,
+   "gamesAFirst": 20,
+   "turns": 808,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/vostra-2-black-belt",
+   "b": "frankfurt-2026/19-crustle-eemeli-reijonen",
+   "games": 40,
+   "winsA": 18,
+   "winsB": 22,
+   "draws": 0,
+   "winsAFirst": 6,
+   "gamesAFirst": 20,
+   "turns": 818,
+   "errors": []
+  },
+  {
+   "a": "brisbane-2026/01-dragapult-edmund-khoo",
+   "b": "nizza-2026/02-dhelmise-maxime-launay",
+   "games": 40,
+   "winsA": 7,
+   "winsB": 33,
+   "draws": 0,
+   "winsAFirst": 4,
+   "gamesAFirst": 20,
+   "turns": 691,
+   "errors": []
+  },
+  {
+   "a": "recife-2026/04-n-s-zoroark-marco-cifuentes-meta",
+   "b": "frankfurt-2026/03-festival-lead-eliot-duclos",
+   "games": 40,
+   "winsA": 17,
+   "winsB": 23,
+   "draws": 0,
+   "winsAFirst": 9,
+   "gamesAFirst": 20,
+   "turns": 895,
+   "errors": []
+  },
+  {
+   "a": "brisbane-2026/04-dragapult-dusknoir-daigo-yoshihara",
+   "b": "nizza-2026/02-dhelmise-maxime-launay",
+   "games": 40,
+   "winsA": 2,
+   "winsB": 38,
+   "draws": 0,
+   "winsAFirst": 1,
+   "gamesAFirst": 20,
+   "turns": 605,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica",
+   "b": "recife-2026/04-n-s-zoroark-marco-cifuentes-meta",
+   "games": 40,
+   "winsA": 33,
+   "winsB": 7,
+   "draws": 0,
+   "winsAFirst": 17,
+   "gamesAFirst": 20,
+   "turns": 759,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica-1-black-belt",
+   "b": "baltimore-2026/02-hydrapple-ben-dobberstein",
+   "games": 40,
+   "winsA": 26,
+   "winsB": 14,
+   "draws": 0,
+   "winsAFirst": 16,
+   "gamesAFirst": 20,
+   "turns": 658,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/tua-dunsparce",
+   "b": "recife-2026/05-mega-excadrill-riguel-assis",
+   "games": 40,
+   "winsA": 23,
+   "winsB": 17,
+   "draws": 0,
+   "winsAFirst": 12,
+   "gamesAFirst": 20,
+   "turns": 798,
+   "errors": []
+  },
+  {
+   "a": "nizza-2026/02-dhelmise-maxime-launay",
+   "b": "recife-2026/04-n-s-zoroark-marco-cifuentes-meta",
+   "games": 40,
+   "winsA": 36,
+   "winsB": 4,
+   "draws": 0,
+   "winsAFirst": 16,
+   "gamesAFirst": 20,
+   "turns": 821,
+   "errors": []
+  },
+  {
+   "a": "brisbane-2026/01-dragapult-edmund-khoo",
+   "b": "frankfurt-2026/19-crustle-eemeli-reijonen",
+   "games": 40,
+   "winsA": 18,
+   "winsB": 22,
+   "draws": 0,
+   "winsAFirst": 10,
+   "gamesAFirst": 20,
+   "turns": 991,
+   "errors": []
+  },
+  {
+   "a": "baltimore-2026/04-slowking-mark-dreitzler",
+   "b": "baltimore-2026/05-alakazam-dudunsparce-joshua-frink",
+   "games": 40,
+   "winsA": 3,
+   "winsB": 36,
+   "draws": 1,
+   "winsAFirst": 3,
+   "gamesAFirst": 20,
+   "turns": 718,
+   "errors": []
+  },
+  {
+   "a": "brisbane-2026/04-dragapult-dusknoir-daigo-yoshihara",
+   "b": "frankfurt-2026/19-crustle-eemeli-reijonen",
+   "games": 40,
+   "winsA": 2,
+   "winsB": 38,
+   "draws": 0,
+   "winsAFirst": 0,
+   "gamesAFirst": 20,
+   "turns": 964,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica",
+   "b": "baltimore-2026/04-slowking-mark-dreitzler",
+   "games": 40,
+   "winsA": 37,
+   "winsB": 2,
+   "draws": 1,
+   "winsAFirst": 20,
+   "gamesAFirst": 20,
+   "turns": 791,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica-1-black-belt",
+   "b": "frankfurt-2026/19-crustle-eemeli-reijonen",
+   "games": 40,
+   "winsA": 29,
+   "winsB": 11,
+   "draws": 0,
+   "winsAFirst": 15,
+   "gamesAFirst": 20,
+   "turns": 834,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/tua-dunsparce",
+   "b": "louisville-2026/02-dragapult-blaziken-austin-charles",
+   "games": 40,
+   "winsA": 29,
+   "winsB": 11,
+   "draws": 0,
+   "winsAFirst": 15,
+   "gamesAFirst": 20,
+   "turns": 754,
+   "errors": []
+  },
+  {
+   "a": "nizza-2026/02-dhelmise-maxime-launay",
+   "b": "baltimore-2026/04-slowking-mark-dreitzler",
+   "games": 40,
+   "winsA": 34,
+   "winsB": 5,
+   "draws": 1,
+   "winsAFirst": 18,
+   "gamesAFirst": 20,
+   "turns": 917,
+   "errors": []
+  },
+  {
+   "a": "baltimore-2026/01-basic-box-dylan-kasturi",
+   "b": "recife-2026/04-n-s-zoroark-marco-cifuentes-meta",
+   "games": 40,
+   "winsA": 23,
+   "winsB": 17,
+   "draws": 0,
+   "winsAFirst": 13,
+   "gamesAFirst": 20,
+   "turns": 1070,
+   "errors": []
+  },
+  {
+   "a": "baltimore-2026/04-slowking-mark-dreitzler",
+   "b": "brisbane-2026/04-dragapult-dusknoir-daigo-yoshihara",
+   "games": 40,
+   "winsA": 11,
+   "winsB": 28,
+   "draws": 1,
+   "winsAFirst": 7,
+   "gamesAFirst": 20,
+   "turns": 978,
+   "errors": []
+  },
+  {
+   "a": "recife-2026/05-mega-excadrill-riguel-assis",
+   "b": "louisville-2026/02-dragapult-blaziken-austin-charles",
+   "games": 40,
+   "winsA": 14,
+   "winsB": 26,
+   "draws": 0,
+   "winsAFirst": 7,
+   "gamesAFirst": 20,
+   "turns": 831,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica",
+   "b": "baltimore-2026/05-alakazam-dudunsparce-joshua-frink",
+   "games": 40,
+   "winsA": 34,
+   "winsB": 6,
+   "draws": 0,
+   "winsAFirst": 19,
+   "gamesAFirst": 20,
+   "turns": 897,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica-con-mixer",
+   "b": "brisbane-2026/01-dragapult-edmund-khoo",
+   "games": 40,
+   "winsA": 31,
+   "winsB": 9,
+   "draws": 0,
+   "winsAFirst": 17,
+   "gamesAFirst": 20,
+   "turns": 787,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/tua-dunsparce",
+   "b": "nizza-2026/02-dhelmise-maxime-launay",
+   "games": 40,
+   "winsA": 20,
+   "winsB": 20,
+   "draws": 0,
+   "winsAFirst": 10,
+   "gamesAFirst": 20,
+   "turns": 822,
+   "errors": []
+  },
+  {
+   "a": "nizza-2026/02-dhelmise-maxime-launay",
+   "b": "baltimore-2026/05-alakazam-dudunsparce-joshua-frink",
+   "games": 40,
+   "winsA": 28,
+   "winsB": 12,
+   "draws": 0,
+   "winsAFirst": 15,
+   "gamesAFirst": 20,
+   "turns": 838,
+   "errors": []
+  },
+  {
+   "a": "baltimore-2026/01-basic-box-dylan-kasturi",
+   "b": "baltimore-2026/04-slowking-mark-dreitzler",
+   "games": 40,
+   "winsA": 28,
+   "winsB": 11,
+   "draws": 1,
+   "winsAFirst": 14,
+   "gamesAFirst": 20,
+   "turns": 1191,
+   "errors": []
+  },
+  {
+   "a": "baltimore-2026/04-slowking-mark-dreitzler",
+   "b": "recife-2026/05-mega-excadrill-riguel-assis",
+   "games": 40,
+   "winsA": 10,
+   "winsB": 30,
+   "draws": 0,
+   "winsAFirst": 7,
+   "gamesAFirst": 20,
+   "turns": 923,
+   "errors": []
+  },
+  {
+   "a": "recife-2026/05-mega-excadrill-riguel-assis",
+   "b": "nizza-2026/02-dhelmise-maxime-launay",
+   "games": 40,
+   "winsA": 14,
+   "winsB": 26,
+   "draws": 0,
+   "winsAFirst": 6,
+   "gamesAFirst": 20,
+   "turns": 736,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica",
+   "b": "brisbane-2026/04-dragapult-dusknoir-daigo-yoshihara",
+   "games": 40,
+   "winsA": 34,
+   "winsB": 6,
+   "draws": 0,
+   "winsAFirst": 18,
+   "gamesAFirst": 20,
+   "turns": 693,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica-con-mixer",
+   "b": "baltimore-2026/01-basic-box-dylan-kasturi",
+   "games": 40,
+   "winsA": 31,
+   "winsB": 9,
+   "draws": 0,
+   "winsAFirst": 17,
+   "gamesAFirst": 20,
+   "turns": 658,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/tua-dunsparce",
+   "b": "frankfurt-2026/03-festival-lead-eliot-duclos",
+   "games": 40,
+   "winsA": 33,
+   "winsB": 7,
+   "draws": 0,
+   "winsAFirst": 18,
+   "gamesAFirst": 20,
+   "turns": 744,
+   "errors": []
+  },
+  {
+   "a": "nizza-2026/02-dhelmise-maxime-launay",
+   "b": "brisbane-2026/04-dragapult-dusknoir-daigo-yoshihara",
+   "games": 40,
+   "winsA": 36,
+   "winsB": 4,
+   "draws": 0,
+   "winsAFirst": 19,
+   "gamesAFirst": 20,
+   "turns": 693,
+   "errors": []
+  },
+  {
+   "a": "baltimore-2026/01-basic-box-dylan-kasturi",
+   "b": "baltimore-2026/05-alakazam-dudunsparce-joshua-frink",
+   "games": 40,
+   "winsA": 4,
+   "winsB": 36,
+   "draws": 0,
+   "winsAFirst": 2,
+   "gamesAFirst": 20,
+   "turns": 608,
+   "errors": []
+  },
+  {
+   "a": "baltimore-2026/04-slowking-mark-dreitzler",
+   "b": "louisville-2026/02-dragapult-blaziken-austin-charles",
+   "games": 40,
+   "winsA": 8,
+   "winsB": 31,
+   "draws": 1,
+   "winsAFirst": 6,
+   "gamesAFirst": 20,
+   "turns": 1080,
+   "errors": []
+  },
+  {
+   "a": "recife-2026/05-mega-excadrill-riguel-assis",
+   "b": "frankfurt-2026/03-festival-lead-eliot-duclos",
+   "games": 40,
+   "winsA": 30,
+   "winsB": 10,
+   "draws": 0,
+   "winsAFirst": 17,
+   "gamesAFirst": 20,
+   "turns": 825,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica",
+   "b": "recife-2026/05-mega-excadrill-riguel-assis",
+   "games": 40,
+   "winsA": 22,
+   "winsB": 18,
+   "draws": 0,
+   "winsAFirst": 14,
+   "gamesAFirst": 20,
+   "turns": 741,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica-con-mixer",
+   "b": "recife-2026/04-n-s-zoroark-marco-cifuentes-meta",
+   "games": 40,
+   "winsA": 35,
+   "winsB": 5,
+   "draws": 0,
+   "winsAFirst": 20,
+   "gamesAFirst": 20,
+   "turns": 764,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/tua-dunsparce",
+   "b": "baltimore-2026/02-hydrapple-ben-dobberstein",
+   "games": 40,
+   "winsA": 23,
+   "winsB": 17,
+   "draws": 0,
+   "winsAFirst": 13,
+   "gamesAFirst": 20,
+   "turns": 881,
+   "errors": []
+  },
+  {
+   "a": "nizza-2026/02-dhelmise-maxime-launay",
+   "b": "recife-2026/05-mega-excadrill-riguel-assis",
+   "games": 40,
+   "winsA": 27,
+   "winsB": 13,
+   "draws": 0,
+   "winsAFirst": 12,
+   "gamesAFirst": 20,
+   "turns": 787,
+   "errors": []
+  },
+  {
+   "a": "baltimore-2026/01-basic-box-dylan-kasturi",
+   "b": "brisbane-2026/04-dragapult-dusknoir-daigo-yoshihara",
+   "games": 40,
+   "winsA": 25,
+   "winsB": 15,
+   "draws": 0,
+   "winsAFirst": 14,
+   "gamesAFirst": 20,
+   "turns": 690,
+   "errors": []
+  },
+  {
+   "a": "baltimore-2026/04-slowking-mark-dreitzler",
+   "b": "nizza-2026/02-dhelmise-maxime-launay",
+   "games": 40,
+   "winsA": 3,
+   "winsB": 37,
+   "draws": 0,
+   "winsAFirst": 3,
+   "gamesAFirst": 20,
+   "turns": 743,
+   "errors": []
+  },
+  {
+   "a": "recife-2026/05-mega-excadrill-riguel-assis",
+   "b": "baltimore-2026/02-hydrapple-ben-dobberstein",
+   "games": 40,
+   "winsA": 15,
+   "winsB": 25,
+   "draws": 0,
+   "winsAFirst": 8,
+   "gamesAFirst": 20,
+   "turns": 792,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica",
+   "b": "louisville-2026/02-dragapult-blaziken-austin-charles",
+   "games": 40,
+   "winsA": 35,
+   "winsB": 5,
+   "draws": 0,
+   "winsAFirst": 20,
+   "gamesAFirst": 20,
+   "turns": 746,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica-con-mixer",
+   "b": "baltimore-2026/04-slowking-mark-dreitzler",
+   "games": 40,
+   "winsA": 36,
+   "winsB": 4,
+   "draws": 0,
+   "winsAFirst": 17,
+   "gamesAFirst": 20,
+   "turns": 716,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/tua-dunsparce",
+   "b": "frankfurt-2026/19-crustle-eemeli-reijonen",
+   "games": 40,
+   "winsA": 20,
+   "winsB": 20,
+   "draws": 0,
+   "winsAFirst": 12,
+   "gamesAFirst": 20,
+   "turns": 974,
+   "errors": []
+  },
+  {
+   "a": "nizza-2026/02-dhelmise-maxime-launay",
+   "b": "louisville-2026/02-dragapult-blaziken-austin-charles",
+   "games": 40,
+   "winsA": 35,
+   "winsB": 5,
+   "draws": 0,
+   "winsAFirst": 18,
+   "gamesAFirst": 20,
+   "turns": 813,
+   "errors": []
+  },
+  {
+   "a": "baltimore-2026/01-basic-box-dylan-kasturi",
+   "b": "recife-2026/05-mega-excadrill-riguel-assis",
+   "games": 40,
+   "winsA": 20,
+   "winsB": 20,
+   "draws": 0,
+   "winsAFirst": 12,
+   "gamesAFirst": 20,
+   "turns": 944,
+   "errors": []
+  },
+  {
+   "a": "baltimore-2026/04-slowking-mark-dreitzler",
+   "b": "frankfurt-2026/03-festival-lead-eliot-duclos",
+   "games": 40,
+   "winsA": 22,
+   "winsB": 18,
+   "draws": 0,
+   "winsAFirst": 11,
+   "gamesAFirst": 20,
+   "turns": 1084,
+   "errors": []
+  },
+  {
+   "a": "recife-2026/05-mega-excadrill-riguel-assis",
+   "b": "frankfurt-2026/19-crustle-eemeli-reijonen",
+   "games": 40,
+   "winsA": 5,
+   "winsB": 35,
+   "draws": 0,
+   "winsAFirst": 2,
+   "gamesAFirst": 20,
+   "turns": 957,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica",
+   "b": "nizza-2026/02-dhelmise-maxime-launay",
+   "games": 40,
+   "winsA": 26,
+   "winsB": 14,
+   "draws": 0,
+   "winsAFirst": 13,
+   "gamesAFirst": 20,
+   "turns": 706,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica-con-mixer",
+   "b": "baltimore-2026/05-alakazam-dudunsparce-joshua-frink",
+   "games": 40,
+   "winsA": 31,
+   "winsB": 9,
+   "draws": 0,
+   "winsAFirst": 15,
+   "gamesAFirst": 20,
+   "turns": 756,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/vostra-2-black-belt",
+   "b": "brisbane-2026/01-dragapult-edmund-khoo",
+   "games": 40,
+   "winsA": 24,
+   "winsB": 16,
+   "draws": 0,
+   "winsAFirst": 14,
+   "gamesAFirst": 20,
+   "turns": 850,
+   "errors": []
+  },
+  {
+   "a": "nizza-2026/02-dhelmise-maxime-launay",
+   "b": "nizza-2026/02-dhelmise-maxime-launay",
+   "games": 40,
+   "winsA": 17,
+   "winsB": 23,
+   "draws": 0,
+   "winsAFirst": 6,
+   "gamesAFirst": 20,
+   "turns": 773,
+   "errors": []
+  },
+  {
+   "a": "baltimore-2026/01-basic-box-dylan-kasturi",
+   "b": "louisville-2026/02-dragapult-blaziken-austin-charles",
+   "games": 40,
+   "winsA": 19,
+   "winsB": 21,
+   "draws": 0,
+   "winsAFirst": 10,
+   "gamesAFirst": 20,
+   "turns": 828,
+   "errors": []
+  },
+  {
+   "a": "baltimore-2026/04-slowking-mark-dreitzler",
+   "b": "baltimore-2026/02-hydrapple-ben-dobberstein",
+   "games": 40,
+   "winsA": 4,
+   "winsB": 34,
+   "draws": 2,
+   "winsAFirst": 2,
+   "gamesAFirst": 20,
+   "turns": 1061,
+   "errors": []
+  },
+  {
+   "a": "louisville-2026/02-dragapult-blaziken-austin-charles",
+   "b": "nizza-2026/02-dhelmise-maxime-launay",
+   "games": 40,
+   "winsA": 5,
+   "winsB": 35,
+   "draws": 0,
+   "winsAFirst": 2,
+   "gamesAFirst": 20,
+   "turns": 867,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica",
+   "b": "frankfurt-2026/03-festival-lead-eliot-duclos",
+   "games": 40,
+   "winsA": 36,
+   "winsB": 4,
+   "draws": 0,
+   "winsAFirst": 18,
+   "gamesAFirst": 20,
+   "turns": 614,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/lista-per-danzica-con-mixer",
+   "b": "brisbane-2026/04-dragapult-dusknoir-daigo-yoshihara",
+   "games": 40,
+   "winsA": 35,
+   "winsB": 5,
+   "draws": 0,
+   "winsAFirst": 18,
+   "gamesAFirst": 20,
+   "turns": 600,
+   "errors": []
+  },
+  {
+   "a": "hide-n-sneak/vostra-2-black-belt",
+   "b": "baltimore-2026/01-basic-box-dylan-kasturi",
+   "games": 40,
+   "winsA": 29,
+   "winsB": 11,
+   "draws": 0,
+   "winsAFirst": 16,
+   "gamesAFirst": 20,
+   "turns": 803,
+   "errors": []
+  },
+  {
+   "a": "nizza-2026/02-dhelmise-maxime-launay",
+   "b": "frankfurt-2026/03-festival-lead-eliot-duclos",
+   "games": 40,
+   "winsA": 36,
+   "winsB": 4,
+   "draws": 0,
+   "winsAFirst": 19,
+   "gamesAFirst": 20,
+   "turns": 648,
+   "errors": []
+  },
+  {
+   "a": "baltimore-2026/01-basic-box-dylan-kasturi",
+   "b": "nizza-2026/02-dhelmise-maxime-launay",
+   "games": 40,
+   "winsA": 7,
+   "winsB": 33,
+   "draws": 0,
+   "winsAFirst": 4,
+   "gamesAFirst": 20,
+   "turns": 772,
+   "errors": []
+  },
+  {
+   "a": "baltimore-2026/04-slowking-mark-dreitzler",
+   "b": "frankfurt-2026/19-crustle-eemeli-reijonen",
+   "games": 40,
+   "winsA": 2,
+   "winsB": 38,
+   "draws": 0,
+   "winsAFirst": 0,
+   "gamesAFirst": 20,
+   "turns": 845,
+   "errors": []
+  },
+  {
+   "a": "louisville-2026/02-dragapult-blaziken-austin-charles",
+   "b": "frankfurt-2026/03-festival-lead-eliot-duclos",
+   "games": 40,
+   "winsA": 32,
+   "winsB": 8,
+   "draws": 0,
+   "winsAFirst": 15,
+   "gamesAFirst": 20,
+   "turns": 800,
+   "errors": []
+  }
+ ]
+}
