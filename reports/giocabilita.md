@@ -4,19 +4,19 @@ Contro nizza-2026/02-dhelmise-maxime-launay, 20 partite, giocatore basic. Primo 
 
 | Archetipo | Primo attacco (turno proprio) | Turni senza attacco (dal 2°) | Premi presi | Vittorie |
 | --- | --- | --- | --- | --- |
-| Dragapult | 2.1 | 15% | 3.8 | 40% |
-| Basic Box | 4.1 | 44% | 3.8 | 45% |
-| N's Zoroark | 3.5 | 43% | 3.5 | 40% |
-| Slowking | 4.3 | 67% | 1.6 | 10% |
-| Dragapult Dusknoir | 2.5 | 34% | 3.8 | 40% |
-| Dragapult Blaziken | 2.5 | 31% | 3.0 | 20% |
-| Festival Lead | 2.7 | 43% | 2.4 | 25% |
-| Alakazam Dudunsparce | 2.5 | 21% | 3.0 | 30% |
-| Crustle | 3.5 | 48% | 4.2 | 50% |
-| Dhelmise | 2.4 | 13% | 4.6 | 65% |
-| Hydrapple | 3.3 | 43% | 3.4 | 35% |
-| Mega Excadrill | 2.6 | 28% | 3.5 | 40% |
-| Alakazam Dusknoir | 2.5 | 30% | 2.3 | 5% |
-| Lucario Hariyama | 2.4 | 34% | 2.4 | 20% |
-| Rocket's Honchkrow | 3.7 | 65% | 1.4 | 0% |
-| Sharpedo Toxtricity | 2.7 | 27% | 4.2 | 45% |
+| Dragapult | 2.1 | 16% | 3.8 | 35% |
+| Basic Box | 4.3 | 46% | 4.0 | 45% |
+| N's Zoroark | 3.1 | 36% | 4.0 | 40% |
+| Slowking | 4.1 | 73% | 1.6 | 10% |
+| Dragapult Dusknoir | 2.7 | 36% | 3.8 | 35% |
+| Dragapult Blaziken | 2.5 | 32% | 3.1 | 25% |
+| Festival Lead | 3.0 | 40% | 2.8 | 35% |
+| Alakazam Dudunsparce | 2.5 | 21% | 3.0 | 25% |
+| Crustle | 3.4 | 46% | 4.2 | 55% |
+| Dhelmise | 2.2 | 10% | 5.0 | 65% |
+| Hydrapple | 3.1 | 40% | 3.7 | 45% |
+| Mega Excadrill | 2.5 | 25% | 3.5 | 45% |
+| Alakazam Dusknoir | 2.5 | 27% | 2.5 | 0% |
+| Lucario Hariyama | 2.3 | 30% | 2.7 | 25% |
+| Rocket's Honchkrow | 3.1 | 43% | 2.3 | 30% |
+| Sharpedo Toxtricity | 3.0 | 30% | 4.5 | 55% |

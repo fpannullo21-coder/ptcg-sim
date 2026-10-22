@@ -509,6 +509,10 @@ export class BasicAgent implements Agent {
             const helpsFocus = this.need(g, [...pf.energies, a.card], cost) < this.need(g, pf.energies, cost);
             if (m === pf && helpsFocus) return 70;
             if (helpsFocus) return -1;
+          } else if (this.plan(g, me).focus) {
+            // l'attaccante principale non è ancora in campo: l'Energia si attacca per ultima, magari arriva nel turno
+            const help = this.energyHelp(g, m, a.card);
+            return help > 0 ? 3 : -1;
           }
           const help = this.energyHelp(g, m, a.card);
           if (help <= 0) return -1;
