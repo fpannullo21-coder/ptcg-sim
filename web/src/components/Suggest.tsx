@@ -8,6 +8,8 @@ import type { SimMessage, SuggestItem, SuggestRequest } from "../sim.worker";
  * "Suggeriscimi una variante": scambi di una carta presi dalle altre liste dell'archetipo,
  * provati contro l'avversario scelto. Le migliori ricevono altre partite.
  */
+const fmtPts = (x: number) => (x > 0 ? `+${x}` : `${x}`);
+
 export function SuggestBox({ data, analyzed, deckText, deckName, active, useDeck, onCompare }: PageProps & { onCompare: (out: string, add: string) => void }) {
   const opps = data.meta.archetypes;
   const [opp, setOpp] = useState(opps[0].name);
@@ -79,9 +81,10 @@ export function SuggestBox({ data, analyzed, deckText, deckName, active, useDeck
       {result && (
         <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 4 }}>
           <div class="msg" style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-            <strong>Come leggere i punti</strong>
-            <span>I punti sono la differenza nei match vinti contro {result.opp}, su 100 match. "+10 punti" vuol dire che su 100 match la variante ne vince 10 in più della tua lista.</span>
-            <span>Ogni numero viene da un numero limitato di partite simulate, quindi ha un margine di errore, come un sondaggio. Se il vantaggio è più grande del margine, il miglioramento è sicuro; se è più piccolo, potrebbe essere solo fortuna delle pescate e va confermato con più partite.</span>
+            <strong>Come leggere i risultati</strong>
+            <span>Esempio: la tua lista vince 54 match su 100, la variante 65. La variante vince 11 match in più ogni 100: sono gli 11 punti.</span>
+            <span>Ma sono partite simulate, non infinite: come lanciando una moneta 10 volte può uscire testa 7 volte, anche una variante può vincere di più solo per pescate fortunate. Per questo il risultato è una forbice: "tra +2 e +20" vuol dire che il guadagno vero sta lì in mezzo.</span>
+            <span>Se tutta la forbice è sopra zero, la variante è migliore di sicuro. Se arriva sotto zero, potrebbe anche essere peggiore: va riprovata con più partite.</span>
           </div>
           <span class="sub">Oggi la tua lista vince {Math.round(100 * bo3(result.base.wr))} match su 100 contro {result.opp}, secondo il simulatore ({result.base.games} partite).</span>
           {best.map((it, k) => {
@@ -100,8 +103,8 @@ export function SuggestBox({ data, analyzed, deckText, deckName, active, useDeck
                 </span>
                 <span><span class="verdict" style={{ color: chip[1], background: `color-mix(in srgb, ${chip[1]} 16%, var(--surface))` }}>{chip[0]}</span></span>
                 <span class="sub">
-                  {Math.round(100 * after)} match vinti su 100 invece di {Math.round(100 * before)}, con un margine di errore di ±{margin} punti ({it.games} partite).{" "}
-                  {level === "sure" ? `Anche nel caso peggiore la variante resta avanti.` : level === "maybe" ? `Il vantaggio (${pts}) è più piccolo del margine (${margin}): potrebbe essere fortuna.` : "In queste partite la variante non ha fatto meglio della tua lista."}
+                  Vince {Math.round(100 * after)} match su 100 invece di {Math.round(100 * before)}. Guadagno vero: tra {fmtPts(pts - margin)} e {fmtPts(pts + margin)} punti ({it.games} partite).{" "}
+                  {level === "sure" ? "Tutta la forbice è sopra zero: la variante è migliore." : level === "maybe" ? "La forbice arriva sotto zero: potrebbe anche essere peggiore, va riprovata con più partite." : "In queste partite la variante non ha fatto meglio della tua lista."}
                 </span>
                 <span class="sub">Perché provarla: {it.swap.why}.</span>
                 {pts > 0 && (
