@@ -168,7 +168,11 @@ export class BasicAgent implements Agent {
     if (d.kind.endsWith("_target")) return top(m => this.energyGap(g, m as Mon) * 10 + (g.top(m as Mon).attacks?.length ?? 0), 1);
     if (d.kind === "copy_attack") {
       // attacco copiato (Night Joker): il più forte, il costo dell'attacco copiato non conta
-      return top(o => { const [card, i] = o as [number, number]; return atkDamage(g.def(card).attacks![i]); }, 1);
+      return top(o => {
+        if (Array.isArray(o)) { const [card, i] = o as [number, number]; return atkDamage(g.def(card).attacks![i]); }
+        if (o && typeof o === "object" && "damage" in o) return atkDamage(o as Attack);
+        return 0;
+      }, 1);
     }
     if (d.kind === "gwynn") return top(c => -this.keep(g, me, c as number), d.max);
     if (d.kind === "mill" || d.kind === "blender") {
