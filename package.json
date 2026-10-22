@@ -18,7 +18,11 @@
     "import-limitless": "NODE_USE_ENV_PROXY=1 tsx src/tools/import-limitless.ts --top 32 --fill 0.7 582 581 580 579 578 577",
     "import-labs": "NODE_USE_ENV_PROXY=1 tsx src/tools/import-labs.ts 0072 0073 0074 0075 0076 0077",
     "meta": "tsx src/tools/meta.ts",
-    "meta-matrix": "tsx src/tools/meta-matrix.ts"
+    "meta-matrix": "tsx src/tools/meta-matrix.ts",
+    "web:data": "tsx src/tools/build-web-data.ts --private",
+    "web:trainer": "tsx src/tools/trainer-positions.ts",
+    "web:dev": "vite web",
+    "web:build": "tsc -p web --noEmit && vite build web"
   },
   "repository": {
     "type": "git",
@@ -30,9 +34,12 @@
   },
   "homepage": "https://github.com/fpannullo21-coder/ptcg-sim#readme",
   "devDependencies": {
+    "@preact/preset-vite": "^2.9.1",
     "@types/node": "^22.10.2",
+    "preact": "^10.24.3",
     "tsx": "^4.19.2",
     "typescript": "^5.6.3",
+    "vite": "^5.4.10",
     "vitest": "^2.1.8"
   },
   "private": true,

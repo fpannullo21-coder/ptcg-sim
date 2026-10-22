@@ -44,10 +44,10 @@ Regole da rispettare prima di rendere pubblico il sito (beta chiusa o pubblico).
 
 | Regola | Mockup del sito | Codice del sito |
 | --- | --- | --- |
-| Niente grafica ufficiale, tessere nostre | fatto | da fare con il sito |
-| Avviso in ogni pagina e Note legali | fatto (avviso), Note legali da scrivere | da fare |
+| Niente grafica ufficiale, tessere nostre | fatto | fatto (`web/src/components/ui.tsx`) |
+| Avviso in ogni pagina e Note legali | fatto | fatto; manca l'indirizzo di contatto |
 | Nome senza "Pokémon" | "PTCG Sim" provvisorio | nome da scegliere |
-| Niente testi completi delle carte | fatto | da fare: versione di `cards.json` senza testi |
+| Niente testi completi delle carte | fatto | fatto (`build-web-data`, controllato da `test/web-data.test.ts`) |
 | Permesso di Limitless | — | da chiedere prima della beta |
 | Licenza del database delle carte | — | da chiedere prima della beta |
-| Nomi dei giocatori nascosti | — | da fare |
+| Nomi dei giocatori nascosti | — | fatto per le liste tipo |

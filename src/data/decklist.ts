@@ -10,7 +10,7 @@
  * Le righe che iniziano con # sono metadati: "# Nome: ...", "# Fonte: ...".
  */
 import type { CardData } from "./cards.js";
-import { CardDB, normName } from "./db.js";
+import { CardDB, normName } from "./carddb.js";
 import { DEFAULT_FORMAT, type Format } from "./format.js";
 
 export interface DeckEntry {

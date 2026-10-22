@@ -34,6 +34,8 @@ export interface CardData {
   retreat?: number;
   rules?: string[];
   mark?: string;
+  /** Chiave delle ristampe già calcolata (dati pubblici senza testi). */
+  key?: string;
 }
 
 export function compact(c: RawCard, s: RawSet): CardData {
@@ -61,5 +63,7 @@ export function compact(c: RawCard, s: RawSet): CardData {
  * vuol dire stessa carta, anche con set e numero diversi.
  */
 export function gameKey(c: CardData): string {
+  // i dati pubblici del sito non hanno i testi delle carte: portano la chiave già calcolata
+  if (c.key) return c.key;
   return JSON.stringify([c.name, c.hp, c.types, c.abilities, c.attacks, c.rules, c.weakness, c.retreat, c.subtypes.filter(s => s !== "ACE SPEC")]);
 }

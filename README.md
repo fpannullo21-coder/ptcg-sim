@@ -37,6 +37,7 @@ Dare in input una lista qualsiasi e ottenere percentuali su quanto funziona, car
 | `reports/` | Risultati delle simulazioni |
 | `legacy/` | Il modello di Danzica e il primo prototipo in Python |
 | `docs/` | Architettura e roadmap |
+| `web/` | Il sito (Vite + Preact), vedi `docs/SITO.md` |
 
 ## Come si usa
 

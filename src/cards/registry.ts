@@ -10,7 +10,7 @@
  * Il report di copertura elenca tutte queste parti.
  */
 import type { CardData } from "../data/cards.js";
-import type { CardDB } from "../data/db.js";
+import type { CardDB } from "../data/carddb.js";
 import type { Deck } from "../data/decklist.js";
 import type { Ability, Attack, CardDef, EType, Passive, Sub } from "../engine/types.js";
 import type { G } from "../engine/game.js";
