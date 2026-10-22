@@ -34,7 +34,7 @@ export function atkDamage(a: Attack): number {
 }
 
 export interface PlanEntry { value: number; max: number; role: "line" | "attacker" | "support" | "other" }
-export type Plan = Map<string, PlanEntry> & { fuel?: string; openers?: string[]; energyRecursion?: boolean; stadium?: string; fillBench?: boolean; focus?: string[] };
+export type Plan = Map<string, PlanEntry> & { fuel?: string; openers?: string[]; energyRecursion?: boolean; stadium?: string; fillBench?: boolean; focus?: string[]; hoard?: string };
 
 /** Carte che riattaccano Energie base dagli scarti: con queste nel mazzo, scartare Energie dalla mano costa poco. */
 const RECURSION = ["N's PP Up", "Wondrous Patch", "Glass Trumpet", "Rosa's Encouragement", "Energy Retrieval", "Superior Energy Retrieval"];
@@ -89,6 +89,7 @@ export function derivePlan(g: G, me: number): Plan {
     if (dp.stadium) plan.stadium = dp.stadium;
     if (dp.fillBench) plan.fillBench = true;
     if (dp.focus) plan.focus = dp.focus;
+    if (dp.hoard) plan.hoard = dp.hoard;
     for (const [n, e] of Object.entries(dp.entries)) {
       const cur = plan.get(n);
       if (cur || defs.has(n)) plan.set(n, { value: 50, max: 1, role: "other", ...cur, ...e });

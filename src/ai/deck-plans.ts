@@ -20,6 +20,8 @@ export interface DeckPlan {
   fillBench?: boolean;
   /** Attaccanti principali: le Energie vanno prima a loro, o ai Pokémon da cui evolvono. */
   focus?: string[];
+  /** Supporter da tenere in mano invece di giocarli (prefisso del nome): l'attacco li scarta per fare danni. */
+  hoard?: string;
 }
 
 export const DECK_PLANS: DeckPlan[] = [
@@ -116,6 +118,22 @@ export const DECK_PLANS: DeckPlan[] = [
       Munkidori: { value: 45, max: 1 },
       Budew: { value: 30, max: 1 },
       "Meowth ex": { value: 25, max: 1 },
+    },
+  },
+  {
+    // Rocket's Honchkrow: Rocket Feathers fa 60 per ogni Supporter Team Rocket scartato dalla mano,
+    // quindi i Supporter si accumulano; Ignition Energy solo sull'attivo nel turno in cui attacca
+    name: "Rocket's Honchkrow",
+    detect: ["Team Rocket's Honchkrow", "Team Rocket's Murkrow"],
+    openers: ["Team Rocket's Murkrow", "Team Rocket's Porygon"],
+    focus: ["Team Rocket's Honchkrow"],
+    hoard: "Team Rocket's",
+    entries: {
+      "Team Rocket's Murkrow": { value: 115, max: 3 },
+      "Team Rocket's Honchkrow": { value: 125, max: 3 },
+      "Team Rocket's Porygon": { value: 55, max: 1 },
+      "Team Rocket's Porygon2": { value: 70, max: 1 },
+      "Team Rocket's Articuno": { value: 50, max: 1 },
     },
   },
 ];

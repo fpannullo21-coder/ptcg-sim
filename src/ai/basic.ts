@@ -324,6 +324,8 @@ export class BasicAgent implements Agent {
       return (this.plan(g, me).get(d.name)?.value ?? 50) * 0.6 - 15 * inHand;
     }
     if (d.kind === "energy") return inPlay.some(m => this.energyGap(g, m) > 0) ? 55 - 20 * inHand : 15;
+    const hoard = this.plan(g, me).hoard;
+    if (d.sub === "supporter" && hoard && d.name.startsWith(hoard)) return 72;
     if (d.sub === "supporter") return p.hand.some(x => g.def(x).sub === "supporter") ? 25 : 65;
     return 35 - 10 * inHand;
   }
@@ -466,8 +468,9 @@ export class BasicAgent implements Agent {
         case "bench": {
           // lascia un posto libero per le linee evolutive, metti prima ciò che serve al piano
           const v = this.benchValue(g, me, a.card);
-          // mai senza panchina: se l'attivo va KO si perde la partita
+          // mai senza panchina (se l'attivo va KO si perde la partita), e almeno due contro chi colpisce la panchina
           if (p.bench.length === 0) return Math.max(50, 25 + v / 2);
+          if (p.bench.length === 1) return Math.max(40, 25 + v / 2);
           if (p.bench.length >= benchMax) return -1;
           if (p.bench.length >= benchMax - 1 && v < 60) return -1;
           return v >= 30 ? 25 + v / 2 : -1;
@@ -487,6 +490,18 @@ export class BasicAgent implements Agent {
         }
         case "attach": {
           const m = slot(p, a.target);
+          // Ignition Energy si scarta a fine turno: solo sull'attivo, se gli fa attaccare adesso
+          if (g.def(a.card).name === "Ignition Energy") {
+            if (a.target !== -1) return -1;
+            // su un'evoluzione vale {C}{C}{C}, su un Base {C}
+            const extra = g.top(m).sub === "basic" ? 1 : 3;
+            const have = m.energies.flatMap(e => provided(g, e)).length;
+            const ok = (g.top(m).attacks ?? []).some(x => {
+              const cost = attackCost(g, m, x);
+              return atkDamage(x) > 0 && this.need(g, m.energies, cost) > 0 && this.need(g, m.energies, cost.filter(c => c !== "C")) === 0 && cost.length <= have + extra;
+            });
+            return ok ? 60 : -1;
+          }
           // piano di mazzo: l'Energia va all'attaccante principale (o a chi lo diventerà) finché non è pronto
           const pf = this.planFocus(g, me);
           if (pf) {
@@ -593,6 +608,11 @@ export class BasicAgent implements Agent {
       if (then > now + 30) return 40;
       return d.name === "Surfer" && p.hand.length <= 2 && then >= now ? 30 : -1;
     }
+    if (d.name === "Team Rocket's Giovanni") {
+      // come Boss's Orders, ma entra anche un nostro Pokémon dalla panchina: solo se quello manda KO il bersaglio
+      const dmg = Math.max(0, ...p.bench.map(m => this.bestDamage(g, m).dmg));
+      return o.bench.some(m => g.hpLeft(m) <= dmg) ? 45 : -1;
+    }
     if (d.name === "Energy Switch") {
       // solo se porta un'Energia all'attaccante principale da un Pokémon che non ne ha bisogno
       const f = this.focus(g, me);
@@ -604,6 +624,13 @@ export class BasicAgent implements Agent {
       return o.hand.length >= 5 || (o.hand.length >= 3 && p.hand.length <= 3) ? 60 : -1;
     }
     if (d.sub === "supporter") {
+      // piano con Supporter da accumulare (Honchkrow): se ne gioca uno solo se in mano ne restano altri o la mano è corta
+      const hoard = this.plan(g, me).hoard;
+      if (hoard && d.name.startsWith(hoard)) {
+        const kept = p.hand.filter(c => c !== card && g.def(c).name.startsWith(hoard) && g.def(c).sub === "supporter").length;
+        if (d.name === "Team Rocket's Archer") return -1 + (p.hand.length <= 2 ? 31 : 0);
+        if (p.hand.length > 4 && kept < 2) return -1;
+      }
       // i Supporter che rimescolano la mano (Lillie, Judge) non si giocano se in mano c'è un pezzo chiave per il prossimo turno
       const SHUFFLE = ["Lillie's Determination", "Judge", "Team Rocket's Archer"];
       // (un'evoluzione per un Pokémon in campo vale 70 con sé stessa in mano)
