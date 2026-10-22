@@ -18,6 +18,8 @@ export interface DeckPlan {
   stadium?: string;
   /** Riempire la panchina (attacchi che contano i Pokémon in panchina). */
   fillBench?: boolean;
+  /** Attaccanti principali: le Energie vanno prima a loro, o ai Pokémon da cui evolvono. */
+  focus?: string[];
 }
 
 export const DECK_PLANS: DeckPlan[] = [
@@ -54,16 +56,18 @@ export const DECK_PLANS: DeckPlan[] = [
     },
   },
   {
-    // Slowking: i Pokémon da copiare con Seek Inspiration restano nel mazzo (non in panchina),
-    // si mettono in cima con Academy at Night o Ciphermaniac's Codebreaking
+    // docs/piani/slowking.md: Mega Kangaskhan ex in attivo nei primi turni (Run Errand pesca 2),
+    // Slowking con le sue due Energie prima di tutto; i Pokémon da copiare con Seek Inspiration
+    // restano nel mazzo e si mettono in cima con Academy at Night o Ciphermaniac's Codebreaking
     name: "Slowking",
     detect: ["Slowking", "Slowpoke"],
-    openers: ["Latias ex", "Slowpoke", "Mega Kangaskhan ex"],
+    openers: ["Mega Kangaskhan ex", "Latias ex", "Slowpoke"],
+    focus: ["Slowking"],
     entries: {
       Slowpoke: { value: 115, max: 3 },
       Slowking: { value: 125, max: 3 },
       "Latias ex": { value: 60, max: 1 },
-      "Mega Kangaskhan ex": { value: 45, max: 1 },
+      "Mega Kangaskhan ex": { value: 70, max: 1 },
       Kyurem: { value: 5, max: 0 },
       Metagross: { value: 5, max: 0 },
       Annihilape: { value: 5, max: 0 },
@@ -74,34 +78,40 @@ export const DECK_PLANS: DeckPlan[] = [
     },
   },
   {
-    // Festival Lead: Festival Grounds sempre in gioco, panchina piena per Do the Wave, Thwackey cerca qualsiasi carta
+    // docs/piani/festival-lead.md: Festival Grounds sempre in gioco, panchina piena per Do the Wave,
+    // Dipplin attaccante principale, Shaymin presto (protegge la panchina), Thwackey cerca qualsiasi carta
     name: "Festival Lead",
     detect: ["Dipplin", "Thwackey"],
     openers: ["Applin", "Goldeen", "Grookey"],
     stadium: "Festival Grounds",
     fillBench: true,
+    focus: ["Dipplin"],
     entries: {
       Applin: { value: 110, max: 3 },
-      Dipplin: { value: 120, max: 3 },
+      Dipplin: { value: 125, max: 3 },
       Grookey: { value: 100, max: 2 },
       Thwackey: { value: 105, max: 2 },
-      Goldeen: { value: 70, max: 2 },
-      Seaking: { value: 75, max: 1 },
+      Goldeen: { value: 55, max: 1 },
+      Seaking: { value: 50, max: 1 },
       Rellor: { value: 60, max: 1 },
       Rabsca: { value: 80, max: 1 },
       Psyduck: { value: 50, max: 1 },
-      Shaymin: { value: 60, max: 1 },
+      Shaymin: { value: 100, max: 1 },
       Moltres: { value: 50, max: 1 },
     },
   },
   {
+    // docs/piani/zoroark.md: Night Joker copia l'attacco che rende di più (Darmanitan per due Base,
+    // Zekrom e Reshiram per i Pokémon grandi); le due Energie vanno su Zoroark ex; Trade quante ne servono
     name: "N's Zoroark",
     detect: ["N's Zoroark ex", "N's Zorua"],
+    focus: ["N's Zoroark ex"],
     entries: {
       "N's Zorua": { value: 115, max: 3 },
       "N's Zoroark ex": { value: 125, max: 3 },
       "N's Zekrom": { value: 60, max: 1 },
       "N's Reshiram": { value: 50, max: 1 },
+      "N's Darmanitan": { value: 50, max: 1 },
       "Pecharunt ex": { value: 35, max: 1 },
       Munkidori: { value: 45, max: 1 },
       Budew: { value: 30, max: 1 },

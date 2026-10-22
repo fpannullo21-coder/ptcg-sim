@@ -6,7 +6,7 @@
  * Ordine del turno: Abilità ed evoluzioni, panchina, ricerca, Energia,
  * Supporter, poi l'attacco migliore. Boss's Orders solo se dà un KO.
  */
-import { apply, attack, attackCost, canPay, G, GameOver, provided, retreatCost, slot } from "../engine/game.js";
+import { apply, applyDamage, attack, attackCost, canPay, G, GameOver, provided, retreatCost, slot } from "../engine/game.js";
 import type { Agent } from "../engine/game.js";
 import { atkDamage, derivePlan, type Plan } from "./plan.js";
 import type { Action, Attack, CardDef, Decision, Mon } from "../engine/types.js";
@@ -85,8 +85,42 @@ export class BasicAgent implements Agent {
     return best;
   }
 
+  /**
+   * Costo dell'attacco principale per un Pokémon del piano (`focus` del piano di mazzo):
+   * quello del Pokémon stesso o dell'evoluzione che diventerà. null se non è un attaccante principale.
+   */
+  focusCost(g: G, me: number, m: Mon): string[] | null {
+    const names = this.plan(g, me).focus;
+    if (!names) return null;
+    const p = g.p(me), name = g.top(m).name;
+    let def: CardDef | undefined;
+    if (names.includes(name)) def = g.top(m);
+    else for (const c of [...p.hand, ...p.deck, ...p.discard]) { const d = g.def(c); if (d.evolvesFrom === name && names.includes(d.name)) { def = d; break; } }
+    const atks = def?.attacks ?? [];
+    if (!atks.length) return null;
+    const a = atks.reduce((x, y) => (atkDamage(y) > atkDamage(x) ? y : x));
+    return def === g.top(m) ? attackCost(g, m, a) : [...a.cost];
+  }
+
+  /** L'attaccante principale del piano da caricare adesso: il più vicino a essere pronto, prima l'attivo. */
+  planFocus(g: G, me: number): Mon | null {
+    let best: Mon | null = null, bv = -Infinity;
+    const p = g.p(me);
+    for (const m of g.inPlay(me)) {
+      const cost = this.focusCost(g, me, m);
+      if (!cost) continue;
+      const need = this.need(g, m.energies, cost);
+      // chi è già pronto non riceve altre Energie se un altro ne ha bisogno
+      const v = (need > 0 ? 100 - 10 * need : 0) + (m === p.active ? 5 : 0) + (this.plan(g, me).focus!.includes(g.top(m).name) ? 3 : 0);
+      if (v > bv) { bv = v; best = m; }
+    }
+    return best;
+  }
+
   /** L'attaccante su cui concentrare le Energie: il più forte tra quelli più vicini a essere pronti. */
   focus(g: G, me: number): Mon | null {
+    const pf = this.planFocus(g, me);
+    if (pf) return pf;
     let best: Mon | null = null, bv = 0;
     const p = g.p(me);
     // le evoluzioni disponibili (in mano o nel mazzo) contano come attacchi futuri del Pokémon
@@ -153,7 +187,8 @@ export class BasicAgent implements Agent {
     for (const a of d.attacks ?? []) {
       let v = atkDamage(a);
       if (a.name === "Destined Fight" && o.active) v = 120 * (g.top(o.active).prizes ?? 1);
-      if (a.name === "Trifrost") v = 110 * Math.min(3, g.inPlay(1 - me).length);
+      // Trifrost: 110 a tre Pokémon, rende di più sui Pokémon Base piccoli (Dreepy, la linea di Hide n' Sneak)
+      if (a.name === "Trifrost") v = g.inPlay(1 - me).map(m => (g.hpLeft(m) <= 110 ? 150 * (g.top(m).prizes ?? 1) : 40)).sort((x, y) => y - x).slice(0, 3).reduce((s2, x) => s2 + x, 0);
       if (o.active && v >= g.hpLeft(o.active)) v += 100 * (g.top(o.active).prizes ?? 1);
       best = Math.max(best, v);
     }
@@ -187,6 +222,45 @@ export class BasicAgent implements Agent {
     return after.energy > before.energy || after.atk > before.atk || after.opp > before.opp || after.cards > before.cards;
   }
 
+  private copyDepth = 0;
+  /**
+   * Valore di un attacco copiato, provato su una copia della partita: premi presi (KO), danni fatti,
+   * meno quello che costa (Energie scartate, attacco bloccato il turno dopo).
+   */
+  copyValue(g: G, me: number, card: number, i: number): number {
+    const atk = g.def(card).attacks![i];
+    if (this.copyDepth > 0) return atkDamage(atk);
+    this.copyDepth++;
+    try {
+      const copy = new G(structuredClone(g.s), g.reg);
+      const att = copy.p(me).active!, o = copy.p(1 - me);
+      const energies = att.energies.length;
+      let base = atk.damage;
+      if (atk.effect) {
+        const it = atk.effect(copy, me);
+        let r = it.next();
+        for (let k = 0; !r.done && k < 50; k++) r = it.next(this.decide(copy, r.value));
+        if (r.done && typeof r.value === "number") base = r.value;
+      }
+      if (o.active && base > 0) applyDamage(copy, att, o.active, base, true);
+      let v = 0;
+      for (const m of copy.inPlay(1 - me)) {
+        const before = [g.p(1 - me).active, ...g.p(1 - me).bench].find(x => x && x.stack[0] === m.stack[0]);
+        const dealt = m.damage - (before?.damage ?? 0);
+        if (dealt <= 0) continue;
+        v += copy.hpLeft(m) <= 0 ? 1000 * (copy.top(m).prizes ?? 1) : dealt;
+      }
+      v -= 25 * (energies - att.energies.length);
+      if ((att.used.no_attack ?? 0) > g.s.turn) v -= 60;
+      return v;
+    } catch (e) {
+      if (e instanceof GameOver) return 1e6;
+      return atkDamage(atk);
+    } finally {
+      this.copyDepth--;
+    }
+  }
+
   /** Miglior danno stimato che l'attivo può fare adesso (senza provare gli attacchi). */
   quickBest(g: G, me: number): number {
     const a = g.p(me).active;
@@ -194,6 +268,14 @@ export class BasicAgent implements Agent {
     let best = 0;
     for (const atk of g.top(a).attacks ?? []) if (canPay(g, a.energies, attackCost(g, a, atk))) best = Math.max(best, atkDamage(atk));
     return best;
+  }
+
+  /** Vero se in mano manca un pezzo che serve in questo turno: l'Energia per l'attaccante o un Supporter. */
+  missingPiece(g: G, me: number): boolean {
+    const p = g.p(me), f = this.focus(g, me);
+    if (f && !p.energyAttached && this.energyGap(g, f) > 0 && !p.hand.some(c => g.def(c).kind === "energy")) return true;
+    if (!p.supporterPlayed && !p.hand.some(c => g.def(c).sub === "supporter")) return true;
+    return false;
   }
 
   private drawAbility = new Map<string, boolean>();
@@ -232,6 +314,12 @@ export class BasicAgent implements Agent {
     const inHand = p.hand.filter(x => g.def(x).name === d.name).length;
     if (d.kind === "pokemon") {
       if (d.evolvesFrom && inPlay.some(m => g.top(m).name === d.evolvesFrom)) return 90 - 20 * inHand;
+      // con Slowking in campo: un bersaglio di Seek Inspiration in mano, da mettere in cima con Academy at Night
+      if (this.seekUser(g, me) && this.plan(g, me).get(d.name)?.max === 0) {
+        const sv = this.seekValue(g, me, c);
+        const others = p.hand.filter(x => x !== c && this.seekValue(g, me, x) > 0).length;
+        if (sv > 0) return (others ? 30 : 75) + Math.min(20, sv / 20);
+      }
       if (d.sub === "basic") return this.benchValue(g, me, c) - 15 * inHand;
       return (this.plan(g, me).get(d.name)?.value ?? 50) * 0.6 - 15 * inHand;
     }
@@ -334,9 +422,10 @@ export class BasicAgent implements Agent {
       return ranked.slice(0, d.max);
     }
     if (d.kind === "copy_attack") {
-      // attacco copiato (Night Joker): il più forte, il costo dell'attacco copiato non conta
+      // attacco copiato (Night Joker, Seek Inspiration): quello che rende di più in questa posizione,
+      // provato su una copia (es. Darmanitan per due Base, Zekrom o Reshiram per i Pokémon grandi)
       return top(o => {
-        if (Array.isArray(o)) { const [card, i] = o as [number, number]; return atkDamage(g.def(card).attacks![i]); }
+        if (Array.isArray(o)) { const [card, i] = o as [number, number]; return this.copyValue(g, me, card, i); }
         if (o && typeof o === "object" && "damage" in o) return atkDamage(o as Attack);
         return 0;
       }, 1);
@@ -368,14 +457,17 @@ export class BasicAgent implements Agent {
           if (p.deck.length <= 8) return -1;
           if (p.hand.length >= 6) return -1;
           // una sola Abilità di pescata per turno, salvo mano quasi vuota (si perdeva spesso a mazzo finito)
+          // altre pescate nello stesso turno solo se manca qualcosa che serve adesso ("quelle necessarie")
           const usedThisTurn = g.inPlay(me).reduce((n, m) => n + (g.top(m).abilities ?? []).filter(ab => m.used[ab.name] === g.s.turn).length, 0);
-          if (usedThisTurn >= 1 && p.hand.length > 2) return -1;
+          if (usedThisTurn >= 1 && p.hand.length > 2 && !this.missingPiece(g, me)) return -1;
           return p.deck.length > 15 ? (p.hand.length <= 4 ? 70 : 30) : p.hand.length <= 3 ? 30 : -1;
         }
         case "evolve": return 80;
         case "bench": {
           // lascia un posto libero per le linee evolutive, metti prima ciò che serve al piano
           const v = this.benchValue(g, me, a.card);
+          // mai senza panchina: se l'attivo va KO si perde la partita
+          if (p.bench.length === 0) return Math.max(50, 25 + v / 2);
           if (p.bench.length >= benchMax) return -1;
           if (p.bench.length >= benchMax - 1 && v < 60) return -1;
           return v >= 30 ? 25 + v / 2 : -1;
@@ -395,6 +487,14 @@ export class BasicAgent implements Agent {
         }
         case "attach": {
           const m = slot(p, a.target);
+          // piano di mazzo: l'Energia va all'attaccante principale (o a chi lo diventerà) finché non è pronto
+          const pf = this.planFocus(g, me);
+          if (pf) {
+            const cost = this.focusCost(g, me, pf)!;
+            const helpsFocus = this.need(g, [...pf.energies, a.card], cost) < this.need(g, pf.energies, cost);
+            if (m === pf && helpsFocus) return 70;
+            if (helpsFocus) return -1;
+          }
           const help = this.energyHelp(g, m, a.card);
           if (help <= 0) return -1;
           return (a.target === -1 ? 30 : 22) + help + (m === this.focus(g, me) ? 25 : 0);
@@ -478,6 +578,21 @@ export class BasicAgent implements Agent {
       const dmg = p.active ? this.bestDamage(g, p.active).dmg : 0;
       return o.bench.some(m => g.hpLeft(m) <= dmg) && !(o.active && g.hpLeft(o.active) <= dmg && (g.top(o.active).prizes ?? 1) >= 2) ? 45 : -1;
     }
+    if (d.name === "Switch" || d.name === "Surfer" || d.name === "Escape Rope") {
+      // solo se chi entra può attaccare in questo turno (anche dopo l'Energia del turno) e meglio dell'attivo
+      if (!p.active || !o.active || !p.bench.length || (g.s.turn === 1 && g.s.first === me)) return -1;
+      const ready = (m: Mon) => {
+        const best = (g.top(m).attacks ?? []).filter(x => atkDamage(x) > 0);
+        return Math.max(0, ...best.map(x => {
+          const need = this.need(g, m.energies, attackCost(g, m, x));
+          const canFix = need === 1 && !p.energyAttached && p.hand.some(c => g.def(c).kind === "energy" && this.need(g, [...m.energies, c], attackCost(g, m, x)) === 0);
+          return need === 0 || canFix ? atkDamage(x) : 0;
+        }));
+      };
+      const now = ready(p.active), then = Math.max(...p.bench.map(ready));
+      if (then > now + 30) return 40;
+      return d.name === "Surfer" && p.hand.length <= 2 && then >= now ? 30 : -1;
+    }
     if (d.name === "Energy Switch") {
       // solo se porta un'Energia all'attaccante principale da un Pokémon che non ne ha bisogno
       const f = this.focus(g, me);
@@ -491,7 +606,10 @@ export class BasicAgent implements Agent {
     if (d.sub === "supporter") {
       // i Supporter che rimescolano la mano (Lillie, Judge) non si giocano se in mano c'è un pezzo chiave per il prossimo turno
       const SHUFFLE = ["Lillie's Determination", "Judge", "Team Rocket's Archer"];
-      if (SHUFFLE.includes(d.name) && p.hand.length >= 3 && p.hand.some(c => c !== card && this.want(g, me, c) >= 80)) return 12;
+      // (un'evoluzione per un Pokémon in campo vale 70 con sé stessa in mano)
+      if (SHUFFLE.includes(d.name) && p.hand.length >= 3 && p.hand.some(c => c !== card && this.want(g, me, c) >= 70)) return 12;
+      // Gladion's Final Battle: si gioca quando è l'ultima carta in mano, prima dell'attacco
+      if (d.name === "Gladion's Final Battle") return p.active && this.bestDamage(g, p.active).dmg > 0 ? 60 : 30;
       if (d.name === "Black Belt's Training") return o.active && (g.top(o.active).tags ?? []).includes("ex") ? 10 : -1;
       if (p.deck.length < 10 && p.hand.length >= 4) return -1;
       return p.hand.length <= 5 ? 35 : 20;

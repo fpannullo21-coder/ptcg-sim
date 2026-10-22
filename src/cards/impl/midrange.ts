@@ -56,6 +56,23 @@ export const MIDRANGE: Impl[] = [
     },
   },
   { name: "N's Zekrom", attacks: { "Rampaging Thunder": { *after(g, me) { g.p(me).active!.used.no_attack = g.s.turn + 2; } } }, covers: ["Shred"] },
+  {
+    name: "N's Darmanitan",
+    attacks: {
+      "Back Draft": { estimate: 60, *effect(g, me) { return 30 * g.p(1 - me).discard.filter(c => fx.isBasicEnergy(g, c)).length; } },
+      "Flamebody Cannon": {
+        estimate: 180,
+        *effect(g, me) {
+          // le Energie si scartano dal Pokémon che attacca (anche se l'attacco è copiato da Night Joker)
+          const m = g.p(me).active!;
+          g.p(me).discard.push(...m.energies.splice(0));
+          const pool = g.p(1 - me).bench.filter(x => !fx.prevented(g, x, me));
+          if (pool.length) fx.damageTo(g, me, yield* fx.chooseOne(g, me, "snipe", pool), 90);
+          return 90;
+        },
+      },
+    },
+  },
   { name: "N's Reshiram", attacks: { "Powerful Rage": { *effect(g, me) { return 20 * Math.floor(g.p(me).active!.damage / 10); } } } },
   {
     name: "N's Purrloin",

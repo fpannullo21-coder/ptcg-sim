@@ -172,9 +172,10 @@ export const BOXES: Impl[] = [
           const c = p.deck.pop()!;
           p.discard.push(c);
           const d = g.def(c);
-          if (d.kind !== "pokemon" || (d.tags ?? []).includes("ex") || (d.tags ?? []).includes("mega") || !d.attacks?.length) return 0;
+          if (d.kind !== "pokemon" || (d.tags ?? []).includes("ex") || (d.tags ?? []).includes("mega") || !d.attacks?.length) { g.say(`scarta ${d.name}: nessun attacco`); return 0; }
           const [, idx] = yield* fx.chooseOne(g, me, "copy_attack", d.attacks.map((_, i) => [c, i] as [number, number]));
           const atk = d.attacks[idx];
+          g.say(`scarta ${d.name}, usa ${atk.name}`);
           m.used.copied = c * 10 + idx;
           if (atk.effect) { const r = yield* atk.effect(g, me); if (typeof r === "number") return r; }
           return atk.damage;
