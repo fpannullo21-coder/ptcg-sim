@@ -10,152 +10,152 @@ Ancorato = il risultato reale dell'archetipo, spostato di quanto la simulazione 
 
 ### Lista per Danzica
 
-**Ancorato ai dati reali: 52.8%** · simulato puro: 73.6% dei match (68.3% delle partite) · reale dell'archetipo: 47.3%.
+**Ancorato ai dati reali: 48.3%** · simulato puro: 71.1% dei match (65.7% delle partite) · reale dell'archetipo: 47.3%.
 
 | Contro | Quota | Partite | Match | Reale (match giocati) | Ancorato |
 | --- | --- | --- | --- | --- | --- |
-| Dragapult | 18.1% | 75.0% | 84.4% | 51.6% (757) | 70.7% |
-| Basic Box | 6.4% | 59.0% | 63.4% | 35.9% (270) | 33.1% |
-| N's Zoroark | 6.4% | 46.0% | 44.0% | 17.9% (240) | 13.9% |
-| Slowking | 6.2% | 93.0% | 98.6% | 62.3% (276) | 54.9% |
-| Alakazam Dudunsparce | 5.6% | 79.0% | 88.6% | 67.0% (201) | 72.9% |
-| Dragapult Dusknoir | 5.5% | 79.0% | 88.6% | 59.8% (204) | 57.4% |
-| Mega Excadrill | 4.6% | 55.0% | 57.5% | 41.8% (190) | 46.2% |
-| Dragapult Blaziken | 4.5% | 84.0% | 93.1% | 34.0% (194) | 72.0% |
-| Dhelmise | 3.7% | 51.0% | 51.5% | 47.3% (172) | 51.8% |
-| Festival Lead | 3.4% | 73.0% | 82.1% | 42.1% (148) | 51.5% |
-| Hydrapple | 3.3% | 51.0% | 51.5% | 30.2% (139) | 25.4% |
-| Crustle | 3.0% | 35.0% | 28.2% | 48.4% (106) | 38.9% |
-| Lucario Hariyama | 2.4% | 81.0% | 90.5% | 94.6% (98) | 85.3% |
-| Lopunny Dudunsparce | 1.9% | 58.0% | 61.9% | 19.1% (82) | 18.2% |
-| Sharpedo Toxtricity | 1.9% | 37.0% | 30.9% | 16.9% (83) | 10.4% |
-| Alakazam Dusknoir | 1.9% | 96.0% | 99.5% | 81.4% (61) | 81.4% |
+| Dragapult | 18.1% | 74.0% | 83.2% | 51.6% (757) | 61.0% |
+| Basic Box | 6.4% | 54.0% | 56.0% | 35.9% (270) | 24.2% |
+| N's Zoroark | 6.4% | 44.0% | 41.0% | 17.9% (240) | 17.9% |
+| Slowking | 6.2% | 79.0% | 88.6% | 62.3% (276) | 23.1% |
+| Alakazam Dudunsparce | 5.6% | 79.0% | 88.6% | 67.0% (201) | 71.1% |
+| Dragapult Dusknoir | 5.5% | 77.0% | 86.6% | 59.8% (204) | 76.6% |
+| Mega Excadrill | 4.6% | 49.0% | 48.5% | 41.8% (190) | 53.9% |
+| Dragapult Blaziken | 4.5% | 67.0% | 74.5% | 34.0% (194) | 41.9% |
+| Dhelmise | 3.7% | 54.0% | 56.0% | 47.3% (172) | 48.8% |
+| Festival Lead | 3.4% | 70.0% | 78.4% | 42.1% (148) | 38.5% |
+| Hydrapple | 3.3% | 65.0% | 71.8% | 30.2% (139) | 26.0% |
+| Crustle | 3.0% | 40.0% | 35.2% | 48.4% (106) | 63.2% |
+| Lucario Hariyama | 2.4% | 83.0% | 92.3% | 94.6% (98) | 96.0% |
+| Lopunny Dudunsparce | 1.9% | 63.0% | 69.1% | 19.1% (82) | 20.1% |
+| Sharpedo Toxtricity | 1.9% | 28.0% | 19.1% | 16.9% (83) | 9.7% |
+| Alakazam Dusknoir | 1.9% | 95.0% | 99.3% | 81.4% (61) | 82.0% |
 
 ## Confronto con i risultati reali
 
-120 matchup con almeno 20 match su Labs. Errore medio (pesato sui match giocati): **23.5 punti**. Entro 10 punti: 30 su 120. Correlazione: 0.22.
+120 matchup con almeno 20 match su Labs. Errore medio (pesato sui match giocati): **24.8 punti**. Entro 10 punti: 27 su 120. Correlazione: 0.22.
 
 Sono questi gli scostamenti da correggere, nelle carte o nel modo di giocare dei mazzi.
 
 | Mazzo | Contro | Simulato | Reale | Scarto | Match reali |
 | --- | --- | --- | --- | --- | --- |
-| Dragapult | Slowking | 95.4% | 42.2% | 53 | 1264 |
+| Dragapult | Slowking | 94.7% | 42.2% | 52 | 1264 |
 | Dragapult | Basic Box | 80.9% | 42.6% | 38 | 1373 |
-| Dragapult | N's Zoroark | 70.5% | 41.5% | 29 | 1334 |
-| Basic Box | Slowking | 99.3% | 50.2% | 49 | 458 |
-| Dragapult | Dragapult Blaziken | 83.2% | 51.4% | 32 | 999 |
-| Slowking | Crustle | 0.0% | 68.9% | -69 | 197 |
-| Slowking | Mega Excadrill | 12.4% | 62.2% | -50 | 307 |
-| Slowking | Dragapult Dusknoir | 14.5% | 56.0% | -41 | 352 |
-| Slowking | Dragapult Blaziken | 10.4% | 51.9% | -41 | 327 |
-| N's Zoroark | Slowking | 85.5% | 52.6% | 33 | 480 |
-| Dragapult | Dragapult Dusknoir | 77.1% | 55.5% | 22 | 1060 |
-| Festival Lead | Crustle | 12.4% | 74.6% | -62 | 126 |
-| Dragapult | Lopunny Dudunsparce | 88.6% | 54.6% | 34 | 420 |
-| Crustle | Lopunny Dudunsparce | 99.0% | 15.1% | 84 | 64 |
-| Alakazam Dudunsparce | Dragapult Dusknoir | 75.8% | 39.5% | 36 | 315 |
-| Slowking | Lucario Hariyama | 19.1% | 72.5% | -53 | 142 |
-| Dragapult | Festival Lead | 83.2% | 61.1% | 22 | 724 |
-| Dragapult | Crustle | 51.5% | 29.0% | 22 | 676 |
-| Dragapult Blaziken | Dhelmise | 19.1% | 59.8% | -41 | 194 |
-| Alakazam Dudunsparce | Festival Lead | 82.1% | 41.0% | 41 | 188 |
-| Dragapult | Alakazam Dusknoir | 87.6% | 59.9% | 28 | 397 |
-| Mega Excadrill | Crustle | 30.9% | 76.6% | -46 | 141 |
+| Dragapult | N's Zoroark | 75.8% | 41.5% | 34 | 1334 |
+| Basic Box | Slowking | 97.7% | 50.2% | 47 | 458 |
+| Slowking | Crustle | 0.7% | 68.9% | -68 | 197 |
+| Slowking | Mega Excadrill | 7.7% | 62.2% | -55 | 307 |
+| N's Zoroark | Slowking | 93.9% | 52.6% | 41 | 480 |
+| Dragapult | Festival Lead | 94.7% | 61.1% | 34 | 724 |
+| Slowking | Dragapult Dusknoir | 9.5% | 56.0% | -47 | 352 |
+| Dragapult | Crustle | 61.9% | 29.0% | 33 | 676 |
+| Slowking | Dragapult Blaziken | 9.5% | 51.9% | -42 | 327 |
+| Dragapult | Lopunny Dudunsparce | 90.5% | 54.6% | 36 | 420 |
+| Crustle | Lopunny Dudunsparce | 98.6% | 15.1% | 83 | 64 |
+| Festival Lead | Crustle | 15.6% | 74.6% | -59 | 126 |
+| Slowking | Lucario Hariyama | 17.9% | 72.5% | -55 | 142 |
+| Dragapult | Dragapult Blaziken | 71.8% | 51.4% | 20 | 999 |
+| Dragapult | Hydrapple | 86.6% | 62.1% | 24 | 657 |
+| Dragapult | Dragapult Dusknoir | 74.5% | 55.5% | 19 | 1060 |
+| Basic Box | Lucario Hariyama | 16.8% | 63.5% | -47 | 156 |
+| Alakazam Dudunsparce | Festival Lead | 83.2% | 41.0% | 42 | 188 |
+| Mega Excadrill | Alakazam Dusknoir | 82.1% | 22.7% | 59 | 85 |
 | N's Zoroark | Dhelmise | 42.5% | 77.5% | -35 | 240 |
-| Basic Box | Crustle | 6.9% | 41.7% | -35 | 232 |
-| Slowking | Sharpedo Toxtricity | 3.4% | 49.2% | -46 | 132 |
-| Basic Box | Lucario Hariyama | 21.6% | 63.5% | -42 | 156 |
-| Slowking | Dhelmise | 2.3% | 30.8% | -29 | 276 |
-| Mega Excadrill | Alakazam Dusknoir | 73.2% | 22.7% | 50 | 85 |
-| N's Zoroark | Crustle | 0.7% | 30.4% | -30 | 239 |
-| Slowking | Hydrapple | 1.0% | 32.3% | -31 | 216 |
-| Mega Excadrill | Dragapult Blaziken | 54.5% | 25.4% | 29 | 210 |
-| Slowking | Lopunny Dudunsparce | 0.5% | 36.5% | -36 | 136 |
-| Dragapult Dusknoir | Crustle | 15.6% | 44.8% | -29 | 198 |
-| Dhelmise | Festival Lead | 75.8% | 42.1% | 34 | 148 |
-| Dhelmise | Lopunny Dudunsparce | 63.4% | 19.1% | 44 | 82 |
-| Festival Lead | Hydrapple | 22.9% | 56.1% | -33 | 136 |
-| Dragapult | Hydrapple | 77.1% | 62.1% | 15 | 657 |
-| Alakazam Dudunsparce | Dragapult Blaziken | 57.5% | 34.0% | 23 | 257 |
-| Basic Box | Festival Lead | 70.5% | 47.9% | 23 | 264 |
-| Dragapult | Sharpedo Toxtricity | 67.7% | 49.2% | 18 | 373 |
-| Slowking | Alakazam Dudunsparce | 5.3% | 23.7% | -18 | 365 |
-| Festival Lead | Lucario Hariyama | 26.8% | 66.7% | -40 | 75 |
-| N's Zoroark | Alakazam Dusknoir | 78.4% | 48.3% | 30 | 131 |
-| Crustle | Sharpedo Toxtricity | 97.2% | 54.9% | 42 | 65 |
-| Alakazam Dudunsparce | Crustle | 10.4% | 36.5% | -26 | 167 |
-| Dragapult | Dhelmise | 30.9% | 43.0% | -12 | 757 |
-| Festival Lead | Lopunny Dudunsparce | 24.2% | 66.1% | -42 | 61 |
-| Dhelmise | Hydrapple | 57.5% | 30.2% | 27 | 139 |
-| Dragapult Dusknoir | Dhelmise | 13.4% | 35.8% | -22 | 204 |
-| N's Zoroark | Dragapult Dusknoir | 38.1% | 54.2% | -16 | 392 |
-| Basic Box | N's Zoroark | 33.8% | 47.6% | -14 | 517 |
-| Hydrapple | Lucario Hariyama | 12.4% | 47.5% | -35 | 80 |
-| Dragapult Blaziken | Crustle | 7.7% | 33.6% | -26 | 145 |
-| Slowking | Alakazam Dusknoir | 51.5% | 24.7% | 27 | 132 |
-| Hydrapple | Crustle | 12.4% | 43.3% | -31 | 97 |
-| Dragapult Dusknoir | Alakazam Dusknoir | 73.2% | 42.5% | 31 | 95 |
-| Sharpedo Toxtricity | Alakazam Dusknoir | 95.4% | 49.2% | 46 | 42 |
-| N's Zoroark | Hydrapple | 13.4% | 33.5% | -20 | 220 |
-| Crustle | Lucario Hariyama | 60.4% | 24.7% | 36 | 62 |
-| Hydrapple | Alakazam Dusknoir | 69.1% | 35.4% | 34 | 65 |
+| Dhelmise | Hydrapple | 75.8% | 30.2% | 46 | 139 |
+| Slowking | Sharpedo Toxtricity | 2.8% | 49.2% | -46 | 132 |
+| Dragapult | Dhelmise | 24.2% | 43.0% | -19 | 757 |
+| Dragapult Blaziken | Dhelmise | 25.5% | 59.8% | -34 | 194 |
+| Basic Box | Festival Lead | 77.1% | 47.9% | 29 | 264 |
+| Basic Box | N's Zoroark | 26.8% | 47.6% | -21 | 517 |
+| Dhelmise | Festival Lead | 80.9% | 42.1% | 39 | 148 |
+| Basic Box | Crustle | 11.4% | 41.7% | -30 | 232 |
+| Basic Box | Mega Excadrill | 28.2% | 54.7% | -27 | 295 |
+| N's Zoroark | Crustle | 1.0% | 30.4% | -29 | 239 |
+| Dragapult Dusknoir | Alakazam Dusknoir | 88.6% | 42.5% | 46 | 95 |
+| Dhelmise | Lopunny Dudunsparce | 67.7% | 19.1% | 49 | 82 |
+| Slowking | Hydrapple | 3.4% | 32.3% | -29 | 216 |
+| Slowking | Dhelmise | 5.3% | 30.8% | -25 | 276 |
+| Dragapult Blaziken | Festival Lead | 80.9% | 49.6% | 31 | 180 |
+| Festival Lead | Lopunny Dudunsparce | 13.4% | 66.1% | -53 | 61 |
+| Festival Lead | Hydrapple | 21.6% | 56.1% | -35 | 136 |
+| Slowking | Lopunny Dudunsparce | 2.3% | 36.5% | -34 | 136 |
+| Mega Excadrill | Festival Lead | 86.6% | 53.3% | 33 | 140 |
+| Dragapult | Alakazam Dusknoir | 79.6% | 59.9% | 20 | 397 |
+| Mega Excadrill | Crustle | 44.0% | 76.6% | -33 | 141 |
+| Dragapult | Mega Excadrill | 61.9% | 49.0% | 13 | 881 |
+| Basic Box | Sharpedo Toxtricity | 32.3% | 62.7% | -30 | 158 |
+| Alakazam Dudunsparce | Crustle | 7.7% | 36.5% | -29 | 167 |
+| N's Zoroark | Alakazam Dusknoir | 80.9% | 48.3% | 33 | 131 |
+| Alakazam Dudunsparce | Dragapult Blaziken | 56.0% | 34.0% | 22 | 257 |
+| Dragapult Dusknoir | Dhelmise | 11.4% | 35.8% | -24 | 204 |
+| Alakazam Dudunsparce | Dragapult Dusknoir | 59.0% | 39.5% | 19 | 315 |
+| Dragapult Blaziken | Alakazam Dusknoir | 93.1% | 58.3% | 35 | 92 |
+| Festival Lead | Lucario Hariyama | 28.2% | 66.7% | -38 | 75 |
+| Crustle | Sharpedo Toxtricity | 96.0% | 54.9% | 41 | 65 |
+| Dragapult | Lucario Hariyama | 75.8% | 60.8% | 15 | 468 |
+| Hydrapple | Lucario Hariyama | 11.4% | 47.5% | -36 | 80 |
+| Mega Excadrill | Hydrapple | 61.9% | 36.9% | 25 | 167 |
+| Sharpedo Toxtricity | Alakazam Dusknoir | 98.6% | 49.2% | 49 | 42 |
+| Festival Lead | Sharpedo Toxtricity | 38.1% | 76.1% | -38 | 71 |
+| Hydrapple | Crustle | 13.4% | 43.3% | -30 | 97 |
+| Hydrapple | Alakazam Dusknoir | 71.8% | 35.4% | 36 | 65 |
+| Slowking | Alakazam Dudunsparce | 8.6% | 23.7% | -15 | 365 |
+| Lucario Hariyama | Lopunny Dudunsparce | 95.4% | 54.9% | 40 | 51 |
 | Alakazam Dudunsparce | Mega Excadrill | 48.5% | 65.5% | -17 | 255 |
-| Mega Excadrill | Hydrapple | 57.5% | 36.9% | 21 | 167 |
-| Lucario Hariyama | Lopunny Dudunsparce | 91.4% | 54.9% | 37 | 51 |
-| N's Zoroark | Festival Lead | 36.6% | 20.8% | 16 | 267 |
-| Basic Box | Sharpedo Toxtricity | 42.5% | 62.7% | -20 | 158 |
-| Dhelmise | Sharpedo Toxtricity | 44.0% | 16.9% | 27 | 83 |
-| Basic Box | Alakazam Dudunsparce | 30.9% | 43.2% | -12 | 387 |
-| Dragapult Blaziken | Festival Lead | 67.7% | 49.6% | 18 | 180 |
-| Dragapult | Lucario Hariyama | 71.8% | 60.8% | 11 | 468 |
-| Basic Box | Dragapult Dusknoir | 41.0% | 53.1% | -12 | 378 |
-| Basic Box | Alakazam Dusknoir | 53.0% | 33.8% | 19 | 148 |
-| Dragapult | Alakazam Dudunsparce | 54.5% | 61.7% | -7 | 1035 |
-| Alakazam Dudunsparce | Lucario Hariyama | 60.4% | 41.5% | 19 | 123 |
-| Basic Box | Lopunny Dudunsparce | 35.2% | 53.8% | -19 | 127 |
-| Basic Box | Mega Excadrill | 42.5% | 54.7% | -12 | 295 |
-| Dragapult Dusknoir | Sharpedo Toxtricity | 30.9% | 50.8% | -20 | 109 |
-| Festival Lead | Sharpedo Toxtricity | 51.5% | 76.1% | -25 | 71 |
-| Dragapult Dusknoir | Hydrapple | 44.0% | 59.2% | -15 | 178 |
-| Crustle | Alakazam Dusknoir | 96.6% | 69.8% | 27 | 53 |
-| Dragapult Blaziken | Lucario Hariyama | 33.8% | 52.1% | -18 | 112 |
-| Festival Lead | Alakazam Dusknoir | 30.9% | 49.7% | -19 | 98 |
-| Mega Excadrill | Festival Lead | 67.7% | 53.3% | 14 | 140 |
-| Hydrapple | Lopunny Dudunsparce | 35.2% | 53.9% | -19 | 76 |
-| Mega Excadrill | Lucario Hariyama | 45.5% | 29.3% | 16 | 100 |
-| Mega Excadrill | Dhelmise | 41.0% | 51.8% | -11 | 190 |
-| Dhelmise | Alakazam Dusknoir | 99.7% | 81.4% | 18 | 61 |
-| Alakazam Dudunsparce | Dhelmise | 19.1% | 28.7% | -10 | 201 |
-| Mega Excadrill | Lopunny Dudunsparce | 69.1% | 53.9% | 15 | 76 |
-| Alakazam Dudunsparce | Lopunny Dudunsparce | 14.5% | 28.4% | -14 | 87 |
-| N's Zoroark | Sharpedo Toxtricity | 48.5% | 37.4% | 11 | 122 |
-| Dhelmise | Crustle | 36.6% | 48.4% | -12 | 106 |
-| Basic Box | Dragapult Blaziken | 56.0% | 49.5% | 6 | 336 |
-| Slowking | Festival Lead | 41.0% | 48.6% | -8 | 245 |
-| N's Zoroark | Alakazam Dudunsparce | 45.5% | 51.6% | -6 | 344 |
-| N's Zoroark | Dragapult Blaziken | 54.5% | 60.6% | -6 | 318 |
-| Lopunny Dudunsparce | Alakazam Dusknoir | 95.4% | 79.4% | 16 | 42 |
-| N's Zoroark | Lopunny Dudunsparce | 59.0% | 67.4% | -8 | 132 |
-| Alakazam Dudunsparce | Alakazam Dusknoir | 45.5% | 36.0% | 10 | 101 |
-| Basic Box | Hydrapple | 38.1% | 32.2% | 6 | 258 |
-| Dragapult Dusknoir | Lucario Hariyama | 39.6% | 47.7% | -8 | 114 |
-| N's Zoroark | Lucario Hariyama | 29.5% | 36.4% | -7 | 153 |
-| Alakazam Dudunsparce | Sharpedo Toxtricity | 20.4% | 29.3% | -9 | 83 |
-| Dragapult Blaziken | Hydrapple | 57.5% | 63.6% | -6 | 165 |
-| Mega Excadrill | Sharpedo Toxtricity | 66.2% | 57.9% | 8 | 84 |
-| Dragapult Dusknoir | Mega Excadrill | 42.5% | 46.9% | -4 | 261 |
-| Dragapult Blaziken | Alakazam Dusknoir | 64.8% | 58.3% | 6 | 92 |
-| Dragapult Dusknoir | Dragapult Blaziken | 50.0% | 46.3% | 4 | 262 |
-| Dragapult Dusknoir | Festival Lead | 69.1% | 65.7% | 3 | 214 |
-| Alakazam Dudunsparce | Hydrapple | 63.4% | 59.7% | 4 | 177 |
-| N's Zoroark | Mega Excadrill | 42.5% | 39.7% | 3 | 279 |
-| Lucario Hariyama | Alakazam Dusknoir | 69.1% | 63.0% | 6 | 45 |
-| Dragapult Blaziken | Sharpedo Toxtricity | 36.6% | 33.3% | 3 | 88 |
-| Dragapult | Mega Excadrill | 50.0% | 49.0% | 1 | 881 |
-| Hydrapple | Sharpedo Toxtricity | 70.5% | 73.4% | -3 | 64 |
-| Dragapult Blaziken | Lopunny Dudunsparce | 53.0% | 55.1% | -2 | 98 |
-| Dhelmise | Lucario Hariyama | 96.6% | 94.6% | 2 | 98 |
-| Lucario Hariyama | Sharpedo Toxtricity | 54.5% | 56.4% | -2 | 52 |
-| Basic Box | Dhelmise | 59.0% | 58.1% | 1 | 270 |
-| Lopunny Dudunsparce | Sharpedo Toxtricity | 20.4% | 18.3% | 2 | 31 |
-| Dragapult Dusknoir | Lopunny Dudunsparce | 53.0% | 52.3% | 1 | 109 |
+| Dhelmise | Crustle | 22.9% | 48.4% | -26 | 106 |
+| Basic Box | Hydrapple | 48.5% | 32.2% | 16 | 258 |
+| Dragapult Blaziken | Crustle | 12.4% | 33.6% | -21 | 145 |
+| Mega Excadrill | Dragapult Blaziken | 42.5% | 25.4% | 17 | 210 |
+| Dragapult | Sharpedo Toxtricity | 61.9% | 49.2% | 13 | 373 |
+| Festival Lead | Alakazam Dusknoir | 25.5% | 49.7% | -24 | 98 |
+| Dragapult | Alakazam Dudunsparce | 69.1% | 61.7% | 7 | 1035 |
+| Dragapult Dusknoir | Crustle | 28.2% | 44.8% | -17 | 198 |
+| Alakazam Dudunsparce | Dhelmise | 12.4% | 28.7% | -16 | 201 |
+| Basic Box | Lopunny Dudunsparce | 33.8% | 53.8% | -20 | 127 |
+| N's Zoroark | Sharpedo Toxtricity | 57.5% | 37.4% | 20 | 122 |
+| Slowking | Alakazam Dusknoir | 44.0% | 24.7% | 19 | 132 |
+| Mega Excadrill | Lopunny Dudunsparce | 78.4% | 53.9% | 24 | 76 |
+| N's Zoroark | Festival Lead | 33.8% | 20.8% | 13 | 267 |
+| Crustle | Lucario Hariyama | 51.5% | 24.7% | 27 | 62 |
+| Dragapult Blaziken | Lucario Hariyama | 32.3% | 52.1% | -20 | 112 |
+| N's Zoroark | Dragapult Blaziken | 50.0% | 60.6% | -11 | 318 |
+| Dragapult Dusknoir | Mega Excadrill | 35.2% | 46.9% | -12 | 261 |
+| Crustle | Alakazam Dusknoir | 95.4% | 69.8% | 26 | 53 |
+| Dragapult Dusknoir | Festival Lead | 78.4% | 65.7% | 13 | 214 |
+| Alakazam Dudunsparce | Lucario Hariyama | 57.5% | 41.5% | 16 | 123 |
+| N's Zoroark | Hydrapple | 21.6% | 33.5% | -12 | 220 |
+| N's Zoroark | Mega Excadrill | 29.5% | 39.7% | -10 | 279 |
+| Basic Box | Alakazam Dusknoir | 47.0% | 33.8% | 13 | 148 |
+| Basic Box | Dragapult Blaziken | 41.0% | 49.5% | -8 | 336 |
+| Basic Box | Dragapult Dusknoir | 45.5% | 53.1% | -8 | 378 |
+| Alakazam Dudunsparce | Sharpedo Toxtricity | 13.4% | 29.3% | -16 | 83 |
+| Dhelmise | Alakazam Dusknoir | 99.0% | 81.4% | 18 | 61 |
+| Dragapult Dusknoir | Dragapult Blaziken | 38.1% | 46.3% | -8 | 262 |
+| Dragapult Dusknoir | Sharpedo Toxtricity | 38.1% | 50.8% | -13 | 109 |
+| Basic Box | Alakazam Dudunsparce | 36.6% | 43.2% | -7 | 387 |
+| Dhelmise | Sharpedo Toxtricity | 30.9% | 16.9% | 14 | 83 |
+| Alakazam Dudunsparce | Alakazam Dusknoir | 47.0% | 36.0% | 11 | 101 |
+| Lucario Hariyama | Alakazam Dusknoir | 78.4% | 63.0% | 15 | 45 |
+| Dragapult Blaziken | Lopunny Dudunsparce | 64.8% | 55.1% | 10 | 98 |
+| Slowking | Festival Lead | 42.5% | 48.6% | -6 | 245 |
+| Lopunny Dudunsparce | Alakazam Dusknoir | 93.9% | 79.4% | 15 | 42 |
+| Mega Excadrill | Sharpedo Toxtricity | 67.7% | 57.9% | 10 | 84 |
+| Hydrapple | Lopunny Dudunsparce | 44.0% | 53.9% | -10 | 76 |
+| Alakazam Dudunsparce | Lopunny Dudunsparce | 19.1% | 28.4% | -9 | 87 |
+| Mega Excadrill | Lucario Hariyama | 36.6% | 29.3% | 7 | 100 |
+| Dragapult Blaziken | Sharpedo Toxtricity | 41.0% | 33.3% | 8 | 88 |
+| Dragapult Dusknoir | Lopunny Dudunsparce | 59.0% | 52.3% | 7 | 109 |
+| Alakazam Dudunsparce | Hydrapple | 54.5% | 59.7% | -5 | 177 |
+| N's Zoroark | Lopunny Dudunsparce | 73.2% | 67.4% | 6 | 132 |
+| Mega Excadrill | Dhelmise | 47.0% | 51.8% | -5 | 190 |
+| Basic Box | Dhelmise | 54.5% | 58.1% | -4 | 270 |
+| Dragapult Dusknoir | Hydrapple | 63.4% | 59.2% | 4 | 178 |
+| Dhelmise | Lucario Hariyama | 89.6% | 94.6% | -5 | 98 |
+| Lucario Hariyama | Sharpedo Toxtricity | 61.9% | 56.4% | 5 | 52 |
+| N's Zoroark | Lucario Hariyama | 39.6% | 36.4% | 3 | 153 |
+| N's Zoroark | Dragapult Dusknoir | 53.0% | 54.2% | -1 | 392 |
+| Dragapult Dusknoir | Lucario Hariyama | 45.5% | 47.7% | -2 | 114 |
+| Dragapult Blaziken | Hydrapple | 64.8% | 63.6% | 1 | 165 |
+| Lopunny Dudunsparce | Sharpedo Toxtricity | 19.1% | 18.3% | 1 | 31 |
+| N's Zoroark | Alakazam Dudunsparce | 51.5% | 51.6% | -0 | 344 |
+| Hydrapple | Sharpedo Toxtricity | 73.2% | 73.4% | -0 | 64 |
