@@ -9,8 +9,10 @@ import { Registry } from "../../src/cards/registry";
 import { IMPLS } from "../../src/cards/impl/index";
 
 export interface Archetype { name: string; share: number; place: string; source: string; list: string }
+export interface RegionalList { event: string; date: string; place: number; players: number; player: string; archetype: string; source: string; list: string }
 export interface Meta {
-  updated: string; games: number; format: string; private: boolean;
+  updated: string; games: number; format: string; private: boolean; names: boolean;
+  lists: RegionalList[];
   sources: { tournaments: string; matchups: string; labsUpdated: string };
   archetypes: Archetype[];
   real: Record<string, Record<string, { wr: number; n: number }>>;

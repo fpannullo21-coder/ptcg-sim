@@ -25,10 +25,17 @@ suite.skipIf(!has)("dati pubblici del sito", () => {
     }
   });
 
-  test("nessun nome di giocatore nelle liste tipo", () => {
+  test("liste dei Regional: piazzamento e torneo sempre, nome del giocatore solo se richiesto", () => {
     for (const a of meta.archetypes) {
       expect(a.list).not.toMatch(/^#/m);
-      expect(a.place).toMatch(/^\d+° Regional /);
+      expect(a.place).toMatch(/\d+° Regional /);
+    }
+    expect(meta.lists.length).toBeGreaterThan(150);
+    for (const l of meta.lists) {
+      expect(l.place).toBeGreaterThan(0);
+      expect(l.event).toMatch(/^Regional /);
+      if (meta.names) expect(l.player).not.toBe("");
+      else expect(l.player).toBe("");
     }
   });
 

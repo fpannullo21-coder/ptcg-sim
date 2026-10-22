@@ -29,7 +29,7 @@ Regole da rispettare prima di rendere pubblico il sito (beta chiusa o pubblico).
 ## 4. Dati dei tornei
 
 - Liste, classifiche e risultati vengono da Limitless (limitlesstcg.com, labs.limitlesstcg.com). Prima del lancio pubblico: **chiedere il permesso a Limitless** di mostrare dati derivati, e citare la fonte in ogni pagina che li usa.
-- **Nomi dei giocatori**: nel sito pubblico le liste si indicano per torneo e piazzamento (es. "4° Recife"), senza nome e cognome, salvo permesso. Riduce i problemi di privacy (GDPR).
+- **Nomi dei giocatori**: per scelta di Francesco (22 ottobre) il sito mostra giocatore, piazzamento e torneo di ogni lista, come li pubblica Limitless, con il collegamento alla pagina di Limitless. Prima del lancio pubblico: verificarlo insieme al permesso di Limitless (privacy, GDPR); se serve, `build-web-data --no-names` toglie i nomi in un passaggio.
 
 ## 5. Gratuito e non commerciale
 
@@ -50,4 +50,4 @@ Regole da rispettare prima di rendere pubblico il sito (beta chiusa o pubblico).
 | Niente testi completi delle carte | fatto | fatto (`build-web-data`, controllato da `test/web-data.test.ts`) |
 | Permesso di Limitless | — | da chiedere prima della beta |
 | Licenza del database delle carte | — | da chiedere prima della beta |
-| Nomi dei giocatori nascosti | — | fatto per le liste tipo |
+| Nomi dei giocatori | — | mostrati per scelta; da verificare con Limitless prima del lancio (`--no-names` li toglie) |

@@ -1,4 +1,4 @@
-import { useState } from "preact/hooks";
+import { useMemo, useState } from "preact/hooks";
 import type { PageProps } from "../main";
 import { pct } from "../data";
 
@@ -11,6 +11,13 @@ export function MazzoPage({ data, analyzed, deckText, useDeck }: PageProps) {
   ];
   const sections: [string, (s: string) => boolean][] = [["Pokémon", s => s === "Pokémon"], ["Allenatori", s => s === "Trainer"], ["Energie", s => s === "Energy"]];
   const cov = coverage.total ? coverage.complete / coverage.total : 0;
+  const [event, setEvent] = useState("");
+  const [archFilter, setArchFilter] = useState("");
+  const [shown, setShown] = useState(12);
+  const events = useMemo(() => [...new Set(data.meta.lists.map(l => l.event))], [data]);
+  const archs = useMemo(() => [...new Set(data.meta.lists.map(l => l.archetype))].sort(), [data]);
+  const found = data.meta.lists.filter(l => (!event || l.event === event) && (!archFilter || l.archetype === archFilter));
+  const pick = (list: string) => { setDraft(list); useDeck(list); window.scrollTo(0, 0); };
 
   return (
     <div class="page">
@@ -50,6 +57,40 @@ export function MazzoPage({ data, analyzed, deckText, useDeck }: PageProps) {
           {coverage.missing.length > 0 && (
             <p class="sub">Effetti ancora da implementare: {coverage.missing.map(m => `${m.count} ${m.name} (${m.parts.map(p => p.replace(/:.*$/, "")).join(", ")})`).join("; ")}. Nelle simulazioni queste carte giocano senza quell'effetto.</p>
           )}
+        </div>
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        <h2 class="h1" style={{ fontSize: 18 }}>Liste dei Regional</h2>
+        <p class="sub">{data.meta.lists.length} liste dalle classifiche di Limitless, le prime 32 di ogni Regional del formato.</p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 10 }}>
+          <div class="field"><label for="f-event">Torneo</label>
+            <select id="f-event" value={event} onChange={e => { setEvent((e.target as HTMLSelectElement).value); setShown(12); }}>
+              <option value="">Tutti</option>{events.map(ev => <option value={ev}>{ev}</option>)}
+            </select></div>
+          <div class="field"><label for="f-arch">Archetipo</label>
+            <select id="f-arch" value={archFilter} onChange={e => { setArchFilter((e.target as HTMLSelectElement).value); setShown(12); }}>
+              <option value="">Tutti</option>{archs.map(a => <option value={a}>{a}</option>)}
+            </select></div>
+        </div>
+        <div>
+          {found.slice(0, shown).map(l => (
+            <div class="deck-line" style={{ alignItems: "center", padding: "10px 0" }}>
+              <span style={{ display: "flex", alignItems: "center", gap: 12, minWidth: 0 }}>
+                <span class="num" style={{ fontSize: 22, minWidth: 40, textAlign: "right", color: l.place <= 8 ? "var(--accent)" : "var(--text)" }}>{l.place}°</span>
+                <span style={{ display: "flex", flexDirection: "column", gap: 2, minWidth: 0 }}>
+                  <span style={{ fontWeight: 600, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{l.player || "Giocatore"}</span>
+                  <span class="sub" style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{l.archetype} · {l.event} · {l.players} giocatori</span>
+                </span>
+              </span>
+              <span style={{ display: "flex", gap: 6, flex: "none" }}>
+                {l.source && <a class="btn" href={l.source} target="_blank" rel="noopener" style={{ display: "inline-flex", alignItems: "center", textDecoration: "none", fontSize: 13, padding: "0 12px" }}>Limitless</a>}
+                <button class="btn" style={{ fontSize: 13, padding: "0 14px" }} onClick={() => pick(l.list)}>Usa</button>
+              </span>
+            </div>
+          ))}
+          {found.length > shown && <button class="btn" style={{ width: "100%", marginTop: 8 }} onClick={() => setShown(shown + 24)}>Mostra altre ({found.length - shown})</button>}
+          {!found.length && <p class="sub">Nessuna lista con questi filtri.</p>}
         </div>
       </div>
 

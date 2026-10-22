@@ -4,11 +4,12 @@
  * - cards.json: solo le carte legali nel formato (con tutte le loro ristampe), senza i testi degli
  *   effetti e delle regole. Al posto del testo resta un segnaposto (serve a sapere che un effetto
  *   esiste) e la chiave delle ristampe già calcolata.
- * - meta.json: archetipi principali, quote, lista tipo di ciascuno (indicata per torneo e piazzamento,
- *   senza il nome del giocatore), risultati reali dei matchup da Limitless Labs, risultati simulati
- *   dell'ultima validazione e, nella versione privata, le liste del team.
+ * - meta.json: archetipi principali, quote, lista tipo di ciascuno, tutte le liste dei Regional importate
+ *   (giocatore, piazzamento, torneo, come le pubblica Limitless), risultati reali dei matchup da
+ *   Limitless Labs, risultati simulati dell'ultima validazione e, nella versione privata, le liste del team.
+ *   Con --no-names i nomi dei giocatori restano fuori.
  *
- *   npx tsx src/tools/build-web-data.ts [--report validazione-100] [--private]
+ *   npx tsx src/tools/build-web-data.ts [--report validazione-100] [--private] [--no-names]
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { gameKey, type CardData } from "../data/cards.js";
@@ -21,6 +22,7 @@ import { loadLabs, realMatchup } from "../data/labs.js";
 const arg = (k: string, d: string) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const REPORT = arg("--report", "validazione-100");
 const PRIVATE = process.argv.includes("--private");
+const NAMES = !process.argv.includes("--no-names");
 /** Liste del team, solo nella versione privata del sito. */
 const TEAM_LISTS: Record<string, string> = { "hide-n-sneak/lista-per-danzica": "Lista per Danzica" };
 
@@ -67,10 +69,17 @@ function main() {
   const labs = loadLabs();
   const decks = loadDecks(database);
   const deckText = (path: string) => formatDeck(decks.find(d => d.path === path)!);
+  /** Torneo, data, piazzamento e giocatore di una lista, dalle righe "# Nome" e "# Fonte". */
+  const infoOf = (path: string) => {
+    const d = decks.find(x => x.path === path);
+    const f = d?.meta["fonte"] ?? "";
+    const m = f.match(/^Regional (.+?), (\d+\w* \w+ \d{4}),\s*(\d+)° posto su (\d+) giocatori/);
+    const player = d?.meta["nome"]?.match(/\(([^,]+),/)?.[1]?.trim() ?? "";
+    return m ? { event: `Regional ${m[1]}`, date: m[2], place: Number(m[3]), players: Number(m[4]), player: NAMES ? player : "" } : null;
+  };
   const placeOf = (path: string) => {
-    const f = decks.find(d => d.path === path)?.meta["fonte"] ?? "";
-    const m = f.match(/^Regional ([^,]+),.*?(\d+)° posto/);
-    return m ? `${m[2]}° Regional ${m[1]}` : "";
+    const i = infoOf(path);
+    return i ? `${i.player ? `${i.player}, ` : ""}${i.place}° ${i.event}` : "";
   };
   const urlOf = (path: string) => (decks.find(d => d.path === path)?.meta["fonte"] ?? "").match(/https:\/\/limitlesstcg\.com\/\S+/)?.[0] ?? "";
   const meta: { name: string; labs: string; share: number; deck: string }[] = report.meta;
@@ -89,6 +98,13 @@ function main() {
     (sim[a] ??= {})[b] = pct(w);
     (sim[b] ??= {})[a] = pct(1 - w);
   }
+  // tutte le liste dei Regional importate, per torneo e piazzamento
+  const lists = decks
+    .filter(d => /^[a-z]+-\d{4}\//.test(d.path) && !d.path.includes("-jp/"))
+    .map(d => ({ path: d.path, info: infoOf(d.path), archetype: d.meta["archetipo"] ?? "" }))
+    .filter(x => x.info)
+    .map(x => ({ ...x.info!, archetype: x.archetype, source: urlOf(x.path), list: deckText(x.path) }))
+    .sort((a, b) => a.event.localeCompare(b.event) || a.place - b.place);
   const team = PRIVATE
     ? Object.entries(TEAM_LISTS).map(([path, name]) => {
       const rows = report.lists?.[path]?.rows ?? [];
@@ -98,13 +114,13 @@ function main() {
   const metaOut = {
     updated: report.date, games: report.games, format: DEFAULT_FORMAT.name, private: PRIVATE,
     sources: { tournaments: "Limitless (limitlesstcg.com)", matchups: "Limitless Labs (labs.limitlesstcg.com)", labsUpdated: labs?.updated ?? "" },
-    archetypes, real, sim, team,
+    names: NAMES, archetypes, lists, real, sim, team,
   };
 
   mkdirSync("web/public/data", { recursive: true });
   writeFileSync("web/public/data/cards.json", JSON.stringify(cards));
   writeFileSync("web/public/data/meta.json", JSON.stringify(metaOut));
-  console.log(`${keep.length} carte (di ${database.byId.size}), ${archetypes.length} archetipi, ${team.length} liste del team -> web/public/data/`);
+  console.log(`${keep.length} carte (di ${database.byId.size}), ${archetypes.length} archetipi, ${lists.length} liste dei Regional, ${team.length} liste del team -> web/public/data/`);
 }
 
 main();

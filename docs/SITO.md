@@ -7,7 +7,7 @@ Cartella `web/`: Vite + Preact, stesso motore del simulatore (`src/`), nessuna c
 | Pagina | Cosa fa | Dove gira |
 | --- | --- | --- |
 | Mazzo | Incolli la lista (formato Live) o parti da una lista del meta: controllo di legalità, archetipo riconosciuto, carte che il simulatore sa giocare | browser |
-| Matchup | La lista contro i 16 archetipi principali: ancorato ai dati reali, solo simulato, reale. Le liste già calcolate in cloud si mostrano subito; le altre si simulano nel browser (10, 20 o 50 partite per coppia) | cloud o browser |
+| Matchup | La lista contro i 16 archetipi principali: stima sui dati reali (prima "ancorato"), solo simulato, reale. Le liste già calcolate in cloud si mostrano subito; le altre si simulano nel browser (10, 20 o 50 partite per coppia) | cloud o browser |
 | Varianti | Togli e aggiungi fino a due carte: la lista e la variante giocano le stesse partite di partenza contro gli archetipi principali | browser |
 | Consistenza | Probabilità esatte: mulligan, ogni carta in mano entro il turno 1-4, carte nei premi | browser |
 | Allenatore | Posizioni da partite simulate: scegli la mossa, vedi con quale percentuale vince ognuna | calcolate prima (`trainer.json`) |

@@ -5,11 +5,11 @@ import { anchor, bo3, pct, tone } from "../data";
 import { Bar, Dots } from "../components/ui";
 
 type Mode = "anchored" | "sim" | "real";
-const LABEL: Record<Mode, string> = { anchored: "Ancorato", sim: "Simulato", real: "Reale" };
+const LABEL: Record<Mode, string> = { anchored: "Stima", sim: "Simulato", real: "Reale" };
 const HELP: Record<Mode, string> = {
-  anchored: "Il dato reale dell'archetipo, spostato di quanto la simulazione dice che la tua lista fa meglio o peggio della lista tipo.",
-  sim: "Solo il simulatore, convertito al meglio delle tre. Utile per confrontare varianti, non ancora affidabile in assoluto.",
-  real: "Match veri dell'archetipo nei Regional, da Limitless Labs. Il pareggio vale un terzo.",
+  anchored: "Percentuale di match che ti aspetti di vincere: sopra il 50% il matchup è a tuo favore (blu), sotto è contro (arancione). Parte dal risultato reale dell'archetipo e lo corregge di quanto la simulazione dice che la tua lista fa meglio o peggio della lista tipo.",
+  sim: "Percentuale di match vinti secondo il solo simulatore, al meglio delle tre. Utile per confrontare varianti, non ancora affidabile in assoluto.",
+  real: "Percentuale di match vinti davvero dall'archetipo nei Regional, da Limitless Labs. Il pareggio vale un terzo.",
 };
 
 export function MatchupPage({ data, analyzed, deckText, sim, runSim, stopSim }: PageProps) {
@@ -64,7 +64,7 @@ export function MatchupPage({ data, analyzed, deckText, sim, runSim, stopSim }: 
       </a>
 
       <div class="big">
-        <span class="sub">{mode === "real" ? "Risultato reale dell'archetipo contro il meta" : `Atteso contro il meta${mode === "anchored" ? ", ancorato ai dati reali" : ", solo simulazione"}`}</span>
+        <span class="sub">{mode === "real" ? "Risultato reale dell'archetipo contro il meta" : `Match che ti aspetti di vincere contro il meta${mode === "anchored" ? " (stima sui dati reali)" : " (solo simulazione)"}`}</span>
         <span style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
           {weighted !== null ? <span class="big-num">{pct(weighted)}</span> : <span class="num" style={{ fontSize: 34, color: "var(--muted)" }}>da simulare</span>}
           <span style={{ fontSize: 15, color: "var(--text-2)" }}>dei match</span>
