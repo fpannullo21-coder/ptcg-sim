@@ -16,9 +16,10 @@ function* copyFrom(g: G, me: number, sources: Mon[]) {
   const opts: [number, number][] = [];
   // un attacco che copia altri attacchi (un altro Night Joker) non si può copiare: andrebbe all'infinito
   for (const m of sources) (g.top(m).attacks ?? []).forEach((a, i) => { if (a.name !== "Night Joker") opts.push([fx.topCard(m), i]); });
-  if (!opts.length) return 0;
+  if (!opts.length) { g.say("nessun attacco da copiare"); return 0; }
   const [card, i] = yield* fx.chooseOne(g, me, "copy_attack", opts);
   const atk = g.def(card).attacks![i];
+  g.say(`copia ${atk.name} di ${g.def(card).name}`);
   g.p(me).active!.used.copied = card * 10 + i;
   if (atk.effect) { const r = yield* atk.effect(g, me); if (typeof r === "number") return r; }
   return atk.damage;

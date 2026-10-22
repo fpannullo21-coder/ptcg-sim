@@ -22,7 +22,7 @@ function Verdict({ v, large }: { v: number; large?: boolean }) {
   return <span class={`verdict${large ? " large" : ""}`} style={{ color: tone(v), background: `color-mix(in srgb, ${tone(v)} 16%, var(--surface))` }}>{verdict(v)}</span>;
 }
 
-export function MatchupPage({ data, analyzed, deckText, sim, runSim, stopSim }: PageProps) {
+export function MatchupPage({ data, analyzed, deckText, deckName, sim, runSim, stopSim }: PageProps) {
   const [mode, setMode] = useState<Mode>("anchored");
   const [games, setGames] = useState(20);
   const meta = data.meta;
@@ -46,7 +46,9 @@ export function MatchupPage({ data, analyzed, deckText, sim, runSim, stopSim }: 
     let anchored: number | null = null;
     if (real && simM !== null && refG !== undefined) anchored = rep?.name === arch ? real.wr : anchor(real.wr, simM, bo3(refG));
     const value = mode === "anchored" ? anchored : mode === "sim" ? simM : real?.wr ?? null;
-    return { a, value, real, mirror: a.name === arch };
+    // quanto la simulazione delle liste tipo si discosta dalla realtà in questo matchup (validazione)
+    const gap = real && refG !== undefined ? Math.abs(bo3(refG) - real.wr) : null;
+    return { a, value, real, mirror: a.name === arch, unreliable: gap !== null && gap > 0.2 };
   });
   const weighted = (() => {
     let s = 0, w = 0;
@@ -74,7 +76,7 @@ export function MatchupPage({ data, analyzed, deckText, sim, runSim, stopSim }: 
     <div class="page">
       <a href="#/mazzo" class="box" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", textDecoration: "none", color: "var(--text)" }}>
         <span style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-          <span style={{ fontSize: 17, fontWeight: 600 }}>{team?.name ?? rep?.name ?? "La tua lista"}</span>
+          <span style={{ fontSize: 17, fontWeight: 600, overflowWrap: "anywhere" }}>{deckName}</span>
           <span class="sub">{arch ?? "archetipo non riconosciuto"} · {analyzed.check.total} carte · cambia lista</span>
         </span>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
@@ -146,6 +148,7 @@ export function MatchupPage({ data, analyzed, deckText, sim, runSim, stopSim }: 
                 <span style={{ display: "flex", flexDirection: "column", gap: 3, minWidth: 0 }}>
                   <span class="mname">{r.a.name}{r.mirror ? " (mirror)" : ""}</span>
                   <span class="mmeta">{pct(r.a.share / 100, 0)} del meta · <Dots level={level} />{["nessun dato reale", "pochi match reali", "dato indicativo", "dato solido"][level]}</span>
+                  {r.unreliable && mode !== "real" && <span class="mmeta" style={{ color: "var(--bad)" }}>simulazione poco affidabile in questo matchup</span>}
                 </span>
                 {r.value !== null ? (
                   <span style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 4, flex: "none" }}>
@@ -176,6 +179,7 @@ export function MatchupPage({ data, analyzed, deckText, sim, runSim, stopSim }: 
           {source ? ` ${source}.` : ""}
         </p>
       </div>
+      <p class="sub"><span class="beta">Beta</span> Il simulatore gioca ancora alcuni mazzi peggio della realtà: dove la simulazione delle liste tipo si discosta di oltre 20 punti dai risultati veri, il matchup è segnato come poco affidabile. In media lo scarto oggi è di circa 23 punti.</p>
       <p class="sub">Simulazioni aggiornate al {new Date(meta.updated).toLocaleDateString("it-IT")}. Le liste tipo sono le meglio piazzate nei Regional del formato.</p>
     </div>
   );

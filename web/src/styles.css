@@ -146,3 +146,9 @@ table.t td { text-align: right; padding: 8px 4px; border-top: 1px solid var(--li
 .discard summary::-webkit-details-marker { display: none; }
 .discard summary::after { content: "▾"; color: var(--muted); margin-left: auto; }
 .discard[open] summary::after { content: "▴"; }
+
+.beta { display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 999px; font-size: 10px; letter-spacing: .06em; color: var(--accent); border: 1px solid var(--accent); vertical-align: 1px; }
+.top { gap: 12px; }
+.list-pill { max-width: 55%; padding: 8px 12px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); color: var(--text); text-decoration: none; font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mylist { display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; border-radius: 14px; background: var(--surface); border: 1.5px solid var(--line); }
+.mylist.on { border-color: var(--accent); }

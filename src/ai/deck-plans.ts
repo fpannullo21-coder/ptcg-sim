@@ -111,9 +111,11 @@ export const DECK_PLANS: DeckPlan[] = [
     entries: {
       "N's Zorua": { value: 115, max: 3 },
       "N's Zoroark ex": { value: 125, max: 3 },
-      "N's Zekrom": { value: 60, max: 1 },
-      // Powerful Rage (20 per ogni segnalino su Zoroark ex) è l'attacco che vince contro Dragapult: Reshiram in panchina presto
-      "N's Reshiram": { value: 80, max: 1 },
+      // Night Joker copia gli attacchi degli N's in panchina: senza Zekrom o Reshiram in campo non fa danni,
+      // quindi entrano subito dopo il primo Zorua (prima si riempiva la panchina di Zorua e Night Joker restava a vuoto)
+      "N's Zekrom": { value: 112, max: 1 },
+      // Powerful Rage (20 per ogni segnalino su Zoroark ex) è l'attacco che vince contro Dragapult
+      "N's Reshiram": { value: 108, max: 1 },
       "N's Darmanitan": { value: 50, max: 1 },
       "Pecharunt ex": { value: 35, max: 1 },
       Munkidori: { value: 45, max: 1 },

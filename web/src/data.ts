@@ -68,12 +68,15 @@ export function detectArchetype(data: Data, deck: Deck): { name: string | null; 
   return bs >= 0.5 ? { name: best, similarity: bs } : { name: null, similarity: bs };
 }
 
-export function analyze(data: Data, text: string): Analyzed {
+/** `archetype`: "" riconosce in automatico, "-" nessun archetipo, altrimenti quello indicato dall'utente. */
+export function analyze(data: Data, text: string, archetype = ""): Analyzed & { manual: boolean } {
   const deck = parseDeck(text, data.db, "La tua lista");
   const check = checkDeck(deck, data.db);
   const coverage = data.reg.coverage(deck);
   const arch = detectArchetype(data, deck);
-  return { deck, check, coverage, archetype: arch.name, similarity: arch.similarity };
+  if (archetype === "-") return { deck, check, coverage, archetype: null, similarity: arch.similarity, manual: true };
+  if (archetype && data.meta.archetypes.some(a => a.name === archetype)) return { deck, check, coverage, archetype, similarity: arch.similarity, manual: true };
+  return { deck, check, coverage, archetype: arch.name, similarity: arch.similarity, manual: false };
 }
 
 // --- numeri ------------------------------------------------------------------

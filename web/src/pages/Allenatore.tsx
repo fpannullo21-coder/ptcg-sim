@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import type { PageProps } from "../main";
-import { deckKey } from "../main";
 import { load, pct, save, type Position, type SideView } from "../data";
 import { BenchTile, MiniCard } from "../components/ui";
 import type { PositionRequest, SimMessage } from "../sim.worker";
@@ -49,7 +48,7 @@ function Side({ title, side, hand, openDiscard }: { title: string; side: SideVie
   );
 }
 
-export function AllenatorePage({ data, deckText, analyzed }: PageProps) {
+export function AllenatorePage({ data, deckText, deckName, analyzed }: PageProps) {
   const ready = data.trainer?.positions ?? [];
   const readyList = data.trainer?.list ?? "";
   const [mine, setMine] = useState<Position[]>([]);
@@ -98,7 +97,7 @@ export function AllenatorePage({ data, deckText, analyzed }: PageProps) {
     save("ptcg.trainer", JSON.stringify(s));
   };
   const next = () => { setI(i + 1); setPicked(null); window.scrollTo(0, 0); };
-  const listName = data.meta.team.find(t => deckKey(data, t.list) === deckKey(data, deckText))?.name ?? (analyzed.archetype ? `la tua lista (${analyzed.archetype})` : "la tua lista");
+  const listName = `"${deckName}"`;
   const fromMine = p ? mine.includes(p) : false;
 
   return (

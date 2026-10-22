@@ -13,6 +13,8 @@ import type { Action, Attack, CardDef, Decision, Mon } from "../engine/types.js"
 
 const SEARCH = new Set(["search", "ultra_ball", "poke_pad", "puppet_pull", "poffin", "telepathic", "explorer", "pokegear",
   "night_stretcher", "recover", "procurement", "look_top", "patch_energy", "attach_discard"]);
+/** Pokémon con un'Abilità che funziona solo con un'Energia di quel tipo attaccata. */
+const ABILITY_ENERGY: Record<string, string> = { Munkidori: "D" };
 const DISCARD = new Set(["discard", "ultra_ball_discard", "prism_discard", "retreat_discard"]);
 
 export class BasicAgent implements Agent {
@@ -318,7 +320,8 @@ export class BasicAgent implements Agent {
     const inPlay = g.inPlay(me);
     const inHand = p.hand.filter(x => g.def(x).name === d.name).length;
     if (d.kind === "pokemon") {
-      if (d.evolvesFrom && inPlay.some(m => g.top(m).name === d.evolvesFrom)) return 90 - 20 * inHand;
+      // un'evoluzione per un Pokémon già in campo vale più di qualsiasi Pokémon Base da cercare
+      if (d.evolvesFrom && inPlay.some(m => g.top(m).name === d.evolvesFrom)) return 125 - 35 * inHand;
       // con Slowking in campo: un bersaglio di Seek Inspiration in mano, da mettere in cima con Academy at Night
       if (this.seekUser(g, me) && this.plan(g, me).get(d.name)?.max === 0) {
         const sv = this.seekValue(g, me, c);
@@ -404,6 +407,10 @@ export class BasicAgent implements Agent {
       const f = this.focus(g, me);
       return top(m => (m === f ? 1000 : 0) + this.energyGap(g, m as Mon) * 10 + (g.top(m as Mon).attacks?.length ?? 0), d.max);
     }
+    if (d.kind === "counters_from") {
+      // Adrena-Brain: i segnalini si tolgono dal Pokémon che vale di più e che rischia il KO
+      return top(m => (m as Mon).damage * (g.top(m as Mon).prizes ?? 1) + (m === this.focus(g, me) ? 50 : 0), 1);
+    }
     if (d.kind === "move_from") {
       // da chi si tolgono Energie: mai dall'attaccante principale se c'è altro, prima dai Pokémon che non attaccheranno
       const f = this.focus(g, me);
@@ -468,7 +475,8 @@ export class BasicAgent implements Agent {
 
   action(g: G, me: number, acts: Action[]): number {
     const p = g.p(me), o = g.p(1 - me);
-    const benchMax = this.plan(g, me).fillBench ? 5 : this.opts.benchMax ?? 4;
+    // 5 posti; l'ultimo solo per Pokémon che servono al piano (valore 60 o più, vedi sotto)
+    const benchMax = this.plan(g, me).fillBench ? 5 : this.opts.benchMax ?? 5;
     const score = (a: Action): number => {
       switch (a.kind) {
         case "ability": {
@@ -511,6 +519,12 @@ export class BasicAgent implements Agent {
         }
         case "attach": {
           const m = slot(p, a.target);
+          // Pokémon la cui Abilità vuole un'Energia (Munkidori: Adrena-Brain con un'Energia Oscurità), quando l'attaccante è pronto
+          const needE = ABILITY_ENERGY[g.top(m).name];
+          if (needE && !m.energies.some(e => provided(g, e).includes(needE)) && provided(g, a.card).includes(needE)) {
+            const f = this.focus(g, me);
+            if (!f || this.energyGap(g, f) === 0) return 60;
+          }
           // Ignition Energy si scarta a fine turno: solo sull'attivo, se gli fa attaccare adesso
           if (g.def(a.card).name === "Ignition Energy") {
             if (a.target !== -1) return -1;
@@ -539,7 +553,16 @@ export class BasicAgent implements Agent {
           if (help <= 0) return -1;
           return (a.target === -1 ? 30 : 22) + help + (m === this.focus(g, me) ? 25 : 0);
         }
-        case "trainer": return this.trainerScore(g, me, g.def(a.card), a.card);
+        case "trainer": {
+          const d = g.def(a.card);
+          // Strumenti (Punk Helmet, Brave Bangle…): sull'attaccante principale, non sul primo Pokémon che capita
+          if (d.sub === "tool" && a.target !== undefined) {
+            const f = this.focus(g, me);
+            if (!f) return -1;
+            return slot(p, a.target) === f ? this.trainerScore(g, me, d, a.card) + 10 : -1;
+          }
+          return this.trainerScore(g, me, d, a.card);
+        }
         case "retreat": {
           if (!o.active || (g.s.turn === 1 && g.s.first === me)) return -1;
           if (this.opts.fast) {

@@ -80,7 +80,7 @@ export const DRAGAPULT: Impl[] = [
       "Adrena-Brain": {
         canUse: (g, me, mon) => hasDarkEnergy(g, mon) && g.inPlay(me).some(m => m.damage > 0) && !watchfulEye(g),
         *use(g, me) {
-          const from = yield* fx.chooseOne(g, me, "move_from", g.inPlay(me).filter(m => m.damage > 0));
+          const from = yield* fx.chooseOne(g, me, "counters_from", g.inPlay(me).filter(m => m.damage > 0));
           const pool = g.inPlay(1 - me).filter(m => !fx.prevented(g, m, me));
           if (!pool.length) return;
           const to = yield* fx.chooseOne(g, me, "counters", pool);

@@ -1,7 +1,8 @@
 import { render } from "preact";
 import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import "./styles.css";
-import { analyze, load, loadData, save, type Data } from "./data";
+import { analyze, loadData, type Data } from "./data";
+import { loadActive, loadLists, newId, saveActive, saveLists, type MyList } from "./lists";
 import { Footer, Nav, type Route } from "./components/ui";
 import { MazzoPage } from "./pages/Mazzo";
 import { MatchupPage } from "./pages/Matchup";
@@ -35,23 +36,41 @@ function App() {
   const [data, setData] = useState<Data | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [route, setRoute] = useState<Route>(routeOf());
-  const [deckText, setDeckText] = useState<string>(load("ptcg.deck") ?? "");
+  const [lists, setLists] = useState<MyList[]>(loadLists);
+  const [activeId, setActiveId] = useState<string | null>(() => loadActive() ?? null);
   const [sim, setSim] = useState<SimState>({ tag: "", running: false, done: 0, total: 0, results: {} });
   const worker = useRef<Worker | null>(null);
 
   useEffect(() => {
-    loadData().then(d => {
-      setData(d);
-      if (!deckText) setDeckText(d.meta.team[0]?.list ?? d.meta.archetypes[0].list);
-    }).catch(e => setErr(String(e)));
+    loadData().then(setData).catch(e => setErr(String(e)));
     const on = () => { setRoute(routeOf()); window.scrollTo(0, 0); };
     window.addEventListener("hashchange", on);
     return () => window.removeEventListener("hashchange", on);
   }, []);
 
-  const analyzed = useMemo(() => (data && deckText ? analyze(data, deckText) : null), [data, deckText]);
+  // lista in uso: una delle mie liste, altrimenti un esempio (la lista tipo dell'archetipo più giocato)
+  const active = lists.find(l => l.id === activeId) ?? lists[0] ?? null;
+  const example = data?.meta.archetypes[0];
+  const deckText = active?.text ?? example?.list ?? "";
+  const deckName = active?.name ?? (example ? `Esempio: ${example.name} (${example.place})` : "");
+  const analyzed = useMemo(() => (data && deckText ? analyze(data, deckText, active?.archetype ?? "") : null), [data, deckText, active?.archetype]);
 
-  const useDeck = (text: string) => { setDeckText(text); save("ptcg.deck", text); };
+  const store = (l: MyList[]) => { setLists(l); saveLists(l); };
+  const selectList = (id: string) => { setActiveId(id); saveActive(id); };
+  const upsertList = (x: Omit<MyList, "id" | "updated"> & { id?: string }) => {
+    const id = x.id ?? newId();
+    const item: MyList = { id, name: x.name.trim() || "Lista senza nome", archetype: x.archetype, text: x.text, updated: Date.now() };
+    store(lists.some(l => l.id === id) ? lists.map(l => (l.id === id ? item : l)) : [item, ...lists]);
+    selectList(id);
+    return id;
+  };
+  const deleteList = (id: string) => {
+    const rest = lists.filter(l => l.id !== id);
+    store(rest);
+    if (activeId === id && rest[0]) selectList(rest[0].id);
+  };
+  /** Una lista nuova (da una lista dei Regional o da un suggerimento) diventa una delle mie liste e va in uso. */
+  const useDeck = (text: string, name = "Nuova lista", archetype = "") => { upsertList({ name, archetype, text }); };
 
   const runSim: RunSim = (tag, req) => {
     worker.current?.terminate();
@@ -77,13 +96,13 @@ function App() {
   if (err) return <div class="app"><div class="page"><p class="msg err">Non riesco a caricare i dati: {err}</p></div></div>;
   if (!data || !analyzed) return <div class="app"><div class="page"><p class="sub">Carico le carte e il meta…</p></div></div>;
 
-  const props = { data, analyzed, deckText, useDeck, sim, runSim, stopSim };
+  const props = { data, analyzed, deckText, deckName, useDeck, sim, runSim, stopSim, lists, active, selectList, upsertList, deleteList };
   const sources = `Dati dei tornei: ${data.meta.sources.tournaments}. Matchup reali: ${data.meta.sources.matchups}.`;
   return (
     <div class="app">
       <header class="top">
-        <span class="brand">PTCG Sim{data.meta.private ? " · privato" : ""}</span>
-        <span class="sub">{data.meta.format}</span>
+        <span class="brand">PTCG Sim <span class="beta">Beta</span>{data.meta.private ? " · privato" : ""}</span>
+        <a href="#/mazzo" class="list-pill" title="Cambia lista">{deckName}</a>
       </header>
       <main>
         {route === "mazzo" && <MazzoPage {...props} />}
@@ -103,7 +122,13 @@ export type PageProps = {
   data: Data;
   analyzed: NonNullable<ReturnType<typeof analyze>>;
   deckText: string;
-  useDeck: (t: string) => void;
+  deckName: string;
+  useDeck: (text: string, name?: string, archetype?: string) => void;
+  lists: MyList[];
+  active: MyList | null;
+  selectList: (id: string) => void;
+  upsertList: (x: Omit<MyList, "id" | "updated"> & { id?: string }) => string;
+  deleteList: (id: string) => void;
   sim: SimState;
   runSim: RunSim;
   stopSim: () => void;

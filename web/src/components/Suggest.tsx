@@ -8,7 +8,7 @@ import type { SimMessage, SuggestItem, SuggestRequest } from "../sim.worker";
  * "Suggeriscimi una variante": scambi di una carta presi dalle altre liste dell'archetipo,
  * provati contro l'avversario scelto. Le migliori ricevono altre partite.
  */
-export function SuggestBox({ data, analyzed, deckText, useDeck, onCompare }: PageProps & { onCompare: (out: string, add: string) => void }) {
+export function SuggestBox({ data, analyzed, deckText, deckName, active, useDeck, onCompare }: PageProps & { onCompare: (out: string, add: string) => void }) {
   const opps = data.meta.archetypes;
   const [opp, setOpp] = useState(opps[0].name);
   const [state, setState] = useState<{ done: number; total: number } | null>(null);
@@ -94,7 +94,7 @@ export function SuggestBox({ data, analyzed, deckText, useDeck, onCompare }: Pag
                 {good && (
                   <span class="row-btns">
                     <button class="btn" onClick={() => onCompare(it.swap.out, it.swap.in)}>Prova sul meta</button>
-                    <button class="btn" onClick={() => useDeck(it.swap.text)}>Usa questa lista</button>
+                    <button class="btn" onClick={() => useDeck(it.swap.text, `${deckName.replace(/^Esempio: /, "")} (−1 ${it.swap.out}, +1 ${it.swap.in})`, active?.archetype ?? "")}>Salva come nuova lista</button>
                   </span>
                 )}
               </div>
