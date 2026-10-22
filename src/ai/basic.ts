@@ -160,6 +160,42 @@ export class BasicAgent implements Agent {
     return best;
   }
 
+  /**
+   * Un'Abilità che non pesca serve se, provata su una copia, migliora qualcosa: più Energie in campo,
+   * un attacco migliore, più danni all'avversario, più carte in mano o in panchina. Se peggiora l'attacco, no.
+   */
+  abilityHelps(g: G, me: number, a: Action): boolean {
+    if (this.opts.fast) return true;
+    const snap = (x: G) => ({
+      energy: x.inPlay(me).reduce((s, m) => s + m.energies.length, 0),
+      atk: this.quickBest(x, me),
+      opp: x.inPlay(1 - me).reduce((s, m) => s + m.damage, 0) + 1000 * (6 - x.p(me).prizes.length),
+      cards: x.p(me).hand.length + x.p(me).bench.length,
+    });
+    const before = snap(g);
+    const copy = new G(structuredClone(g.s), g.reg);
+    try {
+      const it = apply(copy, a);
+      let r = it.next();
+      for (let k = 0; !r.done && k < 50; k++) r = it.next(this.decide(copy, r.value));
+    } catch (e) {
+      if (e instanceof GameOver) return copy.s.winner === me;
+      throw e;
+    }
+    const after = snap(copy);
+    if (after.atk < before.atk - 20) return false;
+    return after.energy > before.energy || after.atk > before.atk || after.opp > before.opp || after.cards > before.cards;
+  }
+
+  /** Miglior danno stimato che l'attivo può fare adesso (senza provare gli attacchi). */
+  quickBest(g: G, me: number): number {
+    const a = g.p(me).active;
+    if (!a) return 0;
+    let best = 0;
+    for (const atk of g.top(a).attacks ?? []) if (canPay(g, a.energies, attackCost(g, a, atk))) best = Math.max(best, atkDamage(atk));
+    return best;
+  }
+
   private drawAbility = new Map<string, boolean>();
   /** Vero se l'Abilità serve soprattutto a pescare (provata una volta su una copia della partita). */
   isDrawAbility(g: G, me: number, a: Action): boolean {
@@ -185,7 +221,8 @@ export class BasicAgent implements Agent {
     const fuel = this.plan(g, me).fuel;
     const isFuel = !!fuel && (g.def(c).tags ?? []).includes(fuel);
     // una copia del carburante può servire in campo se non ce n'è nessuna; le altre vanno negli scarti
-    return this.want(g, me, c) - (isFuel ? 70 : 0);
+    const recycled = !!this.plan(g, me).energyRecursion && g.def(c).sub === "basic_energy";
+    return this.want(g, me, c) - (isFuel ? 70 : 0) - (recycled ? 30 : 0);
   }
 
   /** Quanto vale avere in mano questa carta adesso (più alto = più utile). */
@@ -327,9 +364,12 @@ export class BasicAgent implements Agent {
           const t = this.abilityTrade(g, me, a);
           if (t.given > 0 && t.taken < t.given) return -1;
           // le Abilità che pescano si usano con giudizio: con la mano piena o il mazzo corto si perde a mazzo finito
-          if (!this.isDrawAbility(g, me, a)) return 70;
-          if (p.deck.length <= 6) return -1;
-          if (p.hand.length >= 7) return -1;
+          if (!this.isDrawAbility(g, me, a)) return this.abilityHelps(g, me, a) ? 70 : -1;
+          if (p.deck.length <= 8) return -1;
+          if (p.hand.length >= 6) return -1;
+          // una sola Abilità di pescata per turno, salvo mano quasi vuota (si perdeva spesso a mazzo finito)
+          const usedThisTurn = g.inPlay(me).reduce((n, m) => n + (g.top(m).abilities ?? []).filter(ab => m.used[ab.name] === g.s.turn).length, 0);
+          if (usedThisTurn >= 1 && p.hand.length > 2) return -1;
           return p.deck.length > 15 ? (p.hand.length <= 4 ? 70 : 30) : p.hand.length <= 3 ? 30 : -1;
         }
         case "evolve": return 80;

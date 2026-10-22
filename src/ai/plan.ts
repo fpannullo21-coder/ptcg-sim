@@ -34,7 +34,10 @@ export function atkDamage(a: Attack): number {
 }
 
 export interface PlanEntry { value: number; max: number; role: "line" | "attacker" | "support" | "other" }
-export type Plan = Map<string, PlanEntry> & { fuel?: string; openers?: string[] };
+export type Plan = Map<string, PlanEntry> & { fuel?: string; openers?: string[]; energyRecursion?: boolean };
+
+/** Carte che riattaccano Energie base dagli scarti: con queste nel mazzo, scartare Energie dalla mano costa poco. */
+const RECURSION = ["N's PP Up", "Wondrous Patch", "Glass Trumpet", "Rosa's Encouragement", "Energy Retrieval", "Superior Energy Retrieval"];
 
 /** Attacchi che contano le carte negli scarti: le carte con quel tag vanno scartate volentieri. */
 const FUEL: Record<string, string> = {
@@ -49,13 +52,15 @@ function allCards(g: G, me: number): CardDef[] {
 }
 
 export function derivePlan(g: G, me: number): Plan {
-  const cards = allCards(g, me).filter(d => d.kind === "pokemon");
+  const all = allCards(g, me);
+  const cards = all.filter(d => d.kind === "pokemon");
   const copies = new Map<string, number>();
   const defs = new Map<string, CardDef>();
   for (const d of cards) { copies.set(d.name, (copies.get(d.name) ?? 0) + 1); defs.set(d.name, d); }
   const maxDamage = (d: CardDef) => Math.max(0, ...(d.attacks ?? []).map(atkDamage));
   const plan: Plan = new Map();
   for (const d of defs.values()) for (const a of d.attacks ?? []) if (FUEL[a.name]) plan.fuel = FUEL[a.name];
+  plan.energyRecursion = all.filter(d => RECURSION.includes(d.name)).length >= 2;
   // linee evolutive
   for (const [name, d] of defs) {
     if (!d.evolvesFrom) continue;
