@@ -179,7 +179,7 @@ export function MatchupPage({ data, analyzed, deckText, deckName, sim, runSim, s
           {source ? ` ${source}.` : ""}
         </p>
       </div>
-      <p class="sub"><span class="beta">Beta</span> Il simulatore gioca ancora alcuni mazzi peggio della realtà: dove la simulazione delle liste tipo si discosta di oltre 20 punti dai risultati veri, il matchup è segnato come poco affidabile. In media lo scarto oggi è di circa 23 punti.</p>
+      <p class="sub"><span class="beta">Beta</span> Il simulatore gioca ancora alcuni mazzi peggio della realtà: dove la simulazione delle liste tipo si discosta di oltre 20 punti dai risultati veri, il matchup è segnato come poco affidabile. In media lo scarto oggi è di circa 25 punti.</p>
       <p class="sub">Simulazioni aggiornate al {new Date(meta.updated).toLocaleDateString("it-IT")}. Le liste tipo sono le meglio piazzate nei Regional del formato.</p>
     </div>
   );
