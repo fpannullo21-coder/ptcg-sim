@@ -100,6 +100,27 @@ export class BasicAgent implements Agent {
     return Math.max(0, attackCost(g, m, strongest).length - m.energies.length);
   }
 
+  /** Premi presi e regalati usando un'Abilità, provata su una copia della partita. */
+  abilityTrade(g: G, me: number, a: Action): { taken: number; given: number } {
+    if (this.opts.fast) {
+      // modalità veloce: solo il controllo più importante, l'Abilità che manda KO il proprio Pokémon
+      const m = slot(g.p(me), (a as { target: number }).target);
+      const n = g.top(m).abilities![(a as { index: number }).index].name;
+      return n === "Cursed Blast" ? { taken: 0, given: g.top(m).prizes ?? 1 } : { taken: 0, given: 0 };
+    }
+    const copy = new G(structuredClone(g.s), g.reg);
+    const mine = copy.p(me).prizes.length, theirs = copy.p(1 - me).prizes.length;
+    try {
+      const it = apply(copy, a);
+      let r = it.next();
+      for (let k = 0; !r.done && k < 50; k++) r = it.next(this.decide(copy, r.value));
+    } catch (e) {
+      if (e instanceof GameOver) return copy.s.winner === me ? { taken: 99, given: 0 } : { taken: 0, given: 99 };
+      throw e;
+    }
+    return { taken: mine - copy.p(me).prizes.length, given: theirs - copy.p(1 - me).prizes.length };
+  }
+
   private drawAbility = new Map<string, boolean>();
   /** Vero se l'Abilità serve soprattutto a pescare (provata una volta su una copia della partita). */
   isDrawAbility(g: G, me: number, a: Action): boolean {
@@ -203,6 +224,9 @@ export class BasicAgent implements Agent {
     const score = (a: Action): number => {
       switch (a.kind) {
         case "ability": {
+          // Abilità che costano premi (es. Cursed Blast manda KO il proprio Pokémon): solo se rendono almeno altrettanto
+          const t = this.abilityTrade(g, me, a);
+          if (t.given > 0 && t.taken < t.given) return -1;
           // le Abilità che pescano si usano con giudizio: con la mano piena o il mazzo corto si perde a mazzo finito
           if (!this.isDrawAbility(g, me, a)) return 70;
           if (p.deck.length <= 6) return -1;
