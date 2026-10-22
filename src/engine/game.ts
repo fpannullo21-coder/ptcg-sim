@@ -413,7 +413,7 @@ function removeFromHand(p: Player, c: number) {
 }
 
 /** Applica un'azione. Restituisce true se il turno è finito. */
-function* apply(g: G, a: Action): Gen<boolean> {
+export function* apply(g: G, a: Action): Gen<boolean> {
   const s = g.s, me = s.current, p = g.me();
   g.say(describe(g, a));
   switch (a.kind) {

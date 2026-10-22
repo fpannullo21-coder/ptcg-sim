@@ -25,7 +25,7 @@ export interface Impl {
   name: string;
   /** Se una carta ha più versioni con lo stesso nome, quale questa implementa. */
   version?: (c: CardData) => boolean;
-  attacks?: Record<string, { effect?: Attack["effect"]; after?: Attack["after"]; damage?: number }>;
+  attacks?: Record<string, { effect?: Attack["effect"]; after?: Attack["after"]; damage?: number; estimate?: number }>;
   abilities?: Record<string, Omit<Ability, "name">>;
   play?: CardDef["play"];
   canPlay?: CardDef["canPlay"];
@@ -110,7 +110,7 @@ export class Registry {
       d.attacks = (c.attacks ?? []).map(a => {
         const ia = im?.attacks?.[a.name];
         if (a.text && !ia && !covered.has(a.name)) missing.push(`attacco ${a.name}: ${a.text}`);
-        return { name: a.name, cost: a.cost.map(x => TYPE[x] ?? "C"), damage: ia?.damage ?? baseDamage(a.damage), effect: ia?.effect, after: ia?.after };
+        return { name: a.name, cost: a.cost.map(x => TYPE[x] ?? "C"), damage: ia?.damage ?? baseDamage(a.damage), effect: ia?.effect, after: ia?.after, estimate: ia?.estimate };
       });
       d.abilities = [];
       for (const a of c.abilities ?? []) {

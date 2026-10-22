@@ -17,8 +17,11 @@ import { registry } from "../cards/index.js";
 import { loadDecks, type DeckFile } from "../data/decks.js";
 import { playGame } from "../engine/game.js";
 import { BasicAgent } from "../ai/basic.js";
+import { EvalAgent } from "../ai/eval.js";
 
-export interface Job { a: string; b: string; games: number; seed: number }
+export const AGENTS: Record<string, () => BasicAgent> = { basic: () => new BasicAgent(), eval: () => new EvalAgent() };
+
+export interface Job { a: string; b: string; games: number; seed: number; agent?: string }
 export interface Result { a: string; b: string; games: number; winsA: number; winsB: number; draws: number; winsAFirst: number; gamesAFirst: number; turns: number; errors: string[] }
 
 function playJob(decks: Map<string, DeckFile>, job: Job): Result {
@@ -28,7 +31,8 @@ function playJob(decks: Map<string, DeckFile>, job: Job): Result {
   for (let k = 0; k < job.games; k++) {
     const first = k % 2;
     try {
-      const m = playGame([da, db], [new BasicAgent(), new BasicAgent()], job.seed + k, { first });
+      const make = AGENTS[job.agent ?? "basic"];
+      const m = playGame([da, db], [make(), make()], job.seed + k, { first });
       const w = m.g.s.winner;
       r.games++;
       r.turns += m.g.s.turn;
@@ -57,12 +61,12 @@ function arg(name: string, def: string): string {
  * Gioca `games` partite per ogni coppia (lista, avversario) su più processi.
  * Metà delle partite inizia la prima lista, metà la seconda. Semi fissi: risultati riproducibili.
  */
-export async function runPairs(pairs: [string, string][], games: number, workers = Math.max(1, availableParallelism() - 1), onProgress?: (done: number, total: number) => void): Promise<Result[]> {
+export async function runPairs(pairs: [string, string][], games: number, workers = Math.max(1, availableParallelism() - 1), onProgress?: (done: number, total: number) => void, agent = "basic"): Promise<Result[]> {
   const jobs: Job[] = [];
   let seed = 1;
   const chunk = Math.max(10, Math.ceil(games / Math.max(1, Math.min(workers, 4))));
   for (const [a, b] of pairs) {
-    for (let done = 0; done < games; done += chunk) jobs.push({ a, b, games: Math.min(chunk, games - done), seed: (seed += 100000) });
+    for (let done = 0; done < games; done += chunk) jobs.push({ a, b, games: Math.min(chunk, games - done), seed: (seed += 100000), agent });
   }
   const results: Result[] = [];
   let next = 0;
@@ -98,7 +102,7 @@ async function main() {
   if (!A.length || !B.length) throw new Error("nessuna lista trovata per --a o --b");
 
   const t0 = performance.now();
-  const rows = await runPairs(A.flatMap(a => B.map(b => [a.path, b.path] as [string, string])), games, workers);
+  const rows = await runPairs(A.flatMap(a => B.map(b => [a.path, b.path] as [string, string])), games, workers, undefined, arg("agent", "basic"));
   const sec = (performance.now() - t0) / 1000;
   const pct = (x: number, n: number) => (n ? `${((100 * x) / n).toFixed(1)}%` : "-");
   const cov = (p: string) => { const c = reg.coverage(all.find(d => d.path === p)!); return Math.round((100 * c.complete) / c.total); };

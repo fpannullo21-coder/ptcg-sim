@@ -8,6 +8,7 @@
  */
 import { attack, attackCost, canPay, G, GameOver, provided, retreatCost, slot } from "../engine/game.js";
 import type { Agent } from "../engine/game.js";
+import { atkDamage, derivePlan, type Plan } from "./plan.js";
 import type { Action, Attack, CardDef, Decision, Mon } from "../engine/types.js";
 
 const SEARCH = new Set(["search", "ultra_ball", "poke_pad", "puppet_pull", "poffin", "telepathic", "explorer", "pokegear",
@@ -17,13 +18,28 @@ const DISCARD = new Set(["discard", "ultra_ball_discard", "prism_discard", "retr
 export class BasicAgent implements Agent {
   constructor(public opts: { benchMax?: number } = {}) {}
 
+  private plans: (Plan | null)[] = [null, null];
+  /** Piano della lista del giocatore (ricavato una volta sola alla prima decisione). */
+  plan(g: G, me: number): Plan {
+    return (this.plans[me] ??= derivePlan(g, me));
+  }
+
+  /** Quanto vale mettere in campo questo Pokémon adesso, secondo il piano. */
+  benchValue(g: G, me: number, c: number): number {
+    const d = g.def(c), e = this.plan(g, me).get(d.name);
+    if (!e) return 20;
+    const inPlay = g.inPlay(me).filter(m => g.top(m).name === d.name || m.stack.some(x => g.def(x).name === d.name)).length;
+    if (inPlay >= e.max) return 5;
+    return e.value - 10 * inPlay;
+  }
+
   // --- valutazioni --------------------------------------------------------
 
   /** Danno stampato del miglior attacco pagabile adesso da questo Pokémon. */
   bestDamage(g: G, m: Mon): { atk: Attack | null; dmg: number } {
     let best: { atk: Attack | null; dmg: number } = { atk: null, dmg: -1 };
     for (const a of g.top(m).attacks ?? []) {
-      if (canPay(g, m.energies, attackCost(g, m, a)) && a.damage > best.dmg) best = { atk: a, dmg: a.damage };
+      if (canPay(g, m.energies, attackCost(g, m, a)) && atkDamage(a) > best.dmg) best = { atk: a, dmg: atkDamage(a) };
     }
     return best;
   }
@@ -45,10 +61,10 @@ export class BasicAgent implements Agent {
   energyHelp(g: G, m: Mon, e: number): number {
     let best = 0;
     for (const a of g.top(m).attacks ?? []) {
-      if (a.damage <= 0 && !a.effect) continue;
+      if (atkDamage(a) <= 0) continue;
       const cost = attackCost(g, m, a);
       const before = this.need(g, m.energies, cost), after = this.need(g, [...m.energies, e], cost);
-      if (after < before) best = Math.max(best, 10 + Math.max(a.damage, 30) / 10 + (after === 0 ? 20 : 0));
+      if (after < before) best = Math.max(best, 10 + Math.max(atkDamage(a), 30) / 10 + (after === 0 ? 20 : 0));
     }
     return best;
   }
@@ -58,7 +74,7 @@ export class BasicAgent implements Agent {
     let best: Mon | null = null, bv = 0;
     for (const m of g.inPlay(me)) {
       for (const a of g.top(m).attacks ?? []) {
-        const dmg = a.damage > 0 ? a.damage : a.effect ? 60 : 0;
+        const dmg = atkDamage(a);
         const v = dmg / (1 + this.need(g, m.energies, attackCost(g, m, a))) + (m === g.p(me).active ? 5 : 0);
         if (v > bv) { bv = v; best = m; }
       }
@@ -70,8 +86,16 @@ export class BasicAgent implements Agent {
   energyGap(g: G, m: Mon): number {
     const atks = g.top(m).attacks ?? [];
     if (!atks.length) return 0;
-    const strongest = atks.reduce((a, b) => (b.damage >= a.damage ? b : a));
+    const strongest = atks.reduce((a, b) => (atkDamage(b) >= atkDamage(a) ? b : a));
     return Math.max(0, attackCost(g, m, strongest).length - m.energies.length);
+  }
+
+  /** Quanto conviene tenere una carta invece di scartarla: le carte "carburante" (es. Hide 'n' Sneak) si scartano volentieri. */
+  keep(g: G, me: number, c: number): number {
+    const fuel = this.plan(g, me).fuel;
+    const isFuel = !!fuel && (g.def(c).tags ?? []).includes(fuel);
+    // una copia del carburante può servire in campo se non ce n'è nessuna; le altre vanno negli scarti
+    return this.want(g, me, c) - (isFuel ? 70 : 0);
   }
 
   /** Quanto vale avere in mano questa carta adesso (più alto = più utile). */
@@ -81,8 +105,8 @@ export class BasicAgent implements Agent {
     const inHand = p.hand.filter(x => g.def(x).name === d.name).length;
     if (d.kind === "pokemon") {
       if (d.evolvesFrom && inPlay.some(m => g.top(m).name === d.evolvesFrom)) return 90 - 20 * inHand;
-      if (d.sub === "basic") return (inPlay.some(m => g.top(m).name === d.name) ? 40 : 70) - 15 * inHand + (d.attacks?.some(a => a.damage >= 100) ? 10 : 0);
-      return 50 - 15 * inHand;
+      if (d.sub === "basic") return this.benchValue(g, me, c) - 15 * inHand;
+      return (this.plan(g, me).get(d.name)?.value ?? 50) * 0.6 - 15 * inHand;
     }
     if (d.kind === "energy") return inPlay.some(m => this.energyGap(g, m) > 0) ? 55 - 20 * inHand : 15;
     if (d.sub === "supporter") return p.hand.some(x => g.def(x).sub === "supporter") ? 25 : 65;
@@ -100,10 +124,14 @@ export class BasicAgent implements Agent {
     if (d.kind === "action") return [this.action(g, me, d.options as Action[])];
     if (d.kind === "mulligan_draw") return [d.options.length - 1];
     if (d.kind === "setup_active") {
-      // in attivo il Pokémon meno prezioso e più facile da ritirare
-      return top(c => -(g.def(c as number).retreat ?? 0) * 10 - ((g.def(c as number).tags ?? []).includes("ex") ? 50 : 0), 1);
+      // in attivo il Pokémon meno prezioso e più facile da ritirare; mai la base di una linea evolutiva se c'è altro
+      return top(c => -(g.def(c as number).retreat ?? 0) * 10 - ((g.def(c as number).tags ?? []).includes("ex") ? 50 : 0)
+        - (this.plan(g, me).get(g.def(c as number).name)?.role === "line" ? 25 : 0), 1);
     }
-    if (d.kind === "setup_bench") return idx.slice(0, Math.min(d.max, this.opts.benchMax ?? 3));
+    if (d.kind === "setup_bench") {
+      const ranked = top(c => this.benchValue(g, me, c as number), d.max);
+      return ranked.filter(i => this.benchValue(g, me, d.options[i] as number) >= 50).slice(0, this.opts.benchMax ?? 3);
+    }
     if (d.kind === "promote" || d.kind === "switch") {
       const p = g.p(me);
       // le opzioni possono essere indici della panchina o direttamente i Pokémon
@@ -118,13 +146,13 @@ export class BasicAgent implements Agent {
       return top(m => (m as Mon).damage * (g.top(m as Mon).prizes ?? 1) - g.hpLeft(m as Mon) / 10, d.max);
     }
     if (d.kind.endsWith("_target")) return top(m => this.energyGap(g, m as Mon) * 10 + (g.top(m as Mon).attacks?.length ?? 0), 1);
-    if (d.kind === "gwynn") return idx.slice(0, d.max);
+    if (d.kind === "gwynn") return top(c => -this.keep(g, me, c as number), d.max);
     if (d.kind === "mill" || d.kind === "blender") {
       // scarta prima le carte che contano negli scarti (Hide 'n' Sneak), poi le meno utili
-      return top(c => ((g.def(c as number).tags ?? []).includes("hide_n_sneak") ? 100 : 0) - this.want(g, me, c as number), d.max);
+      return top(c => -this.keep(g, me, c as number), d.max);
     }
-    if (d.kind === "naveen") return top(c => -this.want(g, me, c as number), Math.max(d.min, g.p(me).hand.length - 3));
-    if (DISCARD.has(d.kind)) return top(c => -this.want(g, me, c as number), d.min);
+    if (d.kind === "naveen") return top(c => -this.keep(g, me, c as number), Math.max(d.min, g.p(me).hand.length - 3));
+    if (DISCARD.has(d.kind)) return top(c => -this.keep(g, me, c as number), d.min);
     if (SEARCH.has(d.kind) || typeof d.options[0] === "number") {
       return top(c => this.want(g, me, c as number), d.max);
     }
@@ -136,9 +164,16 @@ export class BasicAgent implements Agent {
     const benchMax = this.opts.benchMax ?? 4;
     const score = (a: Action): number => {
       switch (a.kind) {
-        case "ability": return 70;
+        // con il mazzo corto non si pesca più del necessario (si perde a mazzo finito)
+        case "ability": return p.deck.length > 15 ? 70 : p.hand.length <= 3 && p.deck.length > 6 ? 30 : -1;
         case "evolve": return 80;
-        case "bench": return p.bench.length < benchMax ? 60 : -1;
+        case "bench": {
+          // lascia un posto libero per le linee evolutive, metti prima ciò che serve al piano
+          const v = this.benchValue(g, me, a.card);
+          if (p.bench.length >= benchMax) return -1;
+          if (p.bench.length >= benchMax - 1 && v < 60) return -1;
+          return v >= 30 ? 25 + v / 2 : -1;
+        }
         case "stadium": return p.hand.length >= 4 ? 20 : -1;
         case "attach": {
           const m = slot(p, a.target);
@@ -221,6 +256,7 @@ export class BasicAgent implements Agent {
     }
     if (d.sub === "supporter") {
       if (d.name === "Black Belt's Training") return o.active && (g.top(o.active).tags ?? []).includes("ex") ? 10 : -1;
+      if (p.deck.length < 10 && p.hand.length >= 4) return -1;
       return p.hand.length <= 5 ? 35 : 20;
     }
     if (d.sub === "stadium") return 15;

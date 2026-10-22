@@ -21,6 +21,8 @@ import { runPairs, type Result } from "./matrix.js";
 
 const arg = (n: string, d: string) => { const i = process.argv.indexOf(`--${n}`); return i >= 0 ? process.argv[i + 1] : d; };
 const bo3 = (p: number) => p * p * (3 - 2 * p);
+const logit = (p: number) => Math.log(Math.min(0.99, Math.max(0.01, p)) / (1 - Math.min(0.99, Math.max(0.01, p))));
+const sigm = (x: number) => 1 / (1 + Math.exp(-x));
 const pct = (x: number) => (Number.isFinite(x) ? `${(100 * x).toFixed(1)}%` : "—");
 
 function pick(all: DeckFile[], spec: string): DeckFile[] {
@@ -47,17 +49,27 @@ async function main() {
     .slice(0, top);
   const total = meta.reduce((s, a) => s + a.share, 0);
   const lists = pick(decks, arg("lists", "hide-n-sneak/lista-per-danzica"));
+  // lista di riferimento per l'ancoraggio ai dati reali: la rappresentativa dell'archetipo delle liste provate
+  const ALIAS0: Record<string, string> = { "Hide n' Sneak": "Dhelmise" };
+  const archOf = (d: DeckFile) => ALIAS0[d.meta["archetipo"] ?? ""] ?? d.meta["archetipo"] ?? "";
+  const refs = new Map<string, string>();
+  for (const l of lists) {
+    const a = archetypes(loadTournaments(), decks).find(x => x.name === archOf(l));
+    if (a?.decks[0]) refs.set(archOf(l), a.decks[0]);
+  }
 
   const pairs: [string, string][] = [];
   for (const l of lists) for (const a of meta) pairs.push([l.path, a.deck!]);
+  for (const r of refs.values()) for (const a of meta) pairs.push([r, a.deck!]);
   if (validate) for (let i = 0; i < meta.length; i++) for (let j = i + 1; j < meta.length; j++) pairs.push([meta[i].deck!, meta[j].deck!]);
   const uniq = [...new Map(pairs.map(p => [p.join("|"), p])).values()];
   console.log(`${uniq.length} coppie x ${games} partite su ${workers} processi...`);
   const t0 = performance.now();
   let lastLog = 0;
+  const agent = arg("agent", "basic");
   const res = await runPairs(uniq, games, workers, (d, t) => {
     if (Date.now() - lastLog > 30000) { lastLog = Date.now(); console.log(`  ${d}/${t} blocchi`); }
-  });
+  }, agent);
   const sec = (performance.now() - t0) / 1000;
   const get = (a: string, b: string): number => {
     const r = res.find(x => x.a === a && x.b === b);
@@ -69,9 +81,11 @@ async function main() {
   const out: string[] = [
     `# Meta: ${name}`,
     "",
-    `Quote dei mazzi da Limitless Labs (${labs.tournaments.map(t => t.name).join(", ")}). Ogni archetipo è giocato con la lista meglio piazzata nelle classifiche. ${games} partite per coppia, giocatore base contro giocatore base, ${sec.toFixed(0)} s.`,
+    `Quote dei mazzi da Limitless Labs (${labs.tournaments.map(t => t.name).join(", ")}). Ogni archetipo è giocato con la lista meglio piazzata nelle classifiche. ${games} partite per coppia, giocatore "${agent}" da entrambe le parti, ${sec.toFixed(0)} s.`,
     "",
     "Partite = percentuale di partite vinte nella simulazione. Match = conversione al meglio delle tre. Reale = win rate dei match su Labs per l'archetipo della lista (il pareggio vale un terzo).",
+    "",
+    "Ancorato = il risultato reale dell'archetipo, spostato di quanto la simulazione dice che questa lista fa meglio o peggio della lista di riferimento dell'archetipo. È il numero da usare per confrontare varianti della stessa lista: la simulazione da sola non è ancora affidabile in assoluto.",
     "",
     "## Le liste contro il meta",
     "",
@@ -82,17 +96,24 @@ async function main() {
     const ALIAS: Record<string, string> = { "Hide n' Sneak": "Dhelmise" };
     const raw = meta.find(m => m.deck === l.path)?.name ?? l.meta["archetipo"] ?? "";
     const arch = ALIAS[raw] ?? raw;
-    let wGame = 0, wMatch = 0, wReal = 0, realShare = 0;
+    let wGame = 0, wMatch = 0, wReal = 0, realShare = 0, wAnch = 0, anchShare = 0;
+    const ref = refs.get(arch);
     const rows = meta.map(a => {
       const p = get(l.path, a.deck!);
       const real = realMatchup(labs, arch, a.name);
       wGame += (a.share / total) * p;
       wMatch += (a.share / total) * bo3(p);
-      if (real && real.n >= 10) { wReal += a.share * real.wr; realShare += a.share; }
-      return `| ${a.name} | ${a.share.toFixed(1)}% | ${pct(p)} | ${pct(bo3(p))} | ${real && real.n >= 10 ? `${pct(real.wr)} (${real.n})` : "—"} |`;
+      let anch = NaN;
+      if (real && real.n >= 10) {
+        wReal += a.share * real.wr; realShare += a.share;
+        // ancorato: risultato reale dell'archetipo, spostato della differenza simulata tra questa lista e quella di riferimento
+        if (ref) { anch = sigm(logit(real.wr) + logit(bo3(p)) - logit(bo3(get(ref, a.deck!)))); wAnch += a.share * anch; anchShare += a.share; }
+      }
+      return `| ${a.name} | ${a.share.toFixed(1)}% | ${pct(p)} | ${pct(bo3(p))} | ${real && real.n >= 10 ? `${pct(real.wr)} (${real.n})` : "—"} | ${pct(anch)} |`;
     });
-    out.push(`### ${l.name}`, "", `**Sul meta: ${pct(wMatch)} dei match** (${pct(wGame)} delle partite)${realShare ? `; reale per l'archetipo: ${pct(wReal / realShare)}` : ""}.`, "",
-      "| Contro | Quota | Partite | Match | Reale (match giocati) |", "| --- | --- | --- | --- | --- |", ...rows, "");
+    out.push(`### ${l.name}`, "",
+      `**Ancorato ai dati reali: ${anchShare ? pct(wAnch / anchShare) : "—"}** · simulato puro: ${pct(wMatch)} dei match (${pct(wGame)} delle partite)${realShare ? ` · reale dell'archetipo: ${pct(wReal / realShare)}` : ""}.`, "",
+      "| Contro | Quota | Partite | Match | Reale (match giocati) | Ancorato |", "| --- | --- | --- | --- | --- | --- |", ...rows, "");
     (json.lists as Record<string, unknown>)[l.path] = { metaMatch: wMatch, metaGame: wGame, rows: meta.map(a => ({ vs: a.name, game: get(l.path, a.deck!) })) };
   }
 

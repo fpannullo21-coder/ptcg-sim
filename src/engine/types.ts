@@ -32,6 +32,8 @@ export interface Attack {
   damage: number;
   /** Prima del danno: può restituire il danno base modificato (es. "30+"). */
   effect?: (g: import("./game.js").G, me: number) => Gen<number | void>;
+  /** Danno tipico per i giocatori simulati, quando quello stampato non dice tutto (es. "30+" che di solito fa 170). */
+  estimate?: number;
   /** Dopo il danno (es. "Then, discard that Stadium", "Put this Pokémon into your hand"). */
   after?: (g: import("./game.js").G, me: number) => Gen;
 }
