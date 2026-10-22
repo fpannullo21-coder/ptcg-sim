@@ -35,8 +35,8 @@ Le righe segnate **[nel simulatore]** sono già nel codice. Le altre sono da con
 - **Judge** a metà o fine partita contro una mano grande.
 - **Risky Ruins** dopo aver completato la propria panchina: danneggia anche i Dreepy che entrano dopo.
 
-## Domande per te
+## Risposte di Francesco (22 ottobre)
 
-1. Budew attivo anche andando per primi, o meglio Dreepy?
-2. Quanto presto si usa Unfair Stamp: appena possibile o si tiene per il finale?
-3. Contro Hide n' Sneak e Zoroark, cosa cambia nella distribuzione di Phantom Dive?
+1. **Budew in attivo anche andando per primi:** sì [nel simulatore].
+2. **Unfair Stamp:** appena ti rendi conto che puoi giocarlo, se crea un forte svantaggio [nel simulatore: quando l'avversario ha 5 carte o più in mano, o almeno 3 mentre tu ne hai 3 o meno].
+3. **Phantom Dive contro Hide n' Sneak e Zoroark:** sempre mettere in range di KO i Pokémon da due premi [nel simulatore: se i segnalini non chiudono un KO, vanno sui Pokémon da 2 premi per portarli sotto i 200 PS rimasti].

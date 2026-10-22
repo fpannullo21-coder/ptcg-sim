@@ -22,6 +22,8 @@ const ESTIMATE: Record<string, number> = {
   "Gale Thrust": 150, "Hungry Jaws": 200, "Maximum Drilling": 250, "Full Moon Rondo": 100,
   "Tenacious Tail": 120, "Rocket Feathers": 180, "R Command": 100, "Psychic": 110,
   "Powerful Hand": 160, "Dark Frost": 120,
+  // attacchi usati da Seek Inspiration (Slowking): valore tipico
+  "Destined Fight": 250, Trifrost: 300, "Ghostly Blow": 150, "Metallic Hammer": 150, "Seek Inspiration": 200,
 };
 
 /** Danno atteso di un attacco per le scelte dei giocatori simulati. */

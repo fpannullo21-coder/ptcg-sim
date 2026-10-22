@@ -88,11 +88,23 @@ export class BasicAgent implements Agent {
   /** L'attaccante su cui concentrare le Energie: il più forte tra quelli più vicini a essere pronti. */
   focus(g: G, me: number): Mon | null {
     let best: Mon | null = null, bv = 0;
+    const p = g.p(me);
+    // le evoluzioni disponibili (in mano o nel mazzo) contano come attacchi futuri del Pokémon
+    const evoDefs = (name: string) => {
+      const seen = new Set<string>(), out: CardDef[] = [];
+      for (const c of [...p.hand, ...p.deck]) { const d = g.def(c); if (d.evolvesFrom === name && !seen.has(d.id)) { seen.add(d.id); out.push(d); } }
+      return out;
+    };
     for (const m of g.inPlay(me)) {
-      for (const a of g.top(m).attacks ?? []) {
-        const dmg = atkDamage(a);
-        const v = dmg / (1 + this.need(g, m.energies, attackCost(g, m, a))) + (m === g.p(me).active ? 5 : 0);
-        if (v > bv) { bv = v; best = m; }
+      const forms: [CardDef, number][] = [[g.top(m), 1], ...evoDefs(g.top(m).name).map(d => [d, 0.85] as [CardDef, number])];
+      for (const [def, w] of forms) {
+        const planV = this.plan(g, me).get(def.name)?.value ?? 50;
+        for (const a of def.attacks ?? []) {
+          // il piano di mazzo pesa: l'attaccante principale dell'archetipo riceve le Energie prima degli altri
+          const need = this.need(g, m.energies, [...a.cost]);
+          const v = w * (atkDamage(a) / (1 + need) + planV / 3) + (m === p.active ? 5 : 0);
+          if (v > bv) { bv = v; best = m; }
+        }
       }
     }
     return best;
@@ -125,6 +137,27 @@ export class BasicAgent implements Agent {
       throw e;
     }
     return { taken: mine - copy.p(me).prizes.length, given: theirs - copy.p(1 - me).prizes.length };
+  }
+
+  /** Il Pokémon (attivo o in panchina) che usa Seek Inspiration, se c'è. */
+  seekUser(g: G, me: number): Mon | null {
+    return g.inPlay(me).find(m => (g.top(m).attacks ?? []).some(a => a.name === "Seek Inspiration")) ?? null;
+  }
+
+  /** Quanto vale avere questa carta in cima al mazzo per Seek Inspiration. */
+  seekValue(g: G, me: number, c: number): number {
+    const d = g.def(c), t = d.tags ?? [];
+    if (d.kind !== "pokemon" || t.includes("ex") || t.includes("mega")) return 0;
+    const o = g.p(1 - me);
+    let best = 0;
+    for (const a of d.attacks ?? []) {
+      let v = atkDamage(a);
+      if (a.name === "Destined Fight" && o.active) v = 120 * (g.top(o.active).prizes ?? 1);
+      if (a.name === "Trifrost") v = 110 * Math.min(3, g.inPlay(1 - me).length);
+      if (o.active && v >= g.hpLeft(o.active)) v += 100 * (g.top(o.active).prizes ?? 1);
+      best = Math.max(best, v);
+    }
+    return best;
   }
 
   private drawAbility = new Map<string, boolean>();
@@ -172,7 +205,15 @@ export class BasicAgent implements Agent {
 
   // --- decisioni ----------------------------------------------------------
 
+  /** Ogni risposta rispetta sempre i limiti della decisione (min e max), qualunque regola l'abbia prodotta. */
   decide(g: G, d: Decision): number[] {
+    const raw = this.decideRaw(g, d);
+    const out = [...new Set(raw.filter(i => Number.isInteger(i) && i >= 0 && i < d.options.length))].slice(0, d.max);
+    for (let i = 0; out.length < d.min && i < d.options.length; i++) if (!out.includes(i)) out.push(i);
+    return out;
+  }
+
+  decideRaw(g: G, d: Decision): number[] {
     const me = d.player;
     const idx = d.options.map((_, i) => i);
     const top = (score: (o: unknown) => number, n: number) =>
@@ -207,8 +248,11 @@ export class BasicAgent implements Agent {
     if (d.kind === "counters") {
       // un segnalino alla volta: prima dove completa un KO presto (pochi segnalini mancanti, più premi)
       return top(m => {
-        const left = Math.ceil(g.hpLeft(m as Mon) / 10), prizes = g.top(m as Mon).prizes ?? 1;
-        return left <= 6 ? 1000 * prizes - 100 * left : 10 * prizes - left;
+        // se non si chiude un KO: i Pokémon da 2 premi "in range" del prossimo attacco (piano di Dragapult: sempre in range i due premi)
+        const hp = g.hpLeft(m as Mon), left = Math.ceil(hp / 10), prizes = g.top(m as Mon).prizes ?? 1;
+        if (left <= 6) return 1000 * prizes - 100 * left;
+        const nextHit = 200;
+        return 100 * prizes + (prizes >= 2 && hp > nextHit && hp - 60 <= nextHit ? 300 : 0) - left;
       }, d.max);
     }
     if (d.kind === "spiritual_end") {
@@ -222,7 +266,36 @@ export class BasicAgent implements Agent {
         return (m === o.active ? 50 : 0) + 20 * (m.energies?.length ?? 0) + (m.stack ? this.bestDamage(g, m).dmg / 10 : 0);
       }, 1);
     }
+    if (d.kind === "heal_target") return top(m => (m as Mon).damage * (g.top(m as Mon).prizes ?? 1), 1);
+    if (d.kind === "attach_target" || d.kind === "attach_discard_target" || d.kind === "patch_target" || d.kind === "attach_discard_target_bench") {
+      // le Energie che arrivano da effetti vanno all'attaccante principale, poi a chi ne ha più bisogno
+      const f = this.focus(g, me);
+      return top(m => (m === f ? 1000 : 0) + this.energyGap(g, m as Mon) * 10 + (g.top(m as Mon).attacks?.length ?? 0), d.max);
+    }
+    if (d.kind === "move_from") {
+      // da chi si tolgono Energie: mai dall'attaccante principale se c'è altro, prima dai Pokémon che non attaccheranno
+      const f = this.focus(g, me);
+      return top(m => (m === f ? -1000 : 0) + 10 * (m as Mon).energies.length - this.bestDamage(g, m as Mon).dmg / 10, 1);
+    }
+    if (d.kind === "crispin" || d.kind === "crispin_attach") {
+      // le Energie del tipo che serve all'attaccante principale
+      const f = this.focus(g, me);
+      return top(c => (f ? this.energyHelp(g, f, c as number) : 0) + this.want(g, me, c as number) / 10, d.max);
+    }
+    if (d.kind === "snipe") {
+      return top(m => { const hp = g.hpLeft(m as Mon), pr = g.top(m as Mon).prizes ?? 1; return hp <= 120 ? 1000 * pr - hp : 10 * pr - hp / 10; }, d.max);
+    }
     if (d.kind.endsWith("_target")) return top(m => this.energyGap(g, m as Mon) * 10 + (g.top(m as Mon).attacks?.length ?? 0), 1);
+    if (d.kind === "academy") {
+      // Academy at Night: in cima al mazzo la carta che Seek Inspiration sfrutta meglio, altrimenti la meno utile
+      return top(c => (this.seekUser(g, me) ? this.seekValue(g, me, c as number) : 0) - this.want(g, me, c as number) / 10, 1);
+    }
+    if (d.kind === "ciphermaniac") {
+      // Ciphermaniac: in cima il miglior bersaglio di Seek Inspiration, poi la carta più utile
+      const su = this.seekUser(g, me);
+      const ranked = top(c => (su ? this.seekValue(g, me, c as number) : 0) + this.want(g, me, c as number), d.options.length);
+      return ranked.slice(0, d.max);
+    }
     if (d.kind === "copy_attack") {
       // attacco copiato (Night Joker): il più forte, il costo dell'attacco copiato non conta
       return top(o => {
@@ -267,7 +340,19 @@ export class BasicAgent implements Agent {
           if (p.bench.length >= benchMax - 1 && v < 60) return -1;
           return v >= 30 ? 25 + v / 2 : -1;
         }
-        case "stadium": return p.hand.length >= 4 ? 20 : -1;
+        case "stadium": {
+          // Academy at Night con Slowking attivo: solo se mette in cima un bersaglio migliore di quello che c'è già
+          if (g.s.stadium !== null && g.name(g.s.stadium) === "Academy at Night") {
+            const su = this.seekUser(g, me);
+            if (!su || su !== p.active || !p.hand.length) return -1;
+            const now = p.deck.length ? this.seekValue(g, me, p.deck[p.deck.length - 1]) : 0;
+            const best = Math.max(...p.hand.map(c => this.seekValue(g, me, c)));
+            return best > now + 40 ? 45 : -1;
+          }
+          // Stadi tipo Prism Tower (scarta 2, pesca 1): solo se in mano ci sono due carte inutili
+          const junk = p.hand.map(c => this.keep(g, me, c)).sort((x, y) => x - y);
+          return p.hand.length >= 4 && junk.length >= 2 && junk[1] < 25 ? 20 : -1;
+        }
         case "attach": {
           const m = slot(p, a.target);
           const help = this.energyHelp(g, m, a.card);
@@ -353,7 +438,20 @@ export class BasicAgent implements Agent {
       const dmg = p.active ? this.bestDamage(g, p.active).dmg : 0;
       return o.bench.some(m => g.hpLeft(m) <= dmg) && !(o.active && g.hpLeft(o.active) <= dmg && (g.top(o.active).prizes ?? 1) >= 2) ? 45 : -1;
     }
+    if (d.name === "Energy Switch") {
+      // solo se porta un'Energia all'attaccante principale da un Pokémon che non ne ha bisogno
+      const f = this.focus(g, me);
+      if (!f || this.energyGap(g, f) <= 0) return -1;
+      return g.inPlay(me).some(m => m !== f && m.energies.length > 0) ? 45 : -1;
+    }
+    if (d.name === "Unfair Stamp") {
+      // appena può creare un forte svantaggio: l'avversario scende a 2 carte
+      return o.hand.length >= 5 || (o.hand.length >= 3 && p.hand.length <= 3) ? 60 : -1;
+    }
     if (d.sub === "supporter") {
+      // i Supporter che rimescolano la mano (Lillie, Judge) non si giocano se in mano c'è un pezzo chiave per il prossimo turno
+      const SHUFFLE = ["Lillie's Determination", "Judge", "Team Rocket's Archer"];
+      if (SHUFFLE.includes(d.name) && p.hand.length >= 3 && p.hand.some(c => c !== card && this.want(g, me, c) >= 80)) return 12;
       if (d.name === "Black Belt's Training") return o.active && (g.top(o.active).tags ?? []).includes("ex") ? 10 : -1;
       if (p.deck.length < 10 && p.hand.length >= 4) return -1;
       return p.hand.length <= 5 ? 35 : 20;

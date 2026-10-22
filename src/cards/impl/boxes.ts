@@ -173,7 +173,7 @@ export const BOXES: Impl[] = [
           p.discard.push(c);
           const d = g.def(c);
           if (d.kind !== "pokemon" || (d.tags ?? []).includes("ex") || (d.tags ?? []).includes("mega") || !d.attacks?.length) return 0;
-          const idx = yield* fx.chooseOne(g, me, "copy_attack", d.attacks.map((_, i) => i));
+          const [, idx] = yield* fx.chooseOne(g, me, "copy_attack", d.attacks.map((_, i) => [c, i] as [number, number]));
           const atk = d.attacks[idx];
           m.used.copied = c * 10 + idx;
           if (atk.effect) { const r = yield* atk.effect(g, me); if (typeof r === "number") return r; }
@@ -261,7 +261,7 @@ export const BOXES: Impl[] = [
     canPlay: (g, me) => g.p(me).deck.length >= 2,
     *play(g, me) {
       const p = g.p(me);
-      const picks = yield* fx.choose(g, me, "search", [...p.deck], 2, 2);
+      const picks = yield* fx.choose(g, me, "ciphermaniac", [...p.deck], 2, 2);
       for (const c of picks) p.deck.splice(p.deck.indexOf(c), 1);
       fx.shuffleDeck(g, me);
       p.deck.push(...picks.reverse()); // la prima scelta in cima

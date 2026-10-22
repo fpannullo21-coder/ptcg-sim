@@ -50,6 +50,26 @@ export const DECK_PLANS: DeckPlan[] = [
     },
   },
   {
+    // Slowking: i Pokémon da copiare con Seek Inspiration restano nel mazzo (non in panchina),
+    // si mettono in cima con Academy at Night o Ciphermaniac's Codebreaking
+    name: "Slowking",
+    detect: ["Slowking", "Slowpoke"],
+    openers: ["Latias ex", "Slowpoke", "Mega Kangaskhan ex"],
+    entries: {
+      Slowpoke: { value: 115, max: 3 },
+      Slowking: { value: 125, max: 3 },
+      "Latias ex": { value: 60, max: 1 },
+      "Mega Kangaskhan ex": { value: 45, max: 1 },
+      Kyurem: { value: 5, max: 0 },
+      Metagross: { value: 5, max: 0 },
+      Annihilape: { value: 5, max: 0 },
+      Zeraora: { value: 5, max: 0 },
+      "Lillie's Clefairy ex": { value: 20, max: 1 },
+      "Fezandipiti ex": { value: 10, max: 1 },
+      "Meowth ex": { value: 10, max: 1 },
+    },
+  },
+  {
     name: "N's Zoroark",
     detect: ["N's Zoroark ex", "N's Zorua"],
     entries: {
