@@ -217,7 +217,10 @@ export class BasicAgent implements Agent {
     if (d.kind === "hammer") {
       // l'Energia dell'avversario più pericoloso: l'attivo, o chi ha più Energie e il danno più alto
       const o = g.p(1 - me);
-      return top(m => (m === o.active ? 50 : 0) + 20 * (m as Mon).energies.length + this.bestDamage(g, m as Mon).dmg / 10, 1);
+      return top(x => {
+        const m = ((x as { m?: Mon }).m ?? x) as Mon; // le opzioni sono Pokémon o coppie { Pokémon, Energia }
+        return (m === o.active ? 50 : 0) + 20 * (m.energies?.length ?? 0) + (m.stack ? this.bestDamage(g, m).dmg / 10 : 0);
+      }, 1);
     }
     if (d.kind.endsWith("_target")) return top(m => this.energyGap(g, m as Mon) * 10 + (g.top(m as Mon).attacks?.length ?? 0), 1);
     if (d.kind === "copy_attack") {
