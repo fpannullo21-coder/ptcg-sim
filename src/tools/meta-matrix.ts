@@ -99,7 +99,7 @@ async function main() {
   const out: string[] = [
     `# Meta: ${name}`,
     "",
-    `Quote dei mazzi da Limitless Labs (${labs.tournaments.map(t => t.name).join(", ")}). Ogni archetipo è giocato con la lista meglio piazzata nelle classifiche. ${games} partite per coppia, giocatore "${agent}" da entrambe le parti, ${sec.toFixed(0)} s.`,
+    `Quote dei mazzi da Limitless Labs (${labs.tournaments.map(t => t.name).join(", ")}). Ogni archetipo è giocato con la lista meglio piazzata nelle classifiche. ${games} partite per coppia, giocatore "${agent}" da entrambe le parti${process.argv.includes("--merge") ? ", calcolato in cloud" : `, ${sec.toFixed(0)} s`}.`,
     "",
     "Partite = percentuale di partite vinte nella simulazione. Match = conversione al meglio delle tre. Reale = win rate dei match su Labs per l'archetipo della lista (il pareggio vale un terzo).",
     "",

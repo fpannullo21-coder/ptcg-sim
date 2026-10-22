@@ -24,7 +24,7 @@ GitHub conta i minuti di ogni macchina. Nei repository **privati** il piano grat
 | --- | --- | --- | --- |
 | 2 liste contro 12 archetipi, 60 partite | 1.400 | 30-40 | 5 minuti |
 | 10 varianti contro 12 archetipi, 100 partite | 12.000 | 260 | 30 minuti |
-| Validazione: 12 archetipi tra loro, 60 partite | 4.000 | 90 | 10 minuti |
+| Validazione: 12 archetipi tra loro più 5 varianti, 40 partite (misurato il 22 ottobre) | 4.000 | 120 | 16 minuti con 20 macchine |
 | Validazione: 16 archetipi tra loro, 100 partite | 12.000 | 260 | 30 minuti |
 
 Con 2.000 minuti al mese si possono fare circa 6-8 simulazioni grandi. Se servono di più: rendere pubblico il repository (con le cautele del README), oppure una macchina cloud a ore con più processori, dove gli stessi comandi girano con `--workers` pari al numero di processori.
