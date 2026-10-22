@@ -121,8 +121,8 @@ export const DECK_PLANS: DeckPlan[] = [
     },
   },
   {
-    // Rocket's Honchkrow: Rocket Feathers fa 60 per ogni Supporter Team Rocket scartato dalla mano,
-    // quindi i Supporter si accumulano; Ignition Energy solo sull'attivo nel turno in cui attacca
+    // docs/piani/honchkrow.md: Rocket Feathers fa 60 per ogni Supporter Team Rocket scartato dalla mano,
+    // quindi i Supporter si accumulano e si giocano solo per il loro effetto; Ignition Energy solo sull'attivo nel turno in cui attacca
     name: "Rocket's Honchkrow",
     detect: ["Team Rocket's Honchkrow", "Team Rocket's Murkrow"],
     openers: ["Team Rocket's Murkrow", "Team Rocket's Porygon"],
@@ -133,7 +133,8 @@ export const DECK_PLANS: DeckPlan[] = [
       "Team Rocket's Honchkrow": { value: 125, max: 3 },
       "Team Rocket's Porygon": { value: 55, max: 1 },
       "Team Rocket's Porygon2": { value: 70, max: 1 },
-      "Team Rocket's Articuno": { value: 50, max: 1 },
+      // Articuno (Repelling Veil) protegge dagli effetti degli attacchi i Base Team Rocket: con lui in campo la panchina di Base è al sicuro
+      "Team Rocket's Articuno": { value: 95, max: 1 },
     },
   },
 ];

@@ -32,3 +32,15 @@ suite("piani di mazzo (risposte di Francesco)", () => {
     expect((pick as { target: number }).target).toBe(0);
   });
 });
+
+suite("Honchkrow (risposte di Francesco)", () => {
+  test("Rocket Feathers scarta solo i Supporter che servono per il KO", () => {
+    const g = position(
+      { active: ["Team Rocket's Honchkrow", "Team Rocket's Energy"], hand: ["Team Rocket's Ariana", "Team Rocket's Petrel", "Team Rocket's Archer", "Team Rocket's Giovanni"] },
+      { active: "Dreepy" }, 5, 0);
+    const opts = [...g.p(0).hand];
+    const pick = new BasicAgent().decide(g, { player: 0, kind: "rocket_feathers", options: opts, min: 0, max: 99 });
+    // Dreepy ha 70 PS: bastano due Supporter, e si scartano prima Archer e Giovanni
+    expect(pick.map(i => g.name(opts[i])).sort()).toEqual(["Team Rocket's Archer", "Team Rocket's Giovanni"]);
+  });
+});

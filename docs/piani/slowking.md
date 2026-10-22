@@ -17,9 +17,9 @@ Le righe segnate **[nel simulatore]** sono nel codice. Le risposte di Francesco 
 - Con Slowking in campo, un bersaglio (Kyurem, Metagross, Annihilape) si cerca in mano con Ultra Ball o Poké Pad e si mette in cima con **Academy at Night**; **Ciphermaniac's Codebreaking** mette in cima il bersaglio migliore [nel simulatore].
 - L'attacco da usare si sceglie provandolo sulla posizione: KO e premi prima dei danni [nel simulatore].
 
-## Come gioca oggi
-Contro Hide n' Sneak, 30 partite: Seek Inspiration scopre Kyurem quasi una volta su due (prima una su cinque), ma Slowking attacca ancora solo nel 40% dei turni e vince il 10% (reale 38%). Il limite: Trifrost scarta le Energie, quindi ogni Slowking va ricaricato da capo, e il simulatore non prepara ancora il secondo Slowking mentre il primo attacca.
+## Il secondo Slowking e il passaggio in attivo
+- **Mentre il primo Slowking attacca, il secondo ha almeno 1 Energia se si può** (Francesco). Le Energie vanno prima a chi è più vicino alle 2; quando il primo è pronto, le successive (anche da Wondrous Patch) vanno al secondo [nel simulatore].
+- **Da Kangaskhan a Slowking** (Francesco): con Latias ex in campo la ritirata è gratis; senza Latias si usa Switch o Surfer; se non si può cambiare, Kangaskhan resta in attivo fino al KO e poi si promuove Slowking [nel simulatore; verificato su 20 partite: Switch e ritirata vengono usati appena Slowking è pronto].
 
-## Prossime domande
-1. Mentre il primo Slowking attacca con Trifrost, il secondo si carica in panchina con Wondrous Patch? Quante Energie ha di solito pronte?
-2. Come passa Slowking in attivo dopo Kangaskhan: ritirata con le Energie, Switch, o si lascia andare KO Kangaskhan?
+## Come gioca oggi
+Contro Hide n' Sneak, 30 partite: Seek Inspiration scopre Kyurem quasi una volta su due (prima una su cinque), ma Slowking vince ancora solo il 10% delle partite (reale 31% dei match). Il limite: Trifrost scarta le Energie, e il mazzo ha solo 10 Energie e 3 Wondrous Patch per ricaricare.

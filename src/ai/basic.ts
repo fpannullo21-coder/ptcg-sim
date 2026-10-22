@@ -432,6 +432,22 @@ export class BasicAgent implements Agent {
         return 0;
       }, 1);
     }
+    if (d.kind === "rocket_feathers") {
+      // Rocket Feathers: si scartano solo i Supporter che servono per il KO, prima i meno utili;
+      // senza KO possibile si tengono due Supporter per il turno dopo
+      const ORDER = ["Team Rocket's Archer", "Team Rocket's Giovanni", "Team Rocket's Proton", "Team Rocket's Petrel", "Team Rocket's Ariana"];
+      const rank = (c: number) => { const k = ORDER.indexOf(g.def(c).name); return k < 0 ? 99 : k; };
+      const order = [...idx].sort((x, y) => rank(d.options[x] as number) - rank(d.options[y] as number));
+      const att = g.p(me).active, opp = g.p(1 - me).active;
+      if (att && opp) {
+        for (let k = 1; k <= order.length; k++) {
+          const copy = new G(structuredClone(g.s), g.reg);
+          applyDamage(copy, copy.p(me).active!, copy.p(1 - me).active!, 60 * k, true);
+          if (copy.hpLeft(copy.p(1 - me).active!) <= 0) return order.slice(0, k);
+        }
+      }
+      return order.slice(0, Math.max(1, order.length - 2));
+    }
     if (d.kind === "gwynn") return top(c => -this.keep(g, me, c as number), d.max);
     if (d.kind === "mill" || d.kind === "blender") {
       // scarta prima le carte che contano negli scarti (Hide 'n' Sneak), poi le meno utili
@@ -628,11 +644,25 @@ export class BasicAgent implements Agent {
       return o.hand.length >= 5 || (o.hand.length >= 3 && p.hand.length <= 3) ? 60 : -1;
     }
     if (d.sub === "supporter") {
-      // piano con Supporter da accumulare (Honchkrow): se ne gioca uno solo se in mano ne restano altri o la mano è corta
+      // piano con Supporter da accumulare (Honchkrow, docs/piani/honchkrow.md): ognuno si gioca solo quando serve
+      // il suo effetto, altrimenti resta in mano come danni per Rocket Feathers
       const hoard = this.plan(g, me).hoard;
       if (hoard && d.name.startsWith(hoard)) {
         const kept = p.hand.filter(c => c !== card && g.def(c).name.startsWith(hoard) && g.def(c).sub === "supporter").length;
-        if (d.name === "Team Rocket's Archer") return -1 + (p.hand.length <= 2 ? 31 : 0);
+        const items = p.hand.some(c => c !== card && g.def(c).kind === "trainer" && g.def(c).sub === "item");
+        const inPlay = g.inPlay(me);
+        switch (d.name) {
+          case "Team Rocket's Ariana": return p.hand.length <= 3 ? 45 : -1; // per pescare
+          case "Team Rocket's Petrel": { // quando serve un oggetto: l'evoluzione o un Pokémon da recuperare
+            const evoMissing = inPlay.some(m => p.deck.some(c => g.def(c).evolvesFrom === g.top(m).name) && !p.hand.some(c => g.def(c).evolvesFrom === g.top(m).name));
+            const lost = p.discard.some(c => g.def(c).kind === "pokemon");
+            return !items && (evoMissing || lost) ? 42 : -1;
+          }
+          case "Team Rocket's Proton": // Pokémon Base Team Rocket in mano, se la panchina è corta
+            return p.bench.length < 3 && p.deck.some(c => g.def(c).sub === "basic" && g.def(c).name.startsWith(hoard)) ? 40 : -1;
+          case "Team Rocket's Archer": // disturbo della mano: l'avversario scende a 3 carte, noi a 5
+            return (o.hand.length >= 5 && p.hand.length <= 4) || p.hand.length <= 2 ? 40 : -1;
+        }
         if (p.hand.length > 4 && kept < 2) return -1;
       }
       // i Supporter che rimescolano la mano (Lillie, Judge) non si giocano se in mano c'è un pezzo chiave per il prossimo turno
