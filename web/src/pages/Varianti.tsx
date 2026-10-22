@@ -3,12 +3,14 @@ import type { PageProps } from "../main";
 import { deckKey } from "../main";
 import { bo3, pct } from "../data";
 import { formatDeck, parseDeck } from "../../../src/data/decklist";
+import { SuggestBox } from "../components/Suggest";
 
 /**
  * Varianti: togli e aggiungi fino a due carte e confronta le due liste contro gli archetipi
  * principali, con gli stessi semi (le differenze dipendono dalle carte, non dalla fortuna).
  */
-export function VariantiPage({ data, analyzed, deckText, sim, runSim, stopSim }: PageProps) {
+export function VariantiPage(props: PageProps) {
+  const { data, analyzed, deckText, sim, runSim, stopSim } = props;
   const names = useMemo(() => [...new Set(data.db.byId.values() ? [...data.db.byId.values()].map(c => c.name) : [])].sort(), [data]);
   const inDeck = analyzed.deck.entries.filter(e => e.card).map(e => e.card!.name);
   const [out1, setOut1] = useState(""), [out2, setOut2] = useState("");
@@ -53,6 +55,9 @@ export function VariantiPage({ data, analyzed, deckText, sim, runSim, stopSim }:
   return (
     <div class="page">
       <h1 class="h1">Varianti</h1>
+      <SuggestBox {...props} onCompare={(o, i) => { setOut1(o); setIn1(i); setOut2(""); setIn2(""); document.getElementById("manual")?.scrollIntoView({ behavior: "smooth" }); }} />
+
+      <h2 id="manual" class="h1" style={{ fontSize: 18 }}>Prova una variante sul meta</h2>
       <p class="sub">Togli e aggiungi fino a due carte: il simulatore gioca la tua lista e la variante contro gli archetipi principali, con le stesse partite di partenza, e mostra cosa cambia.</p>
 
       <datalist id="cards-in-deck">{[...new Set(inDeck)].map(n => <option value={n} />)}</datalist>

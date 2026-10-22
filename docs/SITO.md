@@ -8,7 +8,7 @@ Cartella `web/`: Vite + Preact, stesso motore del simulatore (`src/`), nessuna c
 | --- | --- | --- |
 | Mazzo | Incolli la lista (formato Live) o parti da una lista del meta: controllo di legalità, archetipo riconosciuto, carte che il simulatore sa giocare | browser |
 | Matchup | La lista contro i 16 archetipi principali: stima sui dati reali (prima "ancorato"), solo simulato, reale. Le liste già calcolate in cloud si mostrano subito; le altre si simulano nel browser (10, 20 o 50 partite per coppia) | cloud o browser |
-| Varianti | Togli e aggiungi fino a due carte: la lista e la variante giocano le stesse partite di partenza contro gli archetipi principali | browser |
+| Varianti | **Suggeriscimi una variante**: scegli il matchup da migliorare; dalle liste dello stesso archetipo nei Regional si prendono fino a 16 scambi di una carta (una carta che gli altri giocano più di te al posto di una che giochi più di loro), si provano tutti con 24 partite e i 4 migliori con altre 56. Poi la prova manuale: togli e aggiungi fino a due carte e confronta sul meta, con le stesse partite di partenza | browser |
 | Consistenza | Probabilità esatte: mulligan, ogni carta in mano entro il turno 1-4, carte nei premi | browser |
 | Allenatore | Posizioni da partite simulate, con mano, campo e scarti di entrambi (Hide 'n' Sneak contati a parte): scegli la mossa, vedi con quale percentuale vince ognuna. 12 posizioni pronte, più quelle nuove generate nel browser contro l'avversario scelto (40 partite per mossa, mezzo minuto-un minuto) | pronte (`trainer.json`) o browser |
 | Note legali | Avviso di sito non ufficiale, fonti, segnalazioni | — |
