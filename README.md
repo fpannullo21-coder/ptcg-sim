@@ -70,7 +70,7 @@ npm run meta-matrix -- --lists "hide-n-sneak/lista-per-danzica" --top 16 --games
 
 ## Destinazione
 
-Un sito: privato fino a dicembre 2026, poi beta chiusa, poi pubblico e gratuito, senza immagini delle carte. Il motore è in TypeScript perché lo stesso codice gira nel browser (partite, puzzle, simulazioni brevi) e su server o in cloud (matrice completa).
+Un sito: privato fino a dicembre 2026, poi beta chiusa, poi pubblico e gratuito, senza immagini delle carte. Le regole legali da rispettare prima del lancio (niente grafica ufficiale, avviso di sito non ufficiale, niente testi completi delle carte, permessi per i dati) sono in `docs/LEGALE.md`. Il motore è in TypeScript perché lo stesso codice gira nel browser (partite, puzzle, simulazioni brevi) e su server o in cloud (matrice completa).
 
 ## Principi
 
